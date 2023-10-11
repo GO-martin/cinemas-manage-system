@@ -1,0 +1,154 @@
+nav[class="fixed z-30 w-full bg-white border-b border-gray-200 dark_bg-gray-800 dark_border-gray-700"]
+  div[class="px-3 py-3 lg_px-5 lg_pl-3"]
+    div[class="flex items-center justify-between"]
+      div[class="flex items-center justify-start"]
+        button[id="toggleSidebarMobile" aria-expanded="true" aria-controls="sidebar" class="p-2 text-gray-600 rounded cursor-pointer lg_hidden hover_text-gray-900 hover_bg-gray-100 focus_bg-gray-100 dark_focus_bg-gray-700 focus_ring-2 focus_ring-gray-100 dark_focus_ring-gray-700 dark_text-gray-400 dark_hover_bg-gray-700 dark_hover_text-white"]
+          = inline_svg_tag("svg/toggleSidebarMobileHamburger-icon.svg", class: "w-6 h-6")
+          = inline_svg_tag("svg/toggleSidebarMobileClose-icon.svg", class: "hidden w-6 h-6")
+        = link_to root_path, class: "flex ml-2 md_mr-12" do
+          = image_tag("logo.png", class: "h-8 mr-3", alt: "Retro Cinema")
+          span[class="self-center text-xl font-semibold sm_text-2xl whitespace-nowrap dark_text-white"]
+            | Retro Cinema
+        form[action="#" method="GET" class="hidden lg_block lg_pl-2"]
+          label[for="topbar-search" class="sr-only"]
+            | Search
+          div[class="relative mt-1 lg_w-96"]
+            div[class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"]
+              = inline_svg_tag("svg/search-icon.svg", class: "w-5 h-5 text-gray-500 dark_text-gray-400")
+            input[type="text" name="email" id="topbar-search" class="bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-primary-500 focus_border-primary-500 block w-full pl-10 p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-primary-500 dark_focus_border-primary-500" placeholder="Search"]
+
+      div[class="flex items-center"]
+        /<!-- Search mobile -->
+        button[id="toggleSidebarMobileSearch" type="button" class="p-2 text-gray-500 rounded-lg lg_hidden hover_text-gray-900 hover_bg-gray-100 dark_text-gray-400 dark_hover_bg-gray-700 dark_hover_text-white"]
+          span[class="sr-only"]
+            | Search
+          = inline_svg_tag("svg/search-icon.svg", class: "w-6 h-6")
+        /<!-- Notifications -->
+        button[type="button" data-dropdown-toggle="notification-dropdown" class="p-2 text-gray-500 rounded-lg hover_text-gray-900 hover_bg-gray-100 dark_text-gray-400 dark_hover_text-white dark_hover_bg-gray-700"]
+          span[class="sr-only"]
+            | View notification
+          /<!-- Bell icon -->
+          = inline_svg_tag("svg/bell-icon.svg", class: "w-6 h-6")
+        /<!-- Dropdown menu -->
+        #notification-dropdown.z-20.z-50.hidden.max-w-sm.my-4.overflow-hidden.text-base.list-none.bg-white.divide-y.divide-gray-100.rounded.shadow-lg.dark_divide-gray-600.dark_bg-gray-700
+          .block.px-4.py-2.text-base.font-medium.text-center.text-gray-700.bg-gray-50.dark_bg-gray-700.dark_text-gray-400
+            |  Notifications 
+          div
+            a.flex.px-4.py-3.border-b.hover_bg-gray-100.dark_hover_bg-gray-600.dark_border-gray-600[href="#"]
+              .flex-shrink-0
+                img.rounded-full.w-11.h-11[src="/images/users/bonnie-green.png" alt="Jese image"]
+                .absolute.flex.items-center.justify-center.w-5.h-5.ml-6.-mt-5.border.border-white.rounded-full.bg-primary-700.dark_border-gray-700
+                  svg.w-3.h-3.text-white[fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"]
+                    path[d="M8.707 7.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l2-2a1 1 0 00-1.414-1.414L11 7.586V3a1 1 0 10-2 0v4.586l-.293-.293z"]
+                    path[d="M3 5a2 2 0 012-2h1a1 1 0 010 2H5v7h2l1 2h4l1-2h2V5h-1a1 1 0 110-2h1a2 2 0 012 2v10a2 2 0 01-2 2H5a2 2 0 01-2-2V5z"]
+              .w-full.pl-3
+                .text-gray-500.font-normal.text-sm.mb-1.5.dark_text-gray-400
+                  |  New message from 
+                  span.font-semibold.text-gray-900.dark_text-white
+                  | Bonnie Green
+                  | : "Hey, what's up? All set for the presentation?" 
+                .text-xs.font-medium.text-primary-700.dark_text-primary-400
+                  |  a few moments ago 
+            a.block.py-2.text-base.font-normal.text-center.text-gray-900.bg-gray-50.hover_bg-gray-100.dark_bg-gray-700.dark_text-white.dark_hover_underline[href="#"]
+              .inline-flex.items-center
+                  = inline_svg_tag("svg/viewAll-icon.svg", class: "w-5 h-5 mr-2")
+                    |  View all     
+
+        button#theme-toggle.text-gray-500.dark_text-gray-400.hover_bg-gray-100.dark_hover_bg-gray-700.focus_outline-none.focus_ring-4.focus_ring-gray-200.dark_focus_ring-gray-700.rounded-lg.text-sm.p-2.5[data-tooltip-target="tooltip-toggle" type="button"]
+          = inline_svg_tag("svg/themeToggleDark-icon.svg", class: "hidden w-5 h-5")
+          = inline_svg_tag("svg/themeToggleLight-icon.svg", class: "hidden w-5 h-5")
+        div[id="tooltip-toggle" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip"]
+          | Toggle dark mode
+          div[class="tooltip-arrow" data-popper-arrow]
+        /<!-- Profile -->
+        .flex.items-center.ml-3
+          div
+            button#user-menu-button-2.flex.text-sm.bg-gray-800.rounded-full.focus_ring-4.focus_ring-gray-300.dark_focus_ring-gray-600[type="button" aria-expanded="false" data-dropdown-toggle="dropdown-2"]
+              span.sr-only
+                | Open user menu
+              img.w-8.h-8.rounded-full[src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo"]
+          #dropdown-2.z-50.hidden.my-4.text-base.list-none.bg-white.divide-y.divide-gray-100.rounded.shadow.dark_bg-gray-700.dark_divide-gray-600
+            .px-4.py-3[role="none"]
+              p.text-sm.text-gray-900.dark_text-white[role="none"]
+                |  Neil Sims 
+              p.text-sm.font-medium.text-gray-900.truncate.dark_text-gray-300[role="none"]
+                |  neil.sims@flowbite.com 
+            ul.py-1[role="none"]
+              li
+                a.block.px-4.py-2.text-sm.text-gray-700.hover_bg-gray-100.dark_text-gray-300.dark_hover_bg-gray-600.dark_hover_text-white[href="#" role="menuitem"]
+                  | Dashboard
+              li
+                a.block.px-4.py-2.text-sm.text-gray-700.hover_bg-gray-100.dark_text-gray-300.dark_hover_bg-gray-600.dark_hover_text-white[href="#" role="menuitem"]
+                  | Settings
+              li
+                = button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_text-gray-300 dark_hover_bg-gray-600 dark_hover_text-white"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

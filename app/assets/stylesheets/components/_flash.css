@@ -1,0 +1,4 @@
+.flash-message {
+    animation: appear-then-fade 4s both;
+    border-radius: 999px;
+}
