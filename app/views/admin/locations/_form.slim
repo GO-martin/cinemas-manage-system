@@ -1,0 +1,11 @@
+= simple_form_for [:admin, location], html: { class: "space-y-6" } do |f|
+  = f.input :name, label: "Name", label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white" },\
+                  placeholder: "Type location name",\
+                  input_html: {class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus_ring-blue-600 focus_border-blue-600 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500"}
+  .flex.items-center.space-x-2
+    = button_tag(type: "submit", class: "text-white inline-flex items-center bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_outline-none focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800")
+      = inline_svg_tag("svg/add-icon.svg", class: "mr-1 -ml-1 w-6 h-6")
+      = button_submit
+    = button_tag("Cancel", class: "text-gray-900 inline-flex items-center bg-white hover_bg-gray-100 focus_ring-4 focus_outline-none focus_ring-blue-300 font-medium rounded-lg border border-gray-200 text-sm px-5 text-center dark_bg-gray-800 dark_text-gray-400 dark_border-gray-600 dark_hover_text-white dark_hover_bg-gray-700 dark_focus_ring-gray-700 py-2.5", type:"button", data: { action: "turbo-modal#hideModal" })
+      = inline_svg_tag("svg/close-icon.svg", class: "mr-1 -ml-1 w-6 h-6")
+      | Cancel

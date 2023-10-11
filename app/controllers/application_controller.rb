@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit::Authorization
 
+  include Pagy::Backend
   # Cross-Site Request Forgery (CSRF)
   protect_from_forgery with: :exception
 
@@ -21,7 +22,7 @@ class ApplicationController < ActionController::Base
 
   def direct_by_role(resource)
     if resource.has_role? :admin
-      admin_cinemas_path
+      admin_locations_path
     else
       root_path
     end
