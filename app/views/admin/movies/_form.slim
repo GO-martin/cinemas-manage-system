@@ -1,0 +1,50 @@
+= simple_form_for [:admin, movie], html: { class: "col-span-full", data: { controller: "flatpickr" } } do |f|
+  .grid.grid-cols-1.xl_grid-cols-3.xl_gap-4
+    .col-span-full.xl_col-auto
+      .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        h3.mb-1.text-xl.font-bold.text-gray-900.dark_text-white
+            | Poster
+        .items-center.sm_flex.xl_block.2xl_flex.sm_space-x-4.xl_space-x-0.2xl_space-x-4
+          / = render "admin/movies/attachment", file: movie&.poster
+          div   
+            .mb-4.text-sm.text-gray-500.dark_text-gray-400
+              | JPEG or PNG. Max size of 1MB
+            .flex.items-center.space-x-4
+              = f.file_field :poster
+              button.text-gray-900.inline-flex.items-center.bg-white.hover_bg-gray-100.focus_ring-4.focus_outline-none.focus_ring-blue-300.font-medium.rounded-lg.border.border-gray-200.text-sm.px-5.text-center.dark_bg-gray-800.dark_text-gray-400.dark_border-gray-600.dark_hover_text-white.dark_hover_bg-gray-700.dark_focus_ring-gray-700 class="py-2.5" type="button"
+                | Delete
+
+    .col-span-2 
+      .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        .mb-4.text-xl.font-semibold.dark_text-white
+          | General information
+        .grid.grid-cols-6.gap-6
+          .col-span-6.sm_col-span-3
+            = f.input :director, label: "Director", label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white" },\
+                            placeholder: "Type director",\
+                            input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500" }
+          .col-span-6.sm_col-span-3
+            label.block.mb-2.text-sm.font-medium.text-gray-900.dark_text-white
+              | Release Date
+            = f.date_field :release_date, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full pl-10 p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus:border-blue-500"
+          / .col-span-6.sm-col-span-3 
+          /   = f.input :release_date, label: "Release date", input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full pl-10 p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus:border-blue-500" }
+          .col-span-6
+            = f.input :description, as: :text, label: "Description", label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white"},\
+                                    placeholder: "Type description",\
+                                    input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus_ring-blue-600 focus_border-blue-600 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500", rows: "4" }
+    .col-span-full 
+      .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        .mb-4.text-xl.font-semibold.dark_text-white
+          | Trailer
+        .flex.items-center.justify-center.w-full
+          / = render "admin/movies/attachment", file: movie&.trailer
+          .w-full.h-full.mx-auto
+            / = render "admin/movies/trailer_form", f: f
+    .flex.items-center.space-x-2.px-4
+      = button_tag(type: "submit", class: "text-white inline-flex items-center bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_outline-none focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800", data: { turbo: false })
+        = inline_svg_tag("svg/add-icon.svg", class: "mr-1 -ml-1 w-6 h-6")
+        = button_submit
+      = link_to admin_movies_path, class: "text-gray-900 inline-flex items-center bg-white hover_bg-gray-100 focus_ring-4 focus_outline-none focus_ring-blue-300 font-medium rounded-lg border border-gray-200 text-sm px-5 text-center dark_bg-gray-800 dark_text-gray-400 dark_border-gray-600 dark_hover_text-white dark_hover_bg-gray-700 dark_focus_ring-gray-700 py-2.5" do 
+        = inline_svg_tag("svg/close-icon.svg", class: "mr-1 -ml-1 w-6 h-6")
+        | Cancel 

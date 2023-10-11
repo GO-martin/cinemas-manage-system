@@ -1,0 +1,15 @@
+tr.hover_bg-gray-100.Sdark_hover_bg-gray-700 id=dom_id(cinema)
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = cinema.name 
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = cinema.id 
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = cinema&.location&.name
+  td.p-4.space-x-2.whitespace-nowrap.flex
+    = link_to edit_admin_cinema_path(cinema), data: { turbo_frame: "modal" }, class: "btn-update inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800"
+      = inline_svg_tag("svg/update-icon.svg", class: "w-4 h-4 mr-2")
+      | Update
+    = link_to destroy_modal_admin_cinema_path(cinema), data: { turbo_frame: "modal" }, class: "btn-delete inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover_bg-red-800 focus_ring-4 focus_ring-red-300 dark_focus_ring-red-900"
+      = inline_svg_tag("svg/delete-icon.svg", class: "w-4 h-4 mr-2")
+      | Delete 
+      

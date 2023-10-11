@@ -9,6 +9,8 @@ html
 
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags 
+    
+    / link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet"
   body.bg-gray-50.dark_bg-gray-800
     #flash.flash.fixed.top-20.transform.flex.flex-col.items-center.gap-4.max-w-full.w-max-content.px-4.z-50 class="left-1/2 -translate-x-1/2"
       = render "layouts/components/flash"
@@ -18,7 +20,8 @@ html
       div[id="main-content" class="relative w-screen h-screen overflow-y-auto bg-gray-50 lg_ml-64 dark_bg-gray-900"]
         main
           = yield
-
+    / script src="../path/to/flowbite/dist/flowbite.min.js"
+    / script src="../path/to/flowbite/dist/datepicker.js"
     
   
 
