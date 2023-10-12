@@ -9,8 +9,7 @@ html
 
     = stylesheet_link_tag "application", "data-turbo-track": "reload"
     = javascript_importmap_tags 
-    
-    / link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css" rel="stylesheet"
+    link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css"
   body.bg-gray-50.dark_bg-gray-800
     #flash.flash.fixed.top-20.transform.flex.flex-col.items-center.gap-4.max-w-full.w-max-content.px-4.z-50 class="left-1/2 -translate-x-1/2"
       = render "layouts/components/flash"

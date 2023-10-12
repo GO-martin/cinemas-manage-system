@@ -1,9 +1,7 @@
 class Movie < ApplicationRecord
   resourcify
 
-  validates :director, :description, :releaseDate, presence: true
-
-  # validate :acceptable_image
+  validates :director, presence: true
 
   scope :ordered, -> { order(id: :desc) }
 
@@ -17,15 +15,4 @@ class Movie < ApplicationRecord
       ordered
     end
   end
-
-  # def acceptable_image
-  #   return unless poster.attached?
-
-  #   errors.add(:poster, 'is too big') unless poster.blob.byte_size <= 1.megabyte
-
-  #   acceptable_types = ['image/jpeg', 'image/png']
-  #   return if acceptable_types.include?(poster.content_type)
-
-  #   errors.add(:poster, 'must be a JPEG or PNG')
-  # end
 end
