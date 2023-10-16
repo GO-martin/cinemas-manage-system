@@ -3,6 +3,8 @@ class Cinema < ApplicationRecord
 
   belongs_to :location
 
+  has_one :room, dependent: :destroy
+
   validates :name, presence: true, uniqueness: true
   validates :location_id, presence: true
 

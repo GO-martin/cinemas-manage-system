@@ -1,0 +1,19 @@
+.grid.grid-cols-6.gap-6 
+  .col-span-6.sm_col-span-3
+    = form.input :number_of_seats, label: "Number of seats", label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white" }, input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500", value: room&.number_of_seats, data: { "structure-target": "inputNumberOfSeats" }, readonly: :true}
+  .col-span-6
+    label.mb-2.text-sm.font-medium.text-gray-900.dark_text-white Structure:
+  .col-span-6 
+    ul.showcase.justify-center
+      li 
+        .seat 
+        small Inactive
+      li 
+        .seat.active 
+        small Active
+  .col-span-6.mb-10
+    .screen.bg-slate-300.mx-auto.mb-6 class="w-1/2 h-16"
+    - Admin::RoomsHelper::STRUCTURE.each_with_index do |row, rowIndex| 
+      .row.justify-center 
+        - row.each_with_index do |col, columnIndex|  
+          .seat.active row-index="#{rowIndex}" column-index="#{columnIndex}" data-action="click->structure#toggleActive" data-structure-target="seat" 

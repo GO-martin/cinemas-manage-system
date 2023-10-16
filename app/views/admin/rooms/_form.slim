@@ -1,0 +1,29 @@
+/ = binding.pry
+= simple_form_for [:admin, room], html: { class: "col-span-full" }, data: { "controller":"structure", "structure-inactive-value":"#{room&.structure_of_rooms&.where(type_seat: "INACTIVE").to_json}", "structure-number-of-seats-value":"#{room&.number_of_seats}", "structure-active-value":"#{room&.structure_of_rooms&.where(type_seat: "ACTIVE").to_json}", "structure-id-value":"#{room&.id}", "action":"submit->structure#createStructure", "structure-structure-value":"#{room&.structure_of_rooms.to_json}"} do |f|
+  .grid.grid-cols-1.xl_grid-cols-3.xl_gap-4 
+    .col-span-full 
+      .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        .mb-4.text-xl.font-semibold.dark_text-white
+          | General information
+        .grid.grid-cols-6.gap-6
+          .col-span-6.sm_col-span-3
+            = f.input :name, label: "Name", label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white" },\
+                            placeholder: "Type name",\
+                            input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500" }
+          .col-span-6.sm_col-span-3
+            = f.input :cinema_id, collection: Cinema.order("id DESC"), label_method: :name, value_method: :id, :selected => room&.cinema_id, include_blank: false, label: "Cinema", label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white" },\
+                                  placeholder: "Type name",\
+                                  input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500" }
+    .col-span-full 
+      .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        .mb-4.text-xl.font-semibold.dark_text-white
+          | Structure
+        = render "admin/rooms/structure", room: room, form: f
+  
+  .flex.items-center.space-x-2.justify-end.my-10
+    = button_tag(type: "submit", class: "text-white inline-flex items-center bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_outline-none focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800", data: { turbo: false })
+      = inline_svg_tag("svg/add-icon.svg", class: "mr-1 -ml-1 w-6 h-6")
+      = button_submit
+    = link_to admin_rooms_path, class: "text-gray-900 inline-flex items-center bg-white hover_bg-gray-100 focus_ring-4 focus_outline-none focus_ring-blue-300 font-medium rounded-lg border border-gray-200 text-sm px-5 text-center dark_bg-gray-800 dark_text-gray-400 dark_border-gray-600 dark_hover_text-white dark_hover_bg-gray-700 dark_focus_ring-gray-700 py-2.5" do 
+      = inline_svg_tag("svg/close-icon.svg", class: "mr-1 -ml-1 w-6 h-6")
+      | Cancel 

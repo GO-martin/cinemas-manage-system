@@ -11,3 +11,4 @@ pin "flowbite-datepicker", to: "https://ga.jspm.io/npm:flowbite-datepicker@1.2.2
 pin "dropzone", to: "https://ga.jspm.io/npm:dropzone@6.0.0-beta.2/dist/dropzone.mjs"
 pin "just-extend", to: "https://ga.jspm.io/npm:just-extend@5.1.1/index.esm.js"
 pin "@rails/activestorage", to: "https://ga.jspm.io/npm:@rails/activestorage@7.1.0/app/assets/javascripts/activestorage.esm.js"
+pin "jquery", to: "https://ga.jspm.io/npm:jquery@3.7.1/dist/jquery.js"
