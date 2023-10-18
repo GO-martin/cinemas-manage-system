@@ -1,4 +1,4 @@
-= simple_form_for [:admin, movie], html: { class: "col-span-full" } do |f|
+= simple_form_for [:admin, movie], html: { class: "col-span-full", data: { controller: "flatpickr" } } do |f|
   .grid.grid-cols-1.xl_grid-cols-3.xl_gap-4
     .col-span-full.xl_col-auto
       .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
@@ -12,13 +12,27 @@
           | General information
         .grid.grid-cols-6.gap-6
           .col-span-6.sm_col-span-3
+            = f.input :name,
+                      as: :string,
+                      input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500" },
+                      placeholder: "Type name",
+                      required: true,
+                      label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white" }
+          .col-span-6.sm_col-span-3 
+            = f.input :length,
+                      as: :integer,
+                      input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500" },
+                      placeholder: "Type length (minutes)",
+                      required: true,
+                      label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white" }
+          .col-span-6.sm_col-span-3
             = f.input :director, label: "Director", label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white" },\
                             placeholder: "Type director",\
                             input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500" }
           .col-span-6.sm_col-span-3
             label.block.mb-2.text-sm.font-medium.text-gray-900.dark_text-white
               | Release Date
-            = f.date_field :release_date, class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full pl-10 p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus:border-blue-500"
+            = f.date_field :release_date, class: "release_date bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full pl-10 p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus:border-blue-500"
           .col-span-6
             = f.input :description, as: :text, label: "Description", label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white"},\
                                     placeholder: "Type description",\

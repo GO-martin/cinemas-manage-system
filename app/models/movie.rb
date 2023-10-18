@@ -1,7 +1,7 @@
 class Movie < ApplicationRecord
   resourcify
 
-  validates :director, presence: true
+  validates :director, :name, :length, presence: true
 
   scope :ordered, -> { order(id: :desc) }
 
@@ -10,7 +10,7 @@ class Movie < ApplicationRecord
 
   def self.search(term)
     if term
-      where('director LIKE ?', "%#{term}%").ordered
+      where('(name LIKE :term) OR (director LIKE :term)', { term: "%#{term}%" }).ordered
     else
       ordered
     end

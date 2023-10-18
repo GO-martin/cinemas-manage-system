@@ -3,7 +3,7 @@ class Admin::CinemasController < Admin::BaseController
 
   # GET admin/cinemas or admin/cinemas.json
   def index
-    @pagy, @cinemas = pagy(Cinema.search(params[:term]), items: 20)
+    @pagy, @cinemas = pagy(Cinema.search(params[:term]))
   end
 
   # GET admin/cinemas/1 or admin/cinemas/1.json
