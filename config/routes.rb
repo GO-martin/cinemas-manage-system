@@ -30,6 +30,7 @@ Rails.application.routes.draw do
         get 'destroy_modal'
       end
     end
+    resources :users, only: [:index]
   end
 
   # Custom Error Pages
