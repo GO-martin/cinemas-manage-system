@@ -25,6 +25,11 @@ Rails.application.routes.draw do
         get 'destroy_modal'
       end
     end
+    resources :showtimes do
+      member do
+        get 'destroy_modal'
+      end
+    end
   end
 
   # Custom Error Pages
