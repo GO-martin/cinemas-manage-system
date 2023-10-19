@@ -31,6 +31,11 @@ Rails.application.routes.draw do
       end
     end
     resources :users, only: [:index]
+    resources :supplies do
+      member do
+        get 'destroy_modal'
+      end
+    end
   end
 
   # Custom Error Pages
