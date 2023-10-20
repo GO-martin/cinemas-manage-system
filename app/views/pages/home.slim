@@ -1,2 +1,15 @@
-/ = render "pages/navbar"adsfadsf
-asdfasd
+#gallery.relative.w-full data-carousel="slide"
+  .relative.h-56.overflow-hidden.rounded-lg.md_h-screen
+    - @movies.each do |movie|
+      .hidden.duration-700.ease-in-out [data-carousel-item]
+        - if movie.poster.attached?
+          = link_to movie_page_path(movie.id), data: { turbo: false }
+            = image_tag(movie.poster, class:"absolute block max-w-full h-auto -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2")
+  button.absolute.top-0.left-0.z-30.flex.items-center.justify-center.h-full.px-4.cursor-pointer.group.focus_outline-none [data-carousel-prev]
+    span.inline-flex.items-center.justify-center.w-10.h-10.rounded-full.group-focus_ring-4.group-focus_ring-white.group-focus_outline-none class="bg-white/30 dark_bg-gray-800/30 group-hover_bg-white/50 dark_group-hover_bg-gray-800/60 dark_group-focus_ring-gray-800/70"
+      = inline_svg_tag("svg/prev-icon.svg", class: "w-4 h-4 text-white dark_text-gray-800")
+  
+  button.absolute.top-0.right-0.z-30.flex.items-center.justify-center.h-full.px-4.cursor-pointer.group.focus_outline-none [data-carousel-next]
+    span.inline-flex.items-center.justify-center.w-10.h-10.rounded-full.group-focus_ring-4.group-focus_ring-white.group-focus_outline-none class="bg-white/30 dark_bg-gray-800/30 group-hover_bg-white/50 dark_group-hover_bg-gray-800/60 dark_group-focus_ring-gray-800/70"
+      = inline_svg_tag("svg/next-icon.svg", class: "w-4 h-4 text-white dark_text-gray-800")
+    

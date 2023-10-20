@@ -1,5 +1,5 @@
 / = binding.pry
-= simple_form_for [:admin, room], html: { class: "col-span-full" }, data: { "controller":"structure", "structure-inactive-value":"#{room&.structure_of_rooms&.where(type_seat: "INACTIVE").to_json}", "structure-number-of-seats-value":"#{room&.number_of_seats}", "structure-active-value":"#{room&.structure_of_rooms&.where(type_seat: "ACTIVE").to_json}", "structure-id-value":"#{room&.id}", "action":"submit->structure#createStructure", "structure-structure-value":"#{room&.structure_of_rooms.to_json}"} do |f|
+= simple_form_for [:admin, room], html: { class: "col-span-full", data: { "controller":"structure", "structure-inactive-value":"#{room&.structure_of_rooms&.where(type_seat: "INACTIVE").to_json}", "structure-number-of-seats-value":"#{room&.number_of_seats}", "structure-active-value":"#{room&.structure_of_rooms&.where(type_seat: "ACTIVE").to_json}", "structure-id-value":"#{room&.id}", "action":"submit->structure#createStructure", "structure-structure-value":"#{room&.structure_of_rooms.to_json}"} }  do |f|
   .grid.grid-cols-1.xl_grid-cols-3.xl_gap-4 
     .col-span-full 
       .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800

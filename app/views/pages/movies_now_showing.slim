@@ -1,0 +1,30 @@
+.max-w-7xl.mx-auto.px-6.md_px-12.xl_px-6
+  = render "pages/breadcrumb", breadcrumbs: ["Movie", "Now Showing"] 
+  .main.bg-white.grid.grid-cols-1.xl_grid-cols-3 
+    .col-span-full 
+      .p-4.mb-4.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        .mb-10.text-3xl.font-semibold.dark_text-white
+          | Now Showing
+        .grid.grid-cols-1.gap-x-6.gap-y-10.sm_grid-cols-2.lg_grid-cols-3.xl_grid-cols-4.xl_gap-x-8
+          - @movies.each do |movie|
+            .max-w-sm.bg-white.border.border-gray-200.rounded-lg.shadow.dark_bg-gray-800.dark_border-gray-700
+              = link_to movie_page_path(:id => movie.id, :breadcrumbs => ["Movie", "Now Showing", movie.name]  ), data: { turbo: false }
+                - if movie.poster.attached?
+                  = image_tag(movie.poster, class: "h-96")
+              .p-5.mb-2.text-base.font-bold.tracking-tight.text-gray-900.dark_text-white 
+                = movie.name
+              .px-5.text-base.font-normal.dark_text-white 
+                .font-semibold.inline-flex Director: &nbsp;
+                = movie.director
+              .px-5.text-base.font-normal.dark_text-white 
+                .font-semibold.inline-flex Length: &nbsp;
+                = "#{movie.length} minutes"
+              .px-5.text-base.font-normal.dark_text-white 
+                .font-semibold.inline-flex Release date: &nbsp;
+                = movie.release_date&.strftime("%e/%m/%Y")
+              .p-5.flex.justify-end.items-center 
+                = link_to movie_page_path(movie.id), class: "px-5 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800"
+                  | Buy ticket
+              
+
+            
