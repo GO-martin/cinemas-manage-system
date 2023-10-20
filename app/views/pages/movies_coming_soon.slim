@@ -3,8 +3,11 @@
   .main.bg-white.grid.grid-cols-1.xl_grid-cols-3 
     .col-span-full 
       .p-4.mb-4.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
-        .mb-10.text-3xl.font-semibold.dark_text-white
-          | Coming soon
+        .flex.justify-between
+          .mb-4.text-3xl.font-semibold.dark_text-white
+            | Coming Soon
+          = link_to "Now Showing", movies_now_showing_pages_path, class: "mb-4 text-xl font-medium dark_text-white", data: { turbo: false }
+        hr.my-6.border-2.border-slate-700.sm_mx-auto.dark_border-black-700.lg_my-8
         .grid.grid-cols-1.gap-x-6.gap-y-10.sm_grid-cols-2.lg_grid-cols-3.xl_grid-cols-4.xl_gap-x-8
           - @movies.each do |movie|
             .max-w-sm.bg-white.border.border-gray-200.rounded-lg.shadow.dark_bg-gray-800.dark_border-gray-700

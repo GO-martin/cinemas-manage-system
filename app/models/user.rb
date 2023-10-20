@@ -5,6 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  after_create :assign_default_role
+
   scope :ordered, -> { order(id: :desc) }
 
   def self.search(term)
@@ -13,5 +15,9 @@ class User < ApplicationRecord
     else
       ordered
     end
+  end
+
+  def assign_default_role
+    add_role(:customer) if roles.blank?
   end
 end
