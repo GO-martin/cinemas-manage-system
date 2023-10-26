@@ -1,6 +1,7 @@
 class Supply < ApplicationRecord
   resourcify
 
+  has_many :tickets
   belongs_to :cinema
 
   validates :name, :quantity, :price, :cinema_id, presence: true

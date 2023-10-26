@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_20_041417) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_24_072804) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -101,6 +101,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_041417) do
     t.datetime "updated_at", null: false
     t.integer "duration"
     t.datetime "end_time"
+    t.bigint "location_id", default: 2, null: false
+    t.bigint "cinema_id"
+    t.index ["cinema_id"], name: "index_showtimes_on_cinema_id"
+    t.index ["location_id"], name: "index_showtimes_on_location_id"
     t.index ["movie_id"], name: "index_showtimes_on_movie_id"
     t.index ["room_id"], name: "index_showtimes_on_room_id"
   end
@@ -123,6 +127,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_041417) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cinema_id"], name: "index_supplies_on_cinema_id"
+  end
+
+  create_table "tickets", force: :cascade do |t|
+    t.integer "seat_row", null: false
+    t.integer "seat_collumn", null: false
+    t.float "price", null: false
+    t.bigint "user_id", null: false
+    t.bigint "showtime_id", null: false
+    t.bigint "supply_id", null: false
+    t.integer "supply_quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["showtime_id"], name: "index_tickets_on_showtime_id"
+    t.index ["supply_id"], name: "index_tickets_on_supply_id"
+    t.index ["user_id"], name: "index_tickets_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -149,8 +168,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_20_041417) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cinemas", "locations"
   add_foreign_key "rooms", "cinemas"
+  add_foreign_key "showtimes", "cinemas"
+  add_foreign_key "showtimes", "locations"
   add_foreign_key "showtimes", "movies"
   add_foreign_key "showtimes", "rooms"
   add_foreign_key "structure_of_rooms", "rooms"
   add_foreign_key "supplies", "cinemas"
+  add_foreign_key "tickets", "showtimes"
+  add_foreign_key "tickets", "supplies"
+  add_foreign_key "tickets", "users"
 end

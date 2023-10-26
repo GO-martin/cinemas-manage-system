@@ -5,6 +5,7 @@ class Cinema < ApplicationRecord
 
   has_many :rooms, dependent: :destroy
   has_many :supplies, dependent: :destroy
+  has_many :showtimes, dependent: :destroy
 
   validates :name, presence: true, uniqueness: true
   validates :location_id, presence: true

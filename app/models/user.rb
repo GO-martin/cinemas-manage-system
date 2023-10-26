@@ -5,6 +5,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :tickets, dependent: :destroy
+
   after_create :assign_default_role
 
   scope :ordered, -> { order(id: :desc) }

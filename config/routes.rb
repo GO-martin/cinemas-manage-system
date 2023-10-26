@@ -38,9 +38,15 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :customer do
+    resources :tickets
+  end
+
   resources :pages, only: :index do
     member do
       get 'movie', to: 'pages#movie_detail'
+      get 'booking', to: 'pages#booking'
+      get 'booking/showtimes', to: 'pages#get_showtimes'
     end
     collection do
       get 'movies/now-showing', to: 'pages#movies_now_showing'

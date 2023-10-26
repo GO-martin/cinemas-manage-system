@@ -1,6 +1,8 @@
 class Movie < ApplicationRecord
   resourcify
 
+  has_many :showtimes, dependent: :destroy
+
   enum :status, { now_showing: 'now_showing', coming_soon: 'coming_soon' }
 
   validates :director, :name, :length, presence: true

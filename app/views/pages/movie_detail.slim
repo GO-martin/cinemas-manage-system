@@ -23,7 +23,7 @@
           .font-semibold Description: 
           = @movie.description
         - if @movie.now_showing?
-          = link_to root_path, data: { turbo_frame: false }, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800" 
+          = link_to booking_page_path(@movie), data: { turbo: false }, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800"
             | Buy ticket
     .col-start-2.col-span-1
       .p-4.mb-4.dark_border-gray-700.sm_p-6.dark_bg-gray-800

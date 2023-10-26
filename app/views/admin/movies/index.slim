@@ -45,9 +45,7 @@
               th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
                 | Actions
           tbody#movies.bg-white.divide-y.divide-gray-200.dark_bg-gray-800.dark_divide-gray-700
-            - if @movies
-              - @movies.each do |movie|
-                = render "movie", movie: movie 
+            = render @movies
 
 / Pagination 
 div[class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm_flex sm_justify-between dark_bg-gray-800 dark_border-gray-700"]                

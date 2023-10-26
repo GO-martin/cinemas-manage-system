@@ -15,9 +15,9 @@ html
     #flash.flash.fixed.top-20.transform.flex.flex-col.items-center.gap-4.max-w-full.w-max-content.px-4.z-50 class="left-1/2 -translate-x-1/2"
       = render "layouts/components/flash"
     = render "layouts/components/navbar_admin"
-    .flex.pt-16.overflow-hidden.bg-gray-50.dark_bg-gray-900
+    .flex.pt-16.bg-gray-50.dark_bg-gray-900
       = render "layouts/components/sidebar_admin"
-      div[id="main-content" class="relative w-screen h-screen overflow-y-auto bg-gray-50 lg_ml-64 dark_bg-gray-900"]
+      div[id="main-content" class="relative w-screen h-screen bg-gray-50 lg_ml-64 dark_bg-gray-900"]
         main
           = yield
 

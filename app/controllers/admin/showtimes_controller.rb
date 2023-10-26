@@ -90,6 +90,10 @@ class Admin::ShowtimesController < Admin::BaseController
     params[:showtime][:duration] = Movie.find(params[:showtime][:movie_id]).length
     start_time = DateTime.parse(params[:showtime][:start_time])
     params[:showtime][:end_time] = start_time + params[:showtime][:duration].minutes
-    params.require(:showtime).permit(:room_id, :movie_id, :start_time, :fare, :duration, :end_time)
+    params[:showtime][:cinema_id] = Room.find(params[:showtime][:room_id]).cinema.id
+    params[:showtime][:location_id] = Room.find(params[:showtime][:room_id]).cinema.location.id
+
+    params.require(:showtime).permit(:room_id, :movie_id, :location_id, :cinema_id, :start_time, :fare, :duration,
+                                     :end_time)
   end
 end
