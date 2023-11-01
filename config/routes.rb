@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   root 'pages#home'
+  resources :payment_intents
 
   namespace :admin do
     resources :structure_of_rooms
@@ -40,6 +41,14 @@ Rails.application.routes.draw do
 
   namespace :customer do
     resources :tickets
+    resources :showtimes
+    resources :rooms
+    resources :supplies do
+      collection do
+        get 'booking/supplies', to: 'supplies#booking_supplies'
+      end
+    end
+    resources :ticket_supplies
   end
 
   resources :pages, only: :index do

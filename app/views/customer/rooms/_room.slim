@@ -1,0 +1,19 @@
+.grid.grid-cols-6.gap-6 
+  .col-span-6
+    ul.flex.justify-center.p-6.list-none 
+      li.flex.items-center.justify-center.mx-2.space-x-2
+        .seat.sold
+        small Sold
+      li.flex.items-center.justify-center.mx-2.space-x-2 
+        .seat.selected 
+        small Selected  
+  .col-span-4.col-start-2.mb-10
+    = image_tag("bg-screen.png", class: "w-full")
+  .col-span-4.col-start-2 
+    - Admin::RoomsHelper::STRUCTURE.each_with_index do |row, rowIndex| 
+      .row.justify-center 
+        - row.each_with_index do |col, columnIndex|
+          - structure = @structures.where(row_index: rowIndex, column_index: columnIndex).first
+          - sold_ticket = @sold_tickets.where(seat_row: rowIndex, seat_column: columnIndex)
+          .seat class=[structure.type_seat == "INACTIVE" ? "hidden" : ""] data={action:"click->booking#selectSeat"} row-index="#{structure.row_index}" column-index="#{structure.column_index}" class=[sold_ticket.empty? ? "": "sold"]
+            = convert_coordinates_to_seat(rowIndex, columnIndex)

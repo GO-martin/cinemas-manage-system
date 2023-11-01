@@ -1,6 +1,6 @@
 class PagesController < ApplicationController
   skip_before_action :authenticate_user!
-  layout 'page_layout'
+  layout 'pages_layout'
 
   def home
     @movies = Movie.limit(7)
@@ -58,6 +58,8 @@ class PagesController < ApplicationController
       end
     end
   end
+
+  def get_showtime; end
 
   def home_admin; end
 end

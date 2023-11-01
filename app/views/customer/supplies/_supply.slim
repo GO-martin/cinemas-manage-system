@@ -1,0 +1,23 @@
+.col-span-1
+  .grid.grid-cols-1.xl_grid-cols-3.xl_gap-4
+    .col-span-full.xl_col-auto
+      = image_tag(supply.image)
+    .col-span-2
+      .p-4
+        p.font-bold
+          = "#{supply.name.upcase}"
+      .p-4
+        p
+          span Description: &nbsp;
+          = simple_format(supply.description)
+      .px-4.mt-auto
+        .price-box.mb-2
+          span.font-semibold Price: &nbsp;
+          = "#{supply.price} VND"
+        .action-box
+          button.text-white.bg-blue-700.hover_bg-blue-800.focus_ring-4.focus_outline-none.focus_ring-blue-300.font-medium.rounded-full.text-sm.p-3.text-center.inline-flex.items-center supply-price=supply.price data-action="click->booking#minusSupply" supply-name=supply.name supply-id=supply.id
+            = inline_svg_tag("svg/minus-svgrepo-com", class: "w-4 h-4")
+          input id="supply-#{supply.id}" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg mx-2 p-3 w-12 read-only text-center text-lg" value=0 readonly=true 
+          button.text-white.bg-blue-700.hover_bg-blue-800.focus_ring-4.focus_outline-none.focus_ring-blue-300.font-medium.rounded-full.text-sm.p-3.text-center.inline-flex.items-center supply-price=supply.price data-action="click->booking#plusSupply" supply-name=supply.name supply-id=supply.id
+            = inline_svg_tag("svg/plus-svgrepo-com", class: "w-4 h-4")
+    

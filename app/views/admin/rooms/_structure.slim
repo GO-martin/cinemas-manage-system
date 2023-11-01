@@ -11,8 +11,9 @@
       li 
         .seat.active 
         small Active
+  .col-span-4.col-start-2.mb-10
+    = image_tag("bg-screen.png", class: "w-full")
   .col-span-6.mb-10
-    .screen.bg-slate-300.mx-auto.mb-6 class="w-1/2 h-16"
     - Admin::RoomsHelper::STRUCTURE.each_with_index do |row, rowIndex| 
       .row.justify-center 
         - row.each_with_index do |col, columnIndex|  

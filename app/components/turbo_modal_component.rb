@@ -7,7 +7,7 @@ class TurboModalComponent < ViewComponent::Base
     @titleType = titleType
   end
 
-  def checkModal(*modalTitle, title)
-    modalTitle.include?(title)
+  def check_modal(*modal_title, title)
+    modal_title.include?(title)
   end
 end

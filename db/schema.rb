@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_24_072804) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_01_075237) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -121,26 +121,36 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_072804) do
 
   create_table "supplies", force: :cascade do |t|
     t.integer "quantity"
-    t.float "price"
+    t.integer "price"
     t.string "name"
     t.bigint "cinema_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "description"
     t.index ["cinema_id"], name: "index_supplies_on_cinema_id"
+  end
+
+  create_table "ticket_supplies", force: :cascade do |t|
+    t.bigint "ticket_id", null: false
+    t.bigint "supply_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "quantity"
+    t.index ["supply_id"], name: "index_ticket_supplies_on_supply_id"
+    t.index ["ticket_id"], name: "index_ticket_supplies_on_ticket_id"
   end
 
   create_table "tickets", force: :cascade do |t|
     t.integer "seat_row", null: false
-    t.integer "seat_collumn", null: false
-    t.float "price", null: false
+    t.integer "seat_column", null: false
+    t.integer "price", null: false
     t.bigint "user_id", null: false
     t.bigint "showtime_id", null: false
-    t.bigint "supply_id", null: false
-    t.integer "supply_quantity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "stripe_payment_id"
+    t.string "seat_name"
     t.index ["showtime_id"], name: "index_tickets_on_showtime_id"
-    t.index ["supply_id"], name: "index_tickets_on_supply_id"
     t.index ["user_id"], name: "index_tickets_on_user_id"
   end
 
@@ -174,7 +184,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_24_072804) do
   add_foreign_key "showtimes", "rooms"
   add_foreign_key "structure_of_rooms", "rooms"
   add_foreign_key "supplies", "cinemas"
+  add_foreign_key "ticket_supplies", "supplies"
+  add_foreign_key "ticket_supplies", "tickets"
   add_foreign_key "tickets", "showtimes"
-  add_foreign_key "tickets", "supplies"
   add_foreign_key "tickets", "users"
 end

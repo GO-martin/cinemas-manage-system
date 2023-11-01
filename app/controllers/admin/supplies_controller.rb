@@ -87,6 +87,6 @@ class Admin::SuppliesController < Admin::BaseController
   end
 
   def supply_params
-    params.require(:supply).permit(:name, :quantity, :price, :cinema_id, :image)
+    params.require(:supply).permit(:name, :quantity, :price, :cinema_id, :image, :description)
   end
 end

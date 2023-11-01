@@ -48,5 +48,8 @@ header
           li
             a.block.py-2.pr-4.pl-3.text-gray-700.border-b.border-gray-100.hover_bg-gray-50.lg_hover_bg-transparent.lg_border-0.lg_hover_text-blue-700.lg_p-0.dark_text-gray-400.lg_dark_hover_text-white.dark_hover_bg-gray-700.dark_hover_text-white.lg_dark_hover_bg-transparent.dark_border-gray-700[href="#"]
               | Cinema
+          - if user_signed_in?
+          li 
+            = link_to "My Ticket", "#", class: "block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover_bg-gray-50 lg_hover_bg-transparent lg_border-0 lg_hover_text-blue-700 lg_p-0 dark_text-gray-400 lg_dark_hover_text-white dark_hover_bg-gray-700 dark_hover_text-white lg_dark_hover_bg-transparent dark_border-gray-700", data: { turbo: false }
           
 script[src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"]

@@ -31,7 +31,7 @@ export default class extends Controller {
       .then((res) => {
         $("#collateral-tabs").html(res);
       })
-      .catch((error) => console.error("Error:", error));
+      .catch((error) => console.error("Error: ", error));
   }
 }
 
