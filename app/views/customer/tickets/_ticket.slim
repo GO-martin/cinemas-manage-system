@@ -1,0 +1,16 @@
+.max-w-full.bg-white.border.border-gray-200.rounded-lg.shadow
+  .grid.grid-cols-4.gap-4
+    .col-span-1 
+      - if ticket.showtime.movie.poster.attached?
+        = image_tag(ticket.showtime.movie.poster)
+    .col-span-3 
+      p.pt-4.font-bold 
+        = ticket.showtime.movie.name.upcase
+      p.font-medium 
+        = "Cinema: #{ticket.showtime.cinema.name} | Room: #{ticket.showtime.room.name}"
+      p.font-medium 
+        = "#{ticket.showtime.start_time.strftime("%B %d, %Y %I:%M %p")} ~ #{ticket.showtime.end_time.strftime("%B %d, %Y %I:%M %p")}"
+      p.font-medium 
+        = "Seat: #{ticket.seat_name}"
+      p.font-medium 
+        = "Price: #{ticket.price} VND"

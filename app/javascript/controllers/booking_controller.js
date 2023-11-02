@@ -39,7 +39,10 @@ export default class extends Controller {
         <td class="p-4 text-base font-medium text-gray-900 whitespace-wrap">
           ${this.selectedSupplyValue[id].name}
         </td>
-        <td class="p-4 text-base font-medium text-gray-900 whitespace-nowrap">
+        <td class="p-4 text-base font-medium text-gray-900 whitespace-wrap">
+          ${this.selectedSupplyValue[id].quantity}
+        </td>
+        <td class="p-4 text-base font-medium text-gray-900 whitespace-wrap">
           ${
             this.selectedSupplyValue[id].quantity *
             this.selectedSupplyValue[id].price
@@ -132,17 +135,18 @@ export default class extends Controller {
                 ticketData["ticket"]["stripe_payment_id"] = paymentIntent.id;
                 _this.createTicket(ticketData);
               }
+              _this.setLoading(false);
             });
         })
         .catch((error) => {
           console.error("Error: ", error);
+          _this.setLoading(false);
         });
-
-      _this.setLoading(false);
     });
   }
 
   setLoading(isLoading) {
+    console.log("test loading");
     if (isLoading) {
       document.querySelector("#payment-submit").disabled = true;
       document.querySelector("#spinner").classList.remove("hidden");
@@ -171,6 +175,7 @@ export default class extends Controller {
       if (Object.keys(this.selectedSupplyValue).length > 0) {
         this.createTicketSupplies(result.ticket_id);
       }
+      window.location = "/";
     } catch (error) {
       console.error("Error: ", error);
     }
@@ -199,8 +204,6 @@ export default class extends Controller {
       },
       body: JSON.stringify(data),
     });
-
-    window.location = "/";
   }
 
   fetchStructure() {
@@ -317,17 +320,21 @@ export default class extends Controller {
 
     let input = parseInt($("#supply-" + obj.attr("supply-id")).val());
 
-    input += 1;
+    if (input == parseInt(obj.attr("supply-quantity"))) {
+      alert("The number you choose reaches the maximum");
+    } else {
+      input += 1;
 
-    $("#supply-" + obj.attr("supply-id")).val(input);
+      $("#supply-" + obj.attr("supply-id")).val(input);
 
-    this.updateSelectedSupply(
-      parseInt(obj.attr("supply-id")),
-      obj.attr("supply-name"),
-      input,
-      parseInt(obj.attr("supply-price"))
-    );
-    this.updateSupplyPrice(parseInt(obj.attr("supply-price")));
+      this.updateSelectedSupply(
+        parseInt(obj.attr("supply-id")),
+        obj.attr("supply-name"),
+        input,
+        parseInt(obj.attr("supply-price"))
+      );
+      this.updateSupplyPrice(parseInt(obj.attr("supply-price")));
+    }
   }
 
   updateSupplyPrice(price) {

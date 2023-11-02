@@ -37,6 +37,7 @@ Rails.application.routes.draw do
         get 'destroy_modal'
       end
     end
+    resources :tickets
   end
 
   namespace :customer do

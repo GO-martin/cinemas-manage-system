@@ -1,6 +1,8 @@
 class Supply < ApplicationRecord
   resourcify
 
+  has_many :ticket_supplies
+
   has_many :tickets, through: :ticket_supplies
   belongs_to :cinema
 

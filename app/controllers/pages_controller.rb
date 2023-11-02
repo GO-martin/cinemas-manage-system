@@ -28,6 +28,14 @@ class PagesController < ApplicationController
   def get_showtimes
     selected_date = Date.parse(params[:selected_date])
 
+    if selected_date == Date.today
+      start_time = Time.current
+      end_time = Time.current.end_of_day
+    else
+      start_time = selected_date.beginning_of_day
+      end_time = selected_date.end_of_day
+    end
+
     locations = Location.all
     location_data = []
 
@@ -39,7 +47,7 @@ class PagesController < ApplicationController
         showtimes = Showtime.where(
           location_id: location.id,
           cinema_id: cinema.id,
-          start_time: selected_date.beginning_of_day..selected_date.end_of_day,
+          start_time: start_time..end_time,
           movie_id: params[:id]
         )
 
@@ -48,8 +56,6 @@ class PagesController < ApplicationController
 
       location_data << { cinemas: cinema_data, id: location.id, name: location.name } if cinema_data.present?
     end
-
-    p location_data
 
     respond_to do |format|
       format.json do

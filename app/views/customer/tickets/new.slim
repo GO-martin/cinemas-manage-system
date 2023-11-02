@@ -2,22 +2,23 @@
   - stripe = Rails.application.credentials.stripe[:public_key]
   .grid.grid-cols-1.xl_grid-cols-2.xl_gap-4.mb-10
     .col-span-1
-      table.divide-y.divide-gray-200.table-fixed.dark_divide-gray-600.mx-auto.border-collapse.border.border-slate-400 class="w-3/4"
+      table.divide-y.divide-gray-200.table-fixed.dark_divide-gray-600.mx-auto.border-collapse.border.border-slate-400 class="w-full"
         thead
           tr 
-            th.p-4.text-base.font-medium.text-center.text-gray-700.uppercase scope="col" colspan="3"
+            th.p-4.text-base.font-medium.text-center.text-gray-700.uppercase scope="col" colspan="4"
               | Detail
         tbody.divide-y.divide-gray-200#detail-table-body
           tr.hover_bg-gray-100
             td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap
               | Seat
             td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.payment-seat-name 
+            td
             td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.payment-seat-price
         tfoot#detail-table-foot
           tr.font-semibold.text-gray-900.text-left
             th.p-4.text-base scope="row"
               | Total 
-            td.p-4#payment-total-price.text-center colspan="2" 
+            td.p-4#payment-total-price.text-center colspan="3" 
               | Total price
     .col-span-1 
       form#payment-form.mx-auto.p-10.bg-white.rounded.shadow-lg class="w-3/4" data-email="#{current_user.email}" data-public-key="#{Rails.application.credentials.stripe[:public_key]}" data-user-id="#{current_user.id}"

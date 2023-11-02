@@ -4,7 +4,7 @@
       | Booking Online
   .top-content.bg-amber-100.p-4
     p.font-medium
-      = "Cinema_ #{@showtime.cinema.name} | Room: #{@showtime.room.name}" 
+      = "Cinema: #{@showtime.cinema.name} | Room: #{@showtime.room.name}" 
     p.font-medium 
       = "#{@showtime.start_time.strftime("%B %d, %Y %I:%M %p")} ~ #{@showtime.end_time.strftime("%B %d, %Y %I:%M %p")}"
   = turbo_frame_tag "booking-main-content", class: "p-4 mb-10"

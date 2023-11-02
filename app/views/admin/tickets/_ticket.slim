@@ -1,0 +1,14 @@
+tr.hover_bg-gray-100.Sdark_hover_bg-gray-700 id=dom_id(ticket)
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = ticket.showtime.movie.name
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = ticket.showtime.start_time.strftime("%B %d, %Y %I:%M %p") 
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = ticket.showtime.room.name
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = ticket.showtime.cinema.name
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = ticket.seat_name 
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = "#{ticket.price} VND"
+      

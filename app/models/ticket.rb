@@ -3,10 +3,9 @@ class Ticket < ApplicationRecord
 
   belongs_to :user
   belongs_to :showtime
-  # belongs_to :supply
 
+  has_many :ticket_supplies
   has_many :supplies, through: :ticket_supplies
-
   scope :ordered, -> { order(id: :desc) }
 
   def self.search(term)
