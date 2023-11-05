@@ -1,6 +1,8 @@
 class Admin::MoviesController < Admin::BaseController
-  before_action :set_movie, only: %i[show edit update destroy destroy_modal]
+  before_action :set_movie, only: %i[show edit update destroy destroy_modal change_now_showing change_coming_soon]
   before_action :check_release_date, only: %i[create update]
+  skip_before_action :verify_authenticity_token, only: %i[change_now_showing change_coming_soon]
+
   # GET admin/movies or admin/movies.json
   def index
     @pagy, @movies = pagy(Movie.search(params[:term]))
@@ -58,6 +60,32 @@ class Admin::MoviesController < Admin::BaseController
   end
 
   def destroy_modal; end
+
+  def change_now_showing
+    @movie.now_showing!
+    respond_to do |format|
+      format.turbo_stream do
+        flash.now[:notice] = 'Movie was successfully changed status'
+        render turbo_stream: [
+          turbo_stream.replace(@movie, partial: 'admin/movies/movie', locals: { movie: @movie }),
+          render_flash_message
+        ]
+      end
+    end
+  end
+
+  def change_coming_soon
+    @movie.coming_soon!
+    respond_to do |format|
+      format.turbo_stream do
+        flash.now[:notice] = 'Movie was successfully changed status'
+        render turbo_stream: [
+          turbo_stream.replace(@movie, partial: 'admin/movies/movie', locals: { movie: @movie }),
+          render_flash_message
+        ]
+      end
+    end
+  end
 
   private
 

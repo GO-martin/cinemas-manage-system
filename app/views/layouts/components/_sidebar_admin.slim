@@ -24,19 +24,19 @@ aside[id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hi
               = inline_svg_tag("svg/toggle-icon.svg", class: "w-6 h-6")
             ul#dropdown-crud class=["space-y-2 py-2", active_tab("cinemas", "movies", "users", "rooms", "showtimes", "users", "supplies", "tickets") ? "" : " hidden"].compact.join(" ")
               li 
-                = link_to admin_cinemas_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("cinemas") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join("")
+                = link_to admin_cinemas_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("cinemas") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join(""), data: { turbo: false }
                   | Cinemas 
-                = link_to admin_movies_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("movies") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join("")
+                = link_to admin_movies_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("movies") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join(""), data: { turbo: false }
                   | Movies
-                = link_to admin_rooms_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("rooms") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join("")
+                = link_to admin_rooms_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("rooms") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join(""), data: { turbo: false }
                   | Rooms
-                = link_to admin_showtimes_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("showtimes") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join("")
+                = link_to admin_showtimes_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("showtimes") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join(""), data: { turbo: false }
                   | Showtimes
-                = link_to admin_supplies_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("supplies") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join("")
+                = link_to admin_supplies_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("supplies") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join(""), data: { turbo: false }
                   | Supplies
-                = link_to admin_tickets_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("tickets") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join("")
+                = link_to admin_tickets_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("tickets") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join(""), data: { turbo: false }
                   | Tickets
-                = link_to admin_users_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("users") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join("")
+                = link_to admin_users_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("users") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join(""), data: { turbo: false }
                   | Users
                   
           / Category 
@@ -48,10 +48,10 @@ aside[id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hi
               = inline_svg_tag("svg/toggle-icon.svg", class: "w-6 h-6")
             ul#dropdown-category class=["space-y-2 py-2", active_tab("locations") ? "" : " hidden"].compact.join(" ")
               li 
-                = link_to admin_locations_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("locations") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join("")
+                = link_to admin_locations_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("locations") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join(""), data: { turbo: false }
                   | Locations
           li
-            = link_to root_path, class: "flex items-center p-2 text-base text-gray-900 rounded-lg hover_bg-gray-100 group dark_text-gray-200 dark_hover_bg-gray-700" do 
+            = link_to root_path, class: "flex items-center p-2 text-base text-gray-900 rounded-lg hover_bg-gray-100 group dark_text-gray-200 dark_hover_bg-gray-700", data: { turbo: false } do 
               = inline_svg_tag("svg/setting-icon.svg", class: "w-6 h-6 text-gray-500 transition duration-75 group-hover_text-gray-900 dark_text-gray-400 dark_group-hover_text-white")
               span[class="ml-3" sidebar-toggle-item]  
                   | Settings  
