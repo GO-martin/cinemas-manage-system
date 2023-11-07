@@ -1,4 +1,4 @@
-.px-4.pt-6
+.px-4.py-6
   .grid.gap-4.xl_grid-cols-2.2xl_grid-cols-3 data={ controller: "chart", "chart-main-chart-value": "#{@main_chart_data.to_json}", "chart-new-customers-chart-value": "#{@new_customers_chart_data.to_json}", "chart-new-tickets-chart-value": "#{@new_tickets_chart_data.to_json}" }
     .p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2
       .flex.items-center.justify-between.mb-4
@@ -55,7 +55,7 @@
               | Last 30 days 
             = link_to "#", class: "stats-dropdown-button block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100", role: "menuitem", data: { filter: 90, type: "this 3 months", action: "click->chart#updateStatsData" }
               | Last 90 days
-  .grid.w-full.grid-cols-1.gap-4.mt-4.xl_grid-cols-2.2xl_grid-cols-3          
+  .grid.w-full.grid-cols-1.gap-4.mt-4.xl_grid-cols-2.2xl_grid-cols-3        
     .items-center.justify-between.p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.sm_flex.sm_p-6
       .w-full 
         h3.text-base.font-normal.text-gray-500
