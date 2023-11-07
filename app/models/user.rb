@@ -6,6 +6,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :tickets, dependent: :destroy
+  has_one :profile, dependent: :destroy
+
+  accepts_nested_attributes_for :profile
 
   after_create :assign_default_role
 

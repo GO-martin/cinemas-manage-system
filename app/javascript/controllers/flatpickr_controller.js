@@ -10,5 +10,7 @@ export default class extends Controller {
     });
 
     flatpickr(".release_date", {});
+
+    flatpickr(".birthday", {});
   }
 }
