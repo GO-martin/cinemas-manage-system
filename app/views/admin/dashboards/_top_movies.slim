@@ -1,0 +1,13 @@
+ul.divide-y.divide-gray-200 role="list" 
+  - unless top_movies.empty?
+    - top_movies.each do |top_movie|
+      li.py-3.sm_py-4
+        .flex.items-center.justify-between
+          .flex.items-center.min-w-0
+            - if top_movie.poster.attached?
+              = image_tag(top_movie.poster, class: "flex-shrink-0 w-10 h-10")
+            .ml-3
+              p.font-medium.text-gray-900.truncate
+                = top_movie.name
+          .inline-flex.items-center.text-base.font-semibold.text-gray-900
+            = "#{top_movie.total_price} VND"

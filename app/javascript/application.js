@@ -4,3 +4,16 @@ import "controllers";
 import "flowbite";
 import "flowbite-datepicker";
 import "./src/jquery";
+import "apexcharts";
+
+// // Reload Flowbite for Ruby on Rails at turbo
+import { initFlowbite } from "flowbite";
+
+addEventListener("turbo:before-stream-render", (event) => {
+  const originalRender = event.detail.render;
+
+  event.detail.render = function (streamElement) {
+    originalRender(streamElement);
+    initFlowbite();
+  };
+});

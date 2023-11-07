@@ -1,0 +1,78 @@
+.px-4.pt-6
+  .grid.gap-4.xl_grid-cols-2.2xl_grid-cols-3 data={ controller: "chart", "chart-main-chart-value": "#{@main_chart_data.to_json}", "chart-new-customers-chart-value": "#{@new_customers_chart_data.to_json}", "chart-new-tickets-chart-value": "#{@new_tickets_chart_data.to_json}" }
+    .p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2
+      .flex.items-center.justify-between.mb-4
+        .flex-shrink-0
+          span.text-xl.font-bold.leading-none.text-gray-900.sm_text-2xl#main-chart-total-revenue
+            = "#{@main_chart_data[:total_revenue]} VND"
+          h3.text-base.font-light.text-gray-500
+            | Sales 7 days
+      #main-chart
+      .flex.items-center.justify-between.pt-3.mt-4.border-t.border-gray-200.sm_pt-6    
+        div 
+          button.inline-flex.items-center.p-2.text-sm.font-medium.text-center.text-gray-500.rounded-lg.hover_text-gray-900#main-chart-button data-dropdown-toggle="main-chart-dropdown"
+            span 
+              | Last 7 days 
+            = inline_svg_tag("svg/downArrow-icon.svg", class: "w-4 h-4 ml-2")
+          .z-50.hidden.my-4.text-base.list-none.bg-white.divide-y.divide-gray-100.rounded.shadow#main-chart-dropdown
+            .py-1 role="none"
+              = link_to "#", class: "main-chart-dropdown-button block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100", role: "menuitem", data: { turbo: false, filter: 1, type: "today" }
+                | Today
+              = link_to "#", class: "main-chart-dropdown-button block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100", role: "menuitem", data: { turbo: false, filter: 7, type: "this week" }
+                | Last 7 days
+              = link_to "#", class: "main-chart-dropdown-button block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100", role: "menuitem", data: { turbo: false, filter: 30, type: "this month" }
+                | Last 30 days 
+              = link_to "#", class: "main-chart-dropdown-button block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100", role: "menuitem", data: { turbo: false, filter: 90, type: "this 3 months" }
+                | Last 90 days
+    .p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.sm_p-6
+      h3.flex.items-center.mb-4.text-lg.font-semibold.text-gray-900#stats-text
+        | Statistics 7 days
+      ul#fullWidthTab.hidden.text-sm.font-medium.text-center.text-gray-500.divide-x.divide-gray-200.rounded-lg.sm_flex data-tabs-toggle="#fullWidthTabContent" role="tablist"
+        li.w-full 
+          button#top-movies-tab.inline-block.w-full.p-4.rounded-tl-lg.bg-gray-50.hover_bg-gray-100.focus_outline-none data-tabs-target="#top-movies" type="button" role="tab" aria-controls="top-movies" aria-selected="true"
+            | Top movies
+        li.w-full 
+          button#top-customers-tab.inline-block.w-full.p-4.rounded-tr-lg.bg-gray-50.hover_bg-gray-100.focus_outline-none data-tabs-target="#top-customers" type="button" role="tab" aria-controls="top-customers" aria-selected="false"
+            | Top customers
+      #fullWidthTabContent.border-t.border-gray-200    
+        #top-movies.hidden.pt-4 role="tabpanel" aria-labelledby="top-movies-tab"
+          = render "admin/dashboards/top_movies", top_movies: @top_movies
+        #top-customers.hidden.pt-4 role="tabpanel" aria-labelledby="top-customers-tab"
+          = render "admin/dashboards/top_customers", top_customers: @top_customers
+      .flex.items-center.justify-between.pt-3.mt-5.border-t.border-gray-200.sm_pt-6
+        div 
+          button.inline-flex.items-center.p-2.text-sm.font-medium.text-center.text-gray-500.rounded-lg.hover_text-gray-900#stats-button data-dropdown-toggle="stats-dropdown"
+            span 
+              | Last 7 days 
+            = inline_svg_tag("svg/downArrow-icon.svg", class: "w-4 h-4 ml-2")
+        .z-50.hidden.my-4.text-base.list-none.bg-white.divide-y.divide-gray-100.rounded.shadow#stats-dropdown
+          .py-1 role="none"
+            = link_to "#", class: "stats-dropdown-button block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100", role: "menuitem", data: { filter: 1, type: "today", action: "click->chart#updateStatsData" }
+              | Today
+            = link_to "#", class: "stats-dropdown-button block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100", role: "menuitem", data: { filter: 7, type: "this week", action: "click->chart#updateStatsData" }
+              | Last 7 days
+            = link_to "#", class: "stats-dropdown-button block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100", role: "menuitem", data: { filter: 30, type: "this month", action: "click->chart#updateStatsData" }
+              | Last 30 days 
+            = link_to "#", class: "stats-dropdown-button block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100", role: "menuitem", data: { filter: 90, type: "this 3 months", action: "click->chart#updateStatsData" }
+              | Last 90 days
+  .grid.w-full.grid-cols-1.gap-4.mt-4.xl_grid-cols-2.2xl_grid-cols-3          
+    .items-center.justify-between.p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.sm_flex.sm_p-6
+      .w-full 
+        h3.text-base.font-normal.text-gray-500
+          | New customers
+        span.text-2xl.font-bold.leading-none.text-gray-900.sm_text-3xl
+          = @new_customers_chart_data[:total_new_users]
+        p.flex.items-center.text-base.font-normal.text-gray-500
+          | Since last month
+      .w-full#new-customers-chart
+    .items-center.justify-between.p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.sm_flex.sm_p-6
+      .w-full 
+        h3.text-base.font-normal.text-gray-500
+          | New tickets
+        span.text-2xl.font-bold.leading-none.text-gray-900.sm_text-3xl
+          = @new_tickets_chart_data[:total_new_tickets]
+        p.flex.items-center.text-base.font-normal.text-gray-500
+          | Since last month
+      .w-full#new-tickets-chart
+
+

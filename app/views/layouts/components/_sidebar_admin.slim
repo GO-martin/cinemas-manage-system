@@ -13,7 +13,7 @@ aside[id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hi
                   = inline_svg_tag("svg/search-icon.svg", class: "w-5 h-5 text-gray-500")     
                 input[type="text" name="email" id="mobile-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus_ring-primary-500 focus_border-primary-500 block w-full pl-10 p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-gray-200 dark_focus_ring-primary-500 dark_focus_border-primary-500" placeholder="Search"]
           li 
-            = link_to root_path, class: "flex items-center p-2 text-base text-gray-900 rounded-lg hover_bg-gray-100 group dark_text-gray-200 dark_hover_bg-gray-700" do
+            = link_to admin_dashboards_path, class: "flex items-center p-2 text-base text-gray-900 rounded-lg hover_bg-gray-100 group dark_text-gray-200 dark_hover_bg-gray-700", data: { turbo: false } do
               = inline_svg_tag("svg/dashboard-icon.svg", class: "w-6 h-6 text-gray-500 transition duration-75 group-hover_text-gray-900 dark_text-gray-400 dark_group-hover_text-white" )
               span[class="ml-3" sidebar-toggle-item] Dashboard
           li
@@ -51,7 +51,7 @@ aside[id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hi
                 = link_to admin_locations_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("locations") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join(""), data: { turbo: false }
                   | Locations
           li
-            = link_to root_path, class: "flex items-center p-2 text-base text-gray-900 rounded-lg hover_bg-gray-100 group dark_text-gray-200 dark_hover_bg-gray-700", data: { turbo: false } do 
+            = link_to edit_admin_profile_path(current_user.id), class: "flex items-center p-2 text-base text-gray-900 rounded-lg hover_bg-gray-100 group dark_text-gray-200 dark_hover_bg-gray-700", data: { turbo: false } do 
               = inline_svg_tag("svg/setting-icon.svg", class: "w-6 h-6 text-gray-500 transition duration-75 group-hover_text-gray-900 dark_text-gray-400 dark_group-hover_text-white")
               span[class="ml-3" sidebar-toggle-item]  
                   | Settings  

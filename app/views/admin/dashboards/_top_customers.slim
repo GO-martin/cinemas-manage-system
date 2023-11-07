@@ -1,0 +1,14 @@
+ul.divide-y.divide-gray-200 role="list" 
+  - unless top_customers.empty?
+    - top_customers.each do |top_customer|
+      li.py-3.sm_py-4
+        .flex.items-center.space-x-4
+          .flex-shrink-0
+            img.w-8.h-8.rounded-full[src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo"]
+          .flex-1.min-w-0
+            p.font-medium.text-gray-900.truncate 
+              = top_customer.profile.fullname
+            p.text-sm.text-gray-500.truncate
+              = top_customer.email
+          .inline-flex.items-center.text-base.font-semibold.text-gray-900
+            = top_customer.total_price
