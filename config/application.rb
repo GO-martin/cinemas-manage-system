@@ -18,6 +18,8 @@ module CinemasManageSystem
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
+
+    config.active_job.queue_adapter = :sidekiq
     config.time_zone = 'Asia/Ho_Chi_Minh'
     config.active_record.default_timezone = :local
     # config.eager_load_paths << Rails.root.join("extras")

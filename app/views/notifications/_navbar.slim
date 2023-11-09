@@ -1,0 +1,4 @@
+= tag.div id: :notifications_navbar do 
+  - unless notifications.empty?
+    - notifications.each do |notification|
+      = render "notifications/navbar_notification", notification: notification

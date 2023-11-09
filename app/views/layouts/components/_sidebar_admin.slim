@@ -55,5 +55,11 @@ aside[id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hi
               = inline_svg_tag("svg/setting-icon.svg", class: "w-6 h-6 text-gray-500 transition duration-75 group-hover_text-gray-900 dark_text-gray-400 dark_group-hover_text-white")
               span[class="ml-3" sidebar-toggle-item]  
                   | Settings  
+          li 
+            = link_to admin_notifications_path, class: "flex items-center p-2 text-base text-gray-900 rounded-lg hover_bg-gray-100 group dark_text-gray-200 dark_hover_bg-gray-700", data: { turbo: false } do 
+              = heroicon "bell", variant: :solid, options: { class: "h-6 w-6 text-gray-500 transition duration-75 group-hover_text-gray-900 " }
+              span[class="ml-3" sidebar-toggle-item]  
+                | Notification 
+
 
 div[class="fixed inset-0 z-10 hidden bg-gray-900/50 dark_bg-gray-900/90" id="sidebarBackdrop"]

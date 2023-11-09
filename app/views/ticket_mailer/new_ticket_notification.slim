@@ -1,0 +1,22 @@
+section.max-w-2xl.px-6.py-8.mx-auto.bg-white
+  main.mt-8
+    h2.text-gray-700
+      = "Hello #{@ticket.user.profile.fullname}," 
+    p.mt-2.text-gray-600
+      = "We would like to extend our heartfelt thanks to you for selecting #{@ticket.showtime.cinema.name} to enjoy some fantastic movies."
+      |  We greatly appreciate your support, and we hope you had an enjoyable movie-watching experience at our cinema.
+      br
+      | This is your ticket information: 
+    ul class="max-w-md space-y-1 text-gray-500 list-disc list-inside"
+      li 
+        = "Cinema: #{@ticket.showtime.cinema.name} | Room: #{@ticket.showtime.room.name}"
+      li 
+        = "Movie: #{@ticket.showtime.movie.name}"
+      li 
+        = "Time: #{@ticket.showtime.start_time.strftime("%B %d, %Y %I:%M %p")} ~ #{@ticket.showtime.end_time.strftime("%B %d, %Y %I:%M %p")}"
+      li 
+        = "Seat: #{@ticket.seat_name}"
+    p.mt-2.text-gray-600
+      | Best regards,
+      br
+      p.font-semibold.mt-2 Retro cinema
