@@ -6,6 +6,7 @@
 @import "./components/_flash.css";
 @import "./components/_pagy.css";
 @import "./components/_structure.css";
+@import "./components/_loading.css";
 
 /* Config */
 @import "./config/_animation.css";

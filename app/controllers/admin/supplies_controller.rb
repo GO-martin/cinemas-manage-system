@@ -3,7 +3,7 @@ class Admin::SuppliesController < Admin::BaseController
 
   # GET admin/supplies or admin/supplies.json
   def index
-    @pagy, @supplies = pagy(Supply.search(params[:term]))
+    @pagy, @supplies = pagy(Supply.ordered)
   end
 
   # GET admin/supplies/1 or admin/supplies/1.json
@@ -79,6 +79,21 @@ class Admin::SuppliesController < Admin::BaseController
   end
 
   def destroy_modal; end
+
+  def search
+    search_term = params[:searchTerm]
+    cinema_filter = params[:cinemaFilter]
+    @pagy, @supplies = pagy(Supply.by_filter(search_term, cinema_filter).ordered)
+
+    respond_to do |format|
+      format.json do
+        render json: { supplies_html: render_to_string(partial: 'admin/supplies/supply', collection: @supplies, layout: false, formats: [:html]),
+                       pagination_html: render_to_string(PaginationComponent.new(pagy: @pagy), layout: false,
+                                                                                               formats: [:html]) }
+      end
+      format.html { render :index }
+    end
+  end
 
   private
 

@@ -1,9 +1,33 @@
-= simple_form_for [:customer, profile], html: { class: "mt-8 space-y-6" } do |f|
-  = f.input :fullname, input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" }, label_html: { class: "text-sm font-medium text-gray-900 block mb-2" }
-  = f.input :address, input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" }, label_html: { class: "text-sm font-medium text-gray-900 block mb-2" }
-  div
-    label.block.mb-2.text-sm.font-medium.text-gray-900.dark_text-white
-      | Birthday
-    = f.date_field :birthday, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
-  button.text-white.bg-cyan-600.hover_bg-cyan-700.focus_ring-4.focus_ring-cyan-200.font-medium.rounded-lg.text-base.px-5.py-3.w-full.text-center type="submit" data={ turbo:"false" }
-    | Update profile
+= simple_form_for [:customer, profile], html: { class: "col-span-full", data: { controller: "flatpickr" } } do |f|
+  - if profile.errors.any?
+    .p-4.mb-4.text-sm.text-red-800.rounded-lg.bg-red-50.dark_bg-gray-800.dark_text-red-400 role="alert"
+      h2 
+        = pluralize(profile.errors.count, "error") 
+        |  prohibited this event from being saved:
+      ul 
+        - profile.errors.each do |error|
+          li = error.full_message
+  .grid.grid-cols-1.xl_grid-cols-3.xl_gap-4
+    .col-span-full.xl_col-auto
+      .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        h3.mb-4.text-xl.font-semibold.dark_text-white
+          | Avatar
+        - if profile.avatar.attached? 
+          = image_tag(profile.avatar, class: "w-1/2 mx-auto mb-4")
+        = render "admin/profiles/file_form", form: f, accepted_files: "image/*", variable: :avatar 
+    .col-span-2 
+      .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        .mb-4.text-xl.font-semibold.dark_text-white
+          | General information
+        .grid.grid-cols-6.gap-6
+          .col-span-6.sm_col-span-3
+            = f.input :fullname, input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5" }, placeholder: "Type fullname", required: true, label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white" }
+          .col-span-6.sm_col-span-3
+            label.block.mb-2.text-sm.font-medium.text-gray-900
+              | Birthday 
+            = f.date_field :birthday, class: "birthday bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full pl-10 p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus:border-blue-500"
+          .col-span-6 
+            = f.input :address, as: :text, label_html: { class: "block mb-2 text-sm font-medium text-gray-900" }, placeholder: "Type address", input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus_ring-blue-600 focus_border-blue-600 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500", rows: "4" }
+  .flex.items-center.space-x-2.justify-end
+    = button_tag(type: "submit", class: "text-white inline-flex items-center bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_outline-none focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800", data: { turbo: false })
+      | Update Profile

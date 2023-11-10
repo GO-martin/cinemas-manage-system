@@ -5,13 +5,13 @@ class Customer::ProfilesController < Customer::BaseController
   def edit; end
 
   def update
-    # respond_to do |format|
-    if @profile.update(profile_params)
-      # format.html { redirect_to root_path }
-    else
-      format.html { render :edit, status: :unprocessable_entity }
+    respond_to do |format|
+      if @profile.update(profile_params)
+        format.html { redirect_to edit_customer_profile_path(@profile), notice: 'Profile was successfully updated.' }
+      else
+        format.html { render :edit, status: :unprocessable_entity }
+      end
     end
-    # end
   end
 
   private
@@ -27,6 +27,6 @@ class Customer::ProfilesController < Customer::BaseController
   end
 
   def profile_params
-    params.require(:profile).permit(:fullname, :birthday, :address, :user_id)
+    params.require(:profile).permit(:avatar, :fullname, :birthday, :address, :user_id)
   end
 end

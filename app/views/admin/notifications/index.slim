@@ -15,11 +15,6 @@
                 | Notifications
       h1.text-xl.font-semibold.text-gray-900.sm_text-2xl.dark_text-white
         | All notifications
-    div[class="items-center justify-between block sm_flex md_divide-x md_divide-gray-100 dark_divide-gray-700"]
-      div[class="flex items-center mb-4 sm_mb-0"]
-        = form_tag(notifications_path, method: :get, class: "flex space-x-3") do 
-          = text_field_tag :term, params[:term], placeholder: "Search by name", class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500"
-          = submit_tag "Search", class: "cursor-pointer text-white bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark_bg-blue-600 dark_hover_bg-blue-700 focus_outline-none dark_focus_ring-blue-800"
       
 .flex.flex-col
   .overflow-x-auto 

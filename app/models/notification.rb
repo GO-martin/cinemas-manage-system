@@ -17,6 +17,8 @@ class Notification < ApplicationRecord
 
   after_update_commit do
     broadcast_replace_to "broadcast_to_user_#{user_id}",
+                         partial: 'admin/notifications/notification'
+    broadcast_replace_to "broadcast_to_user_#{user_id}",
                          target: 'notifications_navbar',
                          partial: 'notifications/navbar',
                          locals: { notifications: user.unviewed_notifications }

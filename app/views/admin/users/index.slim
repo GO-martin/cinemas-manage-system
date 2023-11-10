@@ -11,7 +11,7 @@
           li
             .flex.items-center
               = inline_svg_tag("svg/rightArrow-icon.svg", class: "w-6 h-6 text-gray-400")
-              a.ml-1.text-gray-700.hover_text-blue-600.md_ml-2.dark_text-gray-300.dark_hover_text-white[href="#"]
+              span.ml-1.text-gray-400.md_ml-2
                 | Main 
           li
             .flex.items-center
@@ -20,11 +20,13 @@
                 | Users
       h1.text-xl.font-semibold.text-gray-900.sm_text-2xl.dark_text-white
         | All users
-    div[class="items-center justify-between block sm_flex md_divide-x md_divide-gray-100 dark_divide-gray-700"]
-      div[class="flex items-center mb-4 sm_mb-0"]
-        = form_tag(admin_users_path, method: :get, class: "flex space-x-3") do 
-          = text_field_tag :term, params[:term], placeholder: "Search by name", class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500"
-          = submit_tag "Search", class: "cursor-pointer text-white bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark_bg-blue-600 dark_hover_bg-blue-700 focus_outline-none dark_focus_ring-blue-800"
+    = simple_form_for('/admin/users/search', html: { class: "items-center justify-between block sm_flex", data: { controller: "search", "search-controller-name-value": "users"} }) do |f|
+      .flex.space-x-3.items-center.mb-4.sm_mb-0 
+        = f.input :search_term, as: :string,input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2", data: {"search-target": "filter", "search-type": "searchTerm"} }, placeholder: "Search by full name", label: false
+        button.text-white.bg-blue-700.hover_bg-blue-800.focus_ring-4.focus_ring-blue-300.font-medium.rounded-lg.text-sm.px-5.py-2.dark_bg-blue-600.dark_hover_bg-blue-700.focus_outline-none.dark_focus_ring-blue-800.border data={"action": "click->search#search"} type="submit"
+          | Search
+        button.focus_outline-none.text-white.bg-red-700.hover_bg-red-800.focus_ring-4.focus_ring-red-300.font-medium.rounded-lg.text-sm.px-5.py-2.border data={"action": "click->search#clear"}
+          | Clear
       
 .flex.flex-col
   .overflow-x-auto 
@@ -34,15 +36,20 @@
           thead.bg-gray-100.dark_bg-gray-700
             tr 
               th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
-                | User email 
-              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
                 | ID
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | Email 
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | Fullname
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | Role
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | Birthday
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | Address     
           tbody#users.bg-white.divide-y.divide-gray-200.dark_bg-gray-800.dark_divide-gray-700
             = render @users
 
 / Pagination 
-div[class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm_flex sm_justify-between dark_bg-gray-800 dark_border-gray-700"]                
-  .flex.items-center.mb-4.sm_mb-0.space-x-3
-    == pagy_nav(@pagy)
-    span[class="font-semibold text-gray-900 dark_text-white"]
-      == pagy_info(@pagy)
+#pagination.sticky.bottom-0.right-0.items-center.w-full.p-4.bg-white.border-t.border-gray-200.sm_flex.sm_justify-between.dark_bg-gray-800.dark_border-gray-700
+  = render PaginationComponent.new(pagy: @pagy)

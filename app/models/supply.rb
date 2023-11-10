@@ -14,11 +14,22 @@ class Supply < ApplicationRecord
 
   has_one_attached :image, dependent: :destroy
 
-  def self.search(term)
-    if term
-      where('name LIKE ?', "%#{term}%").ordered
-    else
-      ordered
-    end
+  after_create_commit do
+    broadcast_prepend_to 'admin', partial: 'admin/supplies/supply',
+                                  locals: { supply: self }
+  end
+
+  after_update_commit do
+    broadcast_replace_to 'admin', partial: 'admin/supplies/supply'
+  end
+
+  after_destroy_commit do
+    broadcast_remove_to 'admin'
+  end
+
+  def self.by_filter(search_term, cinema_filter)
+    left_outer_joins(:cinema)
+      .where('LOWER(supplies.name) LIKE ?', "%#{search_term.downcase}%")
+      .where(cinemas: { id: cinema_filter.presence || Cinema.ids })
   end
 end

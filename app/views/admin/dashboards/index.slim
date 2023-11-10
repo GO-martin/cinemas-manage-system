@@ -6,7 +6,7 @@
           span.text-xl.font-bold.leading-none.text-gray-900.sm_text-2xl#main-chart-total-revenue
             = "#{@main_chart_data[:total_revenue]} VND"
           h3.text-base.font-light.text-gray-500
-            | Sales 7 days
+            | Sales last 7 days
       #main-chart
       .flex.items-center.justify-between.pt-3.mt-4.border-t.border-gray-200.sm_pt-6    
         div 
@@ -26,15 +26,15 @@
                 | Last 90 days
     .p-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.sm_p-6
       h3.flex.items-center.mb-4.text-lg.font-semibold.text-gray-900#stats-text
-        | Statistics 7 days
-      ul#fullWidthTab.hidden.text-sm.font-medium.text-center.text-gray-500.divide-x.divide-gray-200.rounded-lg.sm_flex data-tabs-toggle="#fullWidthTabContent" role="tablist"
+        | Statistics last 7 days
+      ul#fullWidthTab.text-sm.font-medium.text-center.text-gray-500.divide-x.divide-gray-200.rounded-lg.flex data-tabs-toggle="#fullWidthTabContent" role="tablist"
         li.w-full 
           button#top-movies-tab.inline-block.w-full.p-4.rounded-tl-lg.bg-gray-50.hover_bg-gray-100.focus_outline-none data-tabs-target="#top-movies" type="button" role="tab" aria-controls="top-movies" aria-selected="true"
             | Top movies
         li.w-full 
           button#top-customers-tab.inline-block.w-full.p-4.rounded-tr-lg.bg-gray-50.hover_bg-gray-100.focus_outline-none data-tabs-target="#top-customers" type="button" role="tab" aria-controls="top-customers" aria-selected="false"
             | Top customers
-      #fullWidthTabContent.border-t.border-gray-200    
+      #fullWidthTabContent.border-t.border-gray-200 class="sm_h-[400px]"
         #top-movies.hidden.pt-4 role="tabpanel" aria-labelledby="top-movies-tab"
           = render "admin/dashboards/top_movies", top_movies: @top_movies
         #top-customers.hidden.pt-4 role="tabpanel" aria-labelledby="top-customers-tab"

@@ -3,7 +3,7 @@ class Admin::LocationsController < Admin::BaseController
 
   # GET admin/locations or admin/locations.json
   def index
-    @pagy, @locations = pagy(Location.search(params[:term]))
+    @pagy, @locations = pagy(Location.ordered)
   end
 
   # GET admin/locations/1 or admin/locations/1.json
@@ -79,6 +79,21 @@ class Admin::LocationsController < Admin::BaseController
   end
 
   def destroy_modal; end
+
+  def search
+    search_term = params[:searchTerm]
+
+    @pagy, @locations = pagy(Location.by_filter(search_term).ordered)
+
+    respond_to do |format|
+      format.json do
+        render json: { locations_html: render_to_string(partial: 'admin/locations/location', collection: @locations, layout: false, formats: [:html]),
+                       pagination_html: render_to_string(PaginationComponent.new(pagy: @pagy), layout: false,
+                                                                                               formats: [:html]) }
+      end
+      format.html { render :index }
+    end
+  end
 
   private
 

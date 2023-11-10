@@ -15,16 +15,37 @@ class User < ApplicationRecord
 
   scope :ordered, -> { order(id: :desc) }
 
-  def self.search(term)
-    if term
-      where('email LIKE ?', "%#{term}%").ordered
-    else
-      ordered
-    end
+  after_create_commit do
+    broadcast_prepend_to 'admin', partial: 'admin/users/user',
+                                  locals: { user: self }
+  end
+
+  after_update_commit do
+    broadcast_replace_to 'admin', partial: 'admin/users/user'
+  end
+
+  after_destroy_commit do
+    broadcast_remove_to 'admin'
+  end
+
+  def self.by_filter(search_term)
+    left_outer_joins(:profile)
+      .where('LOWER(profiles.fullname) LIKE ?', "%#{search_term.downcase}%")
   end
 
   def assign_default_role
-    add_role(:customer) if roles.blank?
+    if email == 'martin.nguyen.goldenowl@gmail.com'
+      add_role(:admin)
+    else
+      add_role(:customer)
+    end
+  end
+
+  def change_role_admin
+    return unless has_role? :customer
+
+    remove_role :customer
+    add_role :admin
   end
 
   def unviewed_notifications_count

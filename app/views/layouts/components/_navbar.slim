@@ -8,9 +8,10 @@ header
       .flex.items-center.lg_order-2
         - if user_signed_in?
           button#user-menu-button.flex.mr-3.text-sm.bg-gray-800.rounded-full.md_mr-0.focus_ring-4.focus_ring-gray-300.dark_focus_ring-gray-600[type="button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom"]
-            span.sr-only
-              | Open user menu
-            = image_tag("logo.png", class: "w-8 h-8 rounded-full", alt: "Retro Cinema")
+            - if current_user.profile.avatar.attached?
+              = image_tag current_user.profile.avatar, class: "w-8 h-8 rounded-full"
+            - else
+              = image_tag "logo.png", class: "w-8 h-8 rounded-full"
           #user-dropdown.z-50.hidden.my-4.text-base.list-none.bg-white.divide-y.divide-gray-100.rounded-lg.shadow.dark_bg-gray-700.dark_divide-gray-600
             .px-4.py-3
               span.block.text-sm.text-gray-900.dark_text-white
@@ -19,7 +20,7 @@ header
                 = current_user.email
             ul.py-2[aria-labelledby="user-menu-button"]
               li
-                = link_to "Account Settings", edit_customer_profile_path(current_user.id), class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white"
+                = link_to "Account Settings", edit_customer_profile_path(current_user.profile.id), class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white"
               li
                 = button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white"
         - else
@@ -45,9 +46,6 @@ header
                   = link_to "Now Showing", movies_now_showing_pages_path, class: "block px-4 py-2 hover_bg-gray-100 dark_hover_bg-gray-600 dark_hover_text-white", data: { turbo: false }
                 li 
                   = link_to "Coming Soon", movies_coming_soon_pages_path, class: "block px-4 py-2 hover_bg-gray-100 dark_hover_bg-gray-600 dark_hover_text-white", data: { turbo: false }
-          li
-            a.block.py-2.pr-4.pl-3.text-gray-700.border-b.border-gray-100.hover_bg-gray-50.lg_hover_bg-transparent.lg_border-0.lg_hover_text-blue-700.lg_p-0.dark_text-gray-400.lg_dark_hover_text-white.dark_hover_bg-gray-700.dark_hover_text-white.lg_dark_hover_bg-transparent.dark_border-gray-700[href="#"]
-              | Cinema
           - if user_signed_in?
             li 
               = link_to "My Ticket", customer_tickets_path, class: "block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover_bg-gray-50 lg_hover_bg-transparent lg_border-0 lg_hover_text-blue-700 lg_p-0 dark_text-gray-400 lg_dark_hover_text-white dark_hover_bg-gray-700 dark_hover_text-white lg_dark_hover_bg-transparent dark_border-gray-700", data: { turbo: false }

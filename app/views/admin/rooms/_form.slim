@@ -1,5 +1,13 @@
-/ = binding.pry
-= simple_form_for [:admin, room], html: { class: "col-span-full", data: { "controller":"structure", "structure-inactive-value":"#{room&.structure_of_rooms&.where(type_seat: "INACTIVE").to_json}", "structure-number-of-seats-value":"#{room&.number_of_seats}", "structure-active-value":"#{room&.structure_of_rooms&.where(type_seat: "ACTIVE").to_json}", "structure-id-value":"#{room&.id}", "action":"submit->structure#createStructure", "structure-structure-value":"#{room&.structure_of_rooms.to_json}"} }  do |f|
+= simple_form_for [:admin, room], html: { class: "col-span-full", data: { "controller":"structure", "structure-inactive-value":"#{room&.structure_of_rooms&.where(type_seat: "INACTIVE").to_json}", "structure-number-of-seats-value":"#{room&.number_of_seats}", "structure-active-value":"#{room&.structure_of_rooms&.where(type_seat: "ACTIVE").to_json}", "structure-id-value":"#{room&.id}", "action":"submit->structure#createStructure", "structure-structure-value":"#{room&.structure_of_rooms.to_json}"} } do |f|
+  - if room.errors.any?
+    .p-4.mb-4.text-sm.text-red-800.rounded-lg.bg-red-50.dark_bg-gray-800.dark_text-red-400 role="alert"
+      h2 
+        = pluralize(room.errors.count, "error") 
+        |  prohibited this event from being saved:
+      ul 
+        - room.errors.each do |error|
+          li 
+            = error.full_message
   .grid.grid-cols-1.xl_grid-cols-3.xl_gap-4 
     .col-span-full 
       .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
@@ -26,4 +34,4 @@
       = button_submit
     = link_to admin_rooms_path, class: "text-gray-900 inline-flex items-center bg-white hover_bg-gray-100 focus_ring-4 focus_outline-none focus_ring-blue-300 font-medium rounded-lg border border-gray-200 text-sm px-5 text-center dark_bg-gray-800 dark_text-gray-400 dark_border-gray-600 dark_hover_text-white dark_hover_bg-gray-700 dark_focus_ring-gray-700 py-2.5" do 
       = inline_svg_tag("svg/close-icon.svg", class: "mr-1 -ml-1 w-6 h-6")
-      | Cancel 
+      | Cancel

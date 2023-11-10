@@ -15,6 +15,7 @@ class Admin::TicketsController < Admin::BaseController
                        pagination_html: render_to_string(PaginationComponent.new(pagy: @pagy), layout: false,
                                                                                                formats: [:html]) }
       end
+      format.html { render :index }
     end
   end
 end

@@ -174,7 +174,7 @@ export default class extends Controller {
 
       var { dates, values } = _this.formatObject(current_main_chart_data);
 
-      $("#main-chart-total-revenue").next().html(`Sales ${period} days`);
+      $("#main-chart-total-revenue").next().html(`Sales last ${period} days`);
 
       $("#main-chart-button")
         .children("span")
@@ -317,7 +317,7 @@ export default class extends Controller {
         $("#top-movies").html(res.top_movies_html);
         $("#top-customers").html(res.top_customers_html);
 
-        $("#stats-text").html(`Statistics ${period} days`);
+        $("#stats-text").html(`Statistics last ${period} days`);
         $("#stats-button")
           .children("span")
           .html(period == "1" ? "Today" : `Last ${period} days`);
