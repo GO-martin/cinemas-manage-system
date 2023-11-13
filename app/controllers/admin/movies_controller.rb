@@ -66,6 +66,6 @@ class Admin::MoviesController < Admin::BaseController
   end
 
   def movie_params
-    params.require(:movie).permit(:poster, :trailer, :director, :description, :release_date)
+    params.require(:movie).permit(:poster, :trailer, :director, :description, :release_date, :length, :name)
   end
 end

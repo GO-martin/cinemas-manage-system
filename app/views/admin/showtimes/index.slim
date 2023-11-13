@@ -17,16 +17,16 @@
             .flex.items-center
               = inline_svg_tag("svg/rightArrow-icon.svg", class: "w-6 h-6 text-gray-400")
               span.ml-1.text-gray-400.md_ml-2.dark_text-gray-500[aria-current="page"]
-                | Movies
+                | Showtimes
       h1.text-xl.font-semibold.text-gray-900.sm_text-2xl.dark_text-white
-        | All movies
+        | All showtimes
     div[class="items-center justify-between block sm_flex md_divide-x md_divide-gray-100 dark_divide-gray-700"]
       div[class="flex items-center mb-4 sm_mb-0"]
-        = form_tag(admin_movies_path, method: :get, class: "flex space-x-3") do 
-          = text_field_tag :term, params[:term], placeholder: "Search by name, director", class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500"
+        = form_tag(admin_showtimes_path, method: :get, class: "flex space-x-3") do 
+          = text_field_tag :term, params[:term], placeholder: "Search by room name", class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500"
           = submit_tag "Search", class: "cursor-pointer text-white bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark_bg-blue-600 dark_hover_bg-blue-700 focus_outline-none dark_focus_ring-blue-800"
       
-      = link_to "New movie", new_admin_movie_path, class: "text-white bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark_bg-blue-600 dark_hover_bg-blue-700 focus_outline-none dark_focus_ring-blue-800"
+      = link_to "New showtime", new_admin_showtime_path, data: { turbo_frame: "modal" }, class: "text-white bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark_bg-blue-600 dark_hover_bg-blue-700 focus_outline-none dark_focus_ring-blue-800"
 .flex.flex-col
   .overflow-x-auto 
     .inline-block.min-w-full.align-middle 
@@ -35,19 +35,17 @@
           thead.bg-gray-100.dark_bg-gray-700
             tr 
               th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
-                | Name 
+                | Room name
               th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
-                | ID
+                | Movie name
               th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
-                | Length
-              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
-                | Director
+                | Start time
               th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
                 | Actions
-          tbody#movies.bg-white.divide-y.divide-gray-200.dark_bg-gray-800.dark_divide-gray-700
-            - if @movies
-              - @movies.each do |movie|
-                = render "movie", movie: movie 
+          tbody#showtimes.bg-white.divide-y.divide-gray-200.dark_bg-gray-800.dark_divide-gray-700
+            - if @showtimes
+              - @showtimes.each do |showtime|
+                = render "showtime", showtime: showtime 
 
 / Pagination 
 div[class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm_flex sm_justify-between dark_bg-gray-800 dark_border-gray-700"]                
