@@ -11,6 +11,7 @@ module.exports = {
     "./app/javascript/**/*.js",
     "./node_modules/flowbite/**/*.js",
     "./config/initializers/simple_form_tailwind.rb",
+    "./config/initializers/heroicon.rb",
   ],
   safelist: [
     "w-64",

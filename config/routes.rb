@@ -1,13 +1,20 @@
-Rails.application.routes.draw do
-  devise_for :users
+require 'sidekiq/web'
 
+Rails.application.routes.draw do
   root 'pages#home'
   resources :payment_intents
   devise_for :users, controllers: {
     registrations: 'users/registrations'
   }
+  resources :notifications, only: %i[index] do
+    collection do
+      get 'notifications_navbar'
+      post 'view_all'
+    end
+  end
 
   namespace :admin do
+    resources :notifications
     resources :dashboards do
       collection do
         get 'update_main_chart'
@@ -57,6 +64,7 @@ Rails.application.routes.draw do
   end
 
   namespace :customer do
+    mount Sidekiq::Web => '/sidekiq'
     resources :profiles
     resources :tickets
     resources :showtimes

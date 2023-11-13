@@ -115,4 +115,10 @@ gem "image_processing", "~> 1.2"
 gem "view_component"
 gem "hotwire-livereload", "~> 1.2", :group => :development
 
-gem 'stripe'
+gem "stripe"
+
+gem "heroicon"
+
+gem "sidekiq"
+
+gem "sidekiq-cron"

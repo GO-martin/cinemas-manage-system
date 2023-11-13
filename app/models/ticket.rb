@@ -1,5 +1,6 @@
 class Ticket < ApplicationRecord
   resourcify
+  include Notificable
 
   belongs_to :user
   belongs_to :showtime
@@ -13,5 +14,9 @@ class Ticket < ApplicationRecord
       .where('LOWER(movies.name) LIKE ?', "%#{search_term.downcase}%")
       .where(movies: { id: movie_filter.presence || Movie.ids })
       .where(rooms: { id: room_filter.presence || Room.ids })
+  end
+
+  def user_ids
+    User.where.not(id: user_id).with_role(:admin).ids
   end
 end
