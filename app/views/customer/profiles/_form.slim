@@ -1,0 +1,9 @@
+= simple_form_for [:customer, profile], html: { class: "mt-8 space-y-6" } do |f|
+  = f.input :fullname, input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" }, label_html: { class: "text-sm font-medium text-gray-900 block mb-2" }
+  = f.input :address, input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5" }, label_html: { class: "text-sm font-medium text-gray-900 block mb-2" }
+  div
+    label.block.mb-2.text-sm.font-medium.text-gray-900.dark_text-white
+      | Birthday
+    = f.date_field :birthday, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5"
+  button.text-white.bg-cyan-600.hover_bg-cyan-700.focus_ring-4.focus_ring-cyan-200.font-medium.rounded-lg.text-base.px-5.py-3.w-full.text-center type="submit" data={ turbo:"false" }
+    | Update profile

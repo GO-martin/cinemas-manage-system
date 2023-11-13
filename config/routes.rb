@@ -3,6 +3,9 @@ Rails.application.routes.draw do
 
   root 'pages#home'
   resources :payment_intents
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
 
   namespace :admin do
     resources :structure_of_rooms
@@ -47,6 +50,7 @@ Rails.application.routes.draw do
   end
 
   namespace :customer do
+    resources :profiles
     resources :tickets
     resources :showtimes
     resources :rooms

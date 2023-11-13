@@ -1,0 +1,9 @@
+.max-w-7xl.mx-auto.px-6.md_px-12.xl_px-6.min-h-screen
+  = render "pages/breadcrumb", breadcrumbs: ["My Profile"] 
+  .main.bg-white.grid.grid-cols-1.xl_grid-cols-3 
+    .col-span-full 
+      .p-4.mb-4.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        .mb-4.text-3xl.font-semibold.dark_text-white
+          | My profile
+        hr.my-6.border-2.border-slate-700.sm_mx-auto.dark_border-black-700.lg_my-8
+        = render "form", profile: @profile
