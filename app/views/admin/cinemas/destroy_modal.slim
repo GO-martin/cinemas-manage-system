@@ -1,0 +1,39 @@
+.grid.grid-cols-1.px-4.pt-6.xl_grid-cols-3.xl_gap-4.dark_bg-gray-900
+  .mb-4.col-span-full.xl_mb-2
+    nav.flex.mb-5 aria-label="Breadcrumb"
+      ol.inline-flex.items-center.space-x-1.text-sm.font-medium.md_space-x-2
+        li.inline-flex.items-center 
+          a.inline-flex.items-center.text-gray-700.hover_text-blue-600.dark_text-gray-300.dark_hover_text-white href="#"
+            = inline_svg_tag("svg/home-icon.svg", class: "w-5 h-5 mr-2.5") 
+            | Home
+        li.flex.items-center
+          = inline_svg_tag("svg/rightArrow-icon.svg", class: "w-6 h-6 text-gray-400")
+          a.ml-1.text-gray-700.hover_text-blue-600.md_ml-2.dark_text-gray-300.dark_hover_text-white href="#"
+            | Main 
+        li.flex.items-center
+          = inline_svg_tag("svg/rightArrow-icon.svg", class: "w-6 h-6 text-gray-400")
+          span.ml-1.text-gray-400.md_ml-2.dark_text-gray-500 aria-current="page"
+            | Cinemas
+    h1.text-xl.font-semibold.text-gray-900.sm_text-2xl.dark_text-white
+= turbo_frame_tag "modal" do 
+  = tag.div data: { controller: "turbo-modal", \
+                    turbo_modal_target: "modal", \
+                    action: "turbo:submit-end->turbo-modal#submitEnd keyup@window->turbo-modal#closeWithKeyboard" }, \
+            class: "fixed top-0 left-0 right-0 z-50 w-full p-4 overflow-x-hidden overflow-y-auto md_inset-0 max-h-full justify-center items-center flex h-[calc(100%-1rem)]", "aria-modal": "true", role: "dialog"
+    .fixed.inset-0.bg-gray-500.bg-opacity-75.transition-opacity
+    .relative.w-full.max-w-md.max-h-full         
+      .relative.bg-white.rounded-lg.shadow.dark_bg-gray-700
+        .flex.justify-end.p-2
+          button.text-gray-400.bg-transparent.hover_bg-gray-200.hover_text-gray-900.rounded-lg.text-sm.p-1.5.ml-auto.inline-flex.items-center.dark_hover_bg-gray-700.dark_hover_text-white data={ action: "turbo-modal#hideModal"}
+            = inline_svg_tag("svg/close-icon.svg", class: "w-5 h-5")
+        .p-6.pt-0.text-center
+          = inline_svg_tag("svg/warning-icon.svg", class: "w-16 h-16 mx-auto text-red-600")
+          h3.mt-5.mb-6.text-lg.text-gray-500.dark_text-gray-400
+            | Are you sure you want to delete this cinema?
+          .flex.items-center.space-x-2.justify-center
+            = button_to admin_cinema_path(@cinema), method: :delete, class: "text-white inline-flex items-center bg-red-700 hover_bg-red-800 focus_ring-4 focus_outline-none focus_ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark_bg-red-600 dark_hover_bg-red-700 dark_focus_ring-red-800"
+              = inline_svg_tag("svg/delete-icon.svg", class: "mr-1 -ml-1 w-6 h-6") 
+              | Yes, I'm sure
+            button.text-gray-900.inline-flex.items-center.bg-white.hover_bg-gray-100.focus_ring-4.focus_outline-none.focus_ring-blue-300.font-medium.rounded-lg.border.border-gray-200.text-sm.px-5.text-center.dark_bg-gray-800.dark_text-gray-400.dark_border-gray-600.dark_hover_text-white.dark_hover_bg-gray-700.dark_focus_ring-gray-700 class="py-2.5" data={ action: "turbo-modal#hideModal"}
+              = inline_svg_tag("svg/close-icon.svg", class: "mr-1 -ml-1 w-6 h-6")
+              | No, cancel

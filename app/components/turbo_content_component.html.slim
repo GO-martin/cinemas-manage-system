@@ -1,0 +1,19 @@
+= tag.div class: "grid grid-cols-1 px-4 pt-6 xl_grid-cols-3 xl_gap-4 dark_bg-gray-900"
+  .mb-4.col-span-full.xl_mb-2
+    nav.flex.mb-5 aria-label="Breadcrumb"
+      ol.inline-flex.items-center.space-x-1.text-sm.font-medium.md_space-x-2
+        li.inline-flex.items-center 
+          a.inline-flex.items-center.text-gray-700.hover_text-blue-600.dark_text-gray-300.dark_hover_text-white href="#"
+            = inline_svg_tag("svg/home-icon.svg", class: "w-5 h-5 mr-2.5") 
+            |  Home
+        li.flex.items-center
+          = inline_svg_tag("svg/rightArrow-icon.svg", class: "w-6 h-6 text-gray-400")
+          a.ml-1.text-gray-700.hover_text-blue-600.md_ml-2.dark_text-gray-300.dark_hover_text-white href="#"
+            | Main  
+        li.flex.items-center
+          = inline_svg_tag("svg/rightArrow-icon.svg", class: "w-6 h-6 text-gray-400")
+          span.ml-1.text-gray-400.md_ml-2.dark_text-gray-500 aria-current="page"
+            = @title
+    h1.text-xl.font-semibold.text-gray-900.sm_text-2xl.dark_text-white
+      = @titleType + " " + @title
+  = content

@@ -1,19 +1,30 @@
 Rails.application.routes.draw do
   devise_for :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
   root 'pages#home'
 
   namespace :admin do
+    resources :structure_of_rooms
     resources :locations do
       member do
         get 'destroy_modal'
       end
     end
-    resources :cinemas
-    resources :movies
+    resources :cinemas do
+      member do
+        get 'destroy_modal'
+      end
+    end
+    resources :movies do
+      member do
+        get 'destroy_modal'
+      end
+    end
+    resources :rooms do
+      member do
+        get 'destroy_modal'
+      end
+    end
   end
 
   # Custom Error Pages
