@@ -3,7 +3,7 @@ class Admin::ShowtimesController < Admin::BaseController
 
   # GET admin/showtimes or admin/showtimes.json
   def index
-    @pagy, @showtimes = pagy(Showtime.search(params[:term]))
+    @pagy, @showtimes = pagy(Showtime.ordered)
   end
 
   # GET admin/showtimes/1 or admin/showtimes/1.json
@@ -79,6 +79,23 @@ class Admin::ShowtimesController < Admin::BaseController
   end
 
   def destroy_modal; end
+
+  def search
+    search_term = params[:searchTerm]
+    room_filter = params[:roomFilter]
+    movie_filter = params[:movieFilter]
+
+    @pagy, @showtimes = pagy(Showtime.by_filter(search_term, room_filter, movie_filter).ordered)
+
+    respond_to do |format|
+      format.json do
+        render json: { showtimes_html: render_to_string(partial: 'admin/showtimes/showtime', collection: @showtimes, layout: false, formats: [:html]),
+                       pagination_html: render_to_string(PaginationComponent.new(pagy: @pagy), layout: false,
+                                                                                               formats: [:html]) }
+      end
+      format.html { render :index }
+    end
+  end
 
   private
 

@@ -14,12 +14,6 @@
         .field
           = f.label :password, class: "text-sm font-medium text-gray-900 block mb-2"
           = f.password_field :password, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5", placeholder: "••••••••", required: true
-        .field.flex.items-start
-          .flex.items-center.h-5
-            = f.check_box :remember_me, class: "bg-gray-200 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded"
-          .text-sm.ml-3
-            = f.label :remember_me, class: "font-medium text-gray-900"
-          = link_to "Lost Password?", "#", class: "text-sm text-teal-500 hover:underline ml-auto"
         .actions
           = f.submit "Login to your account", class: "text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-base px-5 py-3 w-full sm:w-auto text-center"
         .text-sm.font-medium.text-gray-500

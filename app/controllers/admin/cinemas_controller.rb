@@ -3,7 +3,7 @@ class Admin::CinemasController < Admin::BaseController
 
   # GET admin/cinemas or admin/cinemas.json
   def index
-    @pagy, @cinemas = pagy(Cinema.search(params[:term]))
+    @pagy, @cinemas = pagy(Cinema.ordered)
   end
 
   # GET admin/cinemas/1 or admin/cinemas/1.json
@@ -79,6 +79,21 @@ class Admin::CinemasController < Admin::BaseController
   end
 
   def destroy_modal; end
+
+  def search
+    search_term = params[:searchTerm]
+    location_filter = params[:locationFilter]
+    @pagy, @cinemas = pagy(Cinema.by_filter(search_term, location_filter).ordered)
+
+    respond_to do |format|
+      format.json do
+        render json: { cinemas_html: render_to_string(partial: 'admin/cinemas/cinema', collection: @cinemas, layout: false, formats: [:html]),
+                       pagination_html: render_to_string(PaginationComponent.new(pagy: @pagy), layout: false,
+                                                                                               formats: [:html]) }
+      end
+      format.html { render :index }
+    end
+  end
 
   private
 

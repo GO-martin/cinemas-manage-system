@@ -1,6 +1,21 @@
 = simple_form_for [:admin, profile], html: { class: "col-span-full", data: { controller: "flatpickr" } } do |f|
+  - if profile.errors.any?
+    .p-4.mb-4.text-sm.text-red-800.rounded-lg.bg-red-50.dark_bg-gray-800.dark_text-red-400 role="alert"
+      h2 
+        = pluralize(profile.errors.count, "error") 
+        |  prohibited this event from being saved:
+      ul 
+        - profile.errors.each do |error|
+          li = error.full_message
   .grid.grid-cols-1.xl_grid-cols-3.xl_gap-4
-    .col-span-full
+    .col-span-full.xl_col-auto
+      .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        h3.mb-4.text-xl.font-semibold.dark_text-white
+          | Avatar
+        - if profile.avatar.present? 
+          = image_tag(profile.avatar, class: "w-1/2 mx-auto mb-4")
+        = render "admin/profiles/file_form", form: f, accepted_files: "image/*", variable: :avatar 
+    .col-span-2 
       .p-4.mb-4.bg-white.border.border-gray-200.rounded-lg.shadow-sm.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
         .mb-4.text-xl.font-semibold.dark_text-white
           | General information

@@ -19,11 +19,7 @@ class Location < ApplicationRecord
                          broadcast_remove_to 'admin'
                        }
 
-  def self.search(term)
-    if term
-      where('name LIKE ?', "%#{term}%").ordered
-    else
-      ordered
-    end
+  def self.by_filter(search_term)
+    where('LOWER(locations.name) LIKE ?', "%#{search_term.downcase}%")
   end
 end

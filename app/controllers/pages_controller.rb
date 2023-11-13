@@ -3,7 +3,7 @@ class PagesController < ApplicationController
   layout 'pages_layout'
 
   def home
-    @movies = Movie.limit(7)
+    @movies = Movie.ordered.limit(5)
   end
 
   def movie_detail

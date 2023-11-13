@@ -1,17 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
 
-const DEFAULT_STRUCTURE = [
-  [1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1],
-];
-
 const TYPE = {
   INACTIVE: "INACTIVE",
   ACTIVE: "ACTIVE",
@@ -25,6 +13,8 @@ export default class extends Controller {
     "inputNumberOfSeats",
     "inputInactive",
     "structureData",
+    "inputRowSize",
+    "inputColumnSize",
   ];
   static values = {
     structure: Array,
@@ -42,11 +32,16 @@ export default class extends Controller {
   createStructure(event) {
     event.preventDefault();
 
+    let rowSize = $(this.inputRowSizeTarget).val(),
+      columnSize = $(this.inputColumnSizeTarget).val();
+
     const formData = {
       room: {
         name: $("#room_name").val(),
         cinema_id: $("#room_cinema_id").val(),
         number_of_seats: $("#room_number_of_seats").val(),
+        row_size: rowSize,
+        column_size: columnSize,
       },
     };
 
@@ -64,10 +59,11 @@ export default class extends Controller {
           window.location = "/admin/rooms";
         },
         error: function (error) {
-          console.log("Lỗi khi gửi Ajax: ", error);
+          console.error("Lỗi khi gửi Ajax: ", error);
         },
       });
     } else {
+      $("#loading").toggle("hidden");
       $.ajax({
         url: "/admin/rooms",
         type: "POST",
@@ -77,10 +73,16 @@ export default class extends Controller {
         },
         data: formData,
         success: function (response) {
-          createStructureRecords(response.room_id, inactiveValue);
+          createStructureRecords(
+            response.room_id,
+            inactiveValue,
+            rowSize,
+            columnSize
+          );
         },
         error: function (error) {
-          console.log("Lỗi khi gửi Ajax: ", error);
+          $("#loading").toggle("hidden");
+          console.error("Lỗi khi gửi Ajax: ", error);
         },
       });
     }
@@ -132,9 +134,39 @@ export default class extends Controller {
           updateStructureRecords(structureId, checkType);
         },
         error: function (error) {
-          console.log("Lỗi khi gửi Ajax: ", error);
+          console.error("Lỗi khi gửi Ajax: ", error);
         },
       });
+    }
+  }
+
+  setSize(e) {
+    e.preventDefault();
+
+    let rowSize = $(this.inputRowSizeTarget).val(),
+      columnSize = $(this.inputColumnSizeTarget).val();
+    let numberOfSeats = rowSize * columnSize;
+
+    this.inactiveValue = [];
+    this.numberOfSeatsValue = numberOfSeats;
+
+    $("#room_number_of_seats").val(numberOfSeats);
+
+    $("#structure").empty();
+
+    for (var i = 0; i < rowSize; i++) {
+      const row = $("<div>").addClass("row justify-center");
+      for (var j = 0; j < columnSize; j++) {
+        const column = $("<div>").addClass("seat active");
+        column.attr({
+          "row-index": i,
+          "column-index": j,
+          "data-action": "click->structure#toggleActive",
+          "data-structure-target": "seat",
+        });
+        row.append(column);
+      }
+      $("#structure").append(row);
     }
   }
 }
@@ -153,7 +185,7 @@ function updateStructureRecords(id, checkType) {
     },
     success: function (response) {},
     error: function (error) {
-      console.log("Lỗi khi gửi Ajax: ", error);
+      console.error("Lỗi khi gửi Ajax: ", error);
     },
   });
 }
@@ -188,27 +220,24 @@ function checkExist(element, rowIndex, columnIndex, typeSeat) {
   );
 }
 
-function createStructureRecords(roomId, inactiveValue) {
-  let value = DEFAULT_STRUCTURE;
-  let data = [];
+function createStructureRecords(roomId, inactiveValue, rowSize, columnSize) {
+  for (var i = 0; i < rowSize; i++) {
+    for (var j = 0; j < columnSize; j++) {
+      var type =
+        inactiveValue.findIndex(
+          (item) => item.row_index == i && item.column_index == j
+        ) == -1
+          ? "ACTIVE"
+          : "INACTIVE";
+      var seat = {
+        row_index: i,
+        column_index: j,
+        type_seat: type,
+      };
 
-  inactiveValue.forEach((seat) => {
-    value[seat.row_index][seat.column_index] = 0;
-  });
-
-  value.forEach((row, rowIndex) => {
-    row.forEach((seat, columnIndex) => {
-      data.push({
-        row_index: rowIndex,
-        column_index: columnIndex,
-        type_seat: seat == 1 ? "ACTIVE" : "INACTIVE",
-      });
-    });
-  });
-
-  data.forEach((seat) => {
-    createStructureRecord(roomId, seat);
-  });
+      createStructureRecord(roomId, seat);
+    }
+  }
 }
 
 function createStructureRecord(roomId, seat) {
@@ -223,7 +252,7 @@ function createStructureRecord(roomId, seat) {
       window.location = "/admin/rooms";
     },
     error: function (error) {
-      console.log("Lỗi khi gửi Ajax: ", error);
+      console.error("Lỗi khi gửi Ajax: ", error);
     },
   });
 }

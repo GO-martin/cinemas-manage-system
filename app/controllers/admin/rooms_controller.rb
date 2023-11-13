@@ -3,7 +3,7 @@ class Admin::RoomsController < Admin::BaseController
 
   # GET admin/rooms or admin/rooms.json
   def index
-    @pagy, @rooms = pagy(Room.search(params[:term]))
+    @pagy, @rooms = pagy(Room.ordered)
   end
 
   # GET admin/rooms/1 or admin/rooms/1.json
@@ -61,6 +61,21 @@ class Admin::RoomsController < Admin::BaseController
 
   def destroy_modal; end
 
+  def search
+    search_term = params[:searchTerm]
+    cinema_filter = params[:cinemaFilter]
+    @pagy, @rooms = pagy(Room.by_filter(search_term, cinema_filter).ordered)
+
+    respond_to do |format|
+      format.json do
+        render json: { rooms_html: render_to_string(partial: 'admin/rooms/room', collection: @rooms, layout: false, formats: [:html]),
+                       pagination_html: render_to_string(PaginationComponent.new(pagy: @pagy), layout: false,
+                                                                                               formats: [:html]) }
+      end
+      format.html { render :index }
+    end
+  end
+
   private
 
   def set_room
@@ -68,6 +83,6 @@ class Admin::RoomsController < Admin::BaseController
   end
 
   def room_params
-    params.require(:room).permit(:name, :number_of_seats, :cinema_id)
+    params.require(:room).permit(:name, :number_of_seats, :cinema_id, :row_size, :column_size)
   end
 end

@@ -7,7 +7,7 @@ class Customer::RoomsController < Customer::BaseController
     respond_to do |format|
       format.json do
         render json: render_to_string(partial: 'customer/rooms/room',
-                                      locals: { structures: @structures, sold_tickets: @sold_tickets },
+                                      locals: { structures: @structures, sold_tickets: @sold_tickets, room: @room },
                                       formats: [:html])
       end
     end

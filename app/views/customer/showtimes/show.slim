@@ -16,13 +16,13 @@
           span.mx-auto
             | Previous 
       .minicart-wrapper.col-span-auto.lg_col-span-6.grid.grid-cols-6.gap-6.lg_col-start-2
-        .col-span-auto.lg_col-span-2
+        .col-span-full.lg_col-span-2
           .grid.grid-rows-3.grid-flow-col.gap-4
             .row-span-3
               = image_tag(@showtime.movie.poster)
             .col-span-2
               = @showtime.movie.name.upcase
-        .col-span-auto.lg_col-span-2.lg_col-start-3
+        .col-span-full.lg_col-span-2.lg_col-start-3
           .grid.grid-rows-4.grid-flow-col.gap-4
             p
               = "Cinema: #{@showtime.cinema.name.upcase}"
@@ -32,7 +32,7 @@
               = "Room: #{@showtime.room.name}"
             p 
               = "Movie: #{@showtime.movie.name}"
-        .col-span-auto.lg_col-span-2.lg_col-start-5
+        .col-span-full.lg_col-span-2.lg_col-start-5
           .grid.grid-rows-4.grid-flow-col.gap-4
             p 
               = "Seat: "

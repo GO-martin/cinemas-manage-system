@@ -2,20 +2,26 @@ import { Controller } from "@hotwired/stimulus";
 
 // Connects to data-controller="search"
 export default class extends Controller {
-  static targets = ["filter", "searchTerm", "movieFilter", "roomFilter"];
+  static targets = [
+    "filter",
+    "searchTerm",
+    "movieFilter",
+    "roomFilter",
+    "locationFilter",
+    "statusFilter",
+    "cinemaFilter",
+  ];
 
   static values = {
     filter: Object,
+    controllerName: String,
   };
-
-  connect() {
-    console.log("connect search");
-  }
 
   search(e) {
     e.preventDefault();
 
     var filter = this.filterValue;
+
     this.filterTargets.forEach((target) => {
       var searchType = $(target).attr("data-search-type");
       var searchValue = $(target).val() || "";
@@ -28,31 +34,41 @@ export default class extends Controller {
   clear(e) {
     e.preventDefault();
 
+    var filter = this.filterValue;
     this.filterTargets.forEach((target) => {
       $(target).val("");
+      var searchType = $(target).attr("data-search-type");
+      var searchValue = "";
+      filter[searchType] = searchValue;
     });
 
-    this.fetchData();
+    this.fetchData(filter);
   }
 
   fetchData(filter) {
     const formData = new FormData();
-    formData.append("searchTerm", filter?.searchTerm || "");
-    formData.append("movieFilter", filter?.movieFilter || "");
-    formData.append("roomFilter", filter?.roomFilter || "");
+    Object.keys(filter).forEach((type) => {
+      formData.append(type, filter[type]);
+    });
+    let _this = this;
 
-    fetch(`/admin/tickets/search`, {
-      method: "POST",
-      body: formData,
+    $.ajax({
+      url: `/admin/${this.controllerNameValue}/search`,
+      type: "GET",
+      data: filter,
       headers: {
         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
           .content,
       },
-    })
-      .then((response) => response.json())
-      .then((res) => {
-        $("#tickets").html(res.tickets_html);
-        $("#pagination").html(res.pagination_html);
-      });
+      success: function (data) {
+        var target_html = `${_this.controllerNameValue}_html`;
+
+        $(`#${_this.controllerNameValue}`).html(data[target_html]);
+        $("#pagination").html(data.pagination_html);
+      },
+      error: function (error) {
+        console.error("Error:", error);
+      },
+    });
   }
 }

@@ -1,4 +1,6 @@
 = simple_form_for [:admin, supply], html: { class: "space-y-6" } do |f|
+  - if supply.image.present?
+    = image_tag(supply.image, class: "w-1/2 mx-auto mb-4")
   = render "admin/supplies/file_form", form: f, accepted_files: "image/*", variable: :image 
   = f.input :name,
             as: :string,

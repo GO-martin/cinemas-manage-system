@@ -14,9 +14,13 @@ html
   body.bg-gray-50.dark_bg-gray-800
     - if user_signed_in?
       = turbo_stream_from dom_id(current_user, :broadcast_to)
+    - if current_user.has_role?(:admin)
+      = turbo_stream_from 'admin'
     #flash.flash.fixed.top-20.transform.flex.flex-col.items-center.gap-4.max-w-full.w-max-content.px-4.z-50 class="left-1/2 -translate-x-1/2"
       = render "layouts/components/flash"
     = render "layouts/components/navbar_admin"
+    #loading.hidden
+      = render "layouts/components/loading"
     .flex.pt-16.bg-gray-50.dark_bg-gray-900
       = render "layouts/components/sidebar_admin"
       div[id="main-content" class="relative w-screen h-screen bg-gray-50 lg_ml-64 dark_bg-gray-900"]

@@ -4,14 +4,6 @@ aside[id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hi
     div[class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto"]    
       div[class="flex-1 px-3 space-y-1 bg-white divide-y divide-gray-200 dark_bg-gray-800 dark_divide-gray-700"]
         ul.pb-2.space-y-2 
-          li
-            form[action="#" method="GET" class="lg_hidden"] 
-              label[for="mobile-search" class="sr-only"]
-                | Search 
-              .relative
-                div[class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"]
-                  = inline_svg_tag("svg/search-icon.svg", class: "w-5 h-5 text-gray-500")     
-                input[type="text" name="email" id="mobile-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus_ring-primary-500 focus_border-primary-500 block w-full pl-10 p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-gray-200 dark_focus_ring-primary-500 dark_focus_border-primary-500" placeholder="Search"]
           li 
             = link_to admin_dashboards_path, class: "flex items-center p-2 text-base text-gray-900 rounded-lg hover_bg-gray-100 group dark_text-gray-200 dark_hover_bg-gray-700", data: { turbo: false } do
               = inline_svg_tag("svg/dashboard-icon.svg", class: "w-6 h-6 text-gray-500 transition duration-75 group-hover_text-gray-900 dark_text-gray-400 dark_group-hover_text-white" )
@@ -51,10 +43,10 @@ aside[id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hi
                 = link_to admin_locations_path, class: ["text-base text-gray-900 rounded-lg flex items-center p-2 group hover_bg-gray-100 transition duration-75 pl-11 dark_text-gray-200 dark_hover_bg-gray-700", active_tab("locations") ? " bg-gray-100 dark_bg-gray-700" : ""].compact.join(""), data: { turbo: false }
                   | Locations
           li
-            = link_to edit_admin_profile_path(current_user.id), class: "flex items-center p-2 text-base text-gray-900 rounded-lg hover_bg-gray-100 group dark_text-gray-200 dark_hover_bg-gray-700", data: { turbo: false } do 
+            = link_to edit_admin_profile_path(current_user.profile.id), class: "flex items-center p-2 text-base text-gray-900 rounded-lg hover_bg-gray-100 group dark_text-gray-200 dark_hover_bg-gray-700", data: { turbo: false } do 
               = inline_svg_tag("svg/setting-icon.svg", class: "w-6 h-6 text-gray-500 transition duration-75 group-hover_text-gray-900 dark_text-gray-400 dark_group-hover_text-white")
               span[class="ml-3" sidebar-toggle-item]  
-                  | Settings  
+                | Settings  
           li 
             = link_to admin_notifications_path, class: "flex items-center p-2 text-base text-gray-900 rounded-lg hover_bg-gray-100 group dark_text-gray-200 dark_hover_bg-gray-700", data: { turbo: false } do 
               = heroicon "bell", variant: :solid, options: { class: "h-6 w-6 text-gray-500 transition duration-75 group-hover_text-gray-900 " }
@@ -63,3 +55,27 @@ aside[id="sidebar" class="fixed top-0 left-0 z-20 flex flex-col flex-shrink-0 hi
 
 
 div[class="fixed inset-0 z-10 hidden bg-gray-900/50 dark_bg-gray-900/90" id="sidebarBackdrop"]
+
+javascript: 
+  var sidebar = document.getElementById('sidebar');
+  if (sidebar) {
+    const toggleSidebarMobile = (sidebar, sidebarBackdrop, toggleSidebarMobileHamburger, toggleSidebarMobileClose) => {
+        sidebar.classList.toggle('hidden');
+        sidebarBackdrop.classList.toggle('hidden');
+        toggleSidebarMobileHamburger.classList.toggle('hidden');
+        toggleSidebarMobileClose.classList.toggle('hidden');
+    }
+    const toggleSidebarMobileEl = document.getElementById('toggleSidebarMobile');
+    const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+    const toggleSidebarMobileHamburger = document.getElementById('toggleSidebarMobileHamburger');
+    const toggleSidebarMobileClose = document.getElementById('toggleSidebarMobileClose');
+
+    
+    toggleSidebarMobileEl.addEventListener('click', () => {
+        toggleSidebarMobile(sidebar, sidebarBackdrop, toggleSidebarMobileHamburger, toggleSidebarMobileClose);
+    });
+    
+    sidebarBackdrop.addEventListener('click', () => {
+        toggleSidebarMobile(sidebar, sidebarBackdrop, toggleSidebarMobileHamburger, toggleSidebarMobileClose);
+    });
+  }

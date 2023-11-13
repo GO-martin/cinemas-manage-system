@@ -13,6 +13,12 @@ Rails.application.routes.draw do
     end
   end
 
+  concern :searchable do
+    collection do
+      get 'search'
+    end
+  end
+
   namespace :admin do
     resources :notifications
     resources :dashboards do
@@ -24,16 +30,19 @@ Rails.application.routes.draw do
     resources :profiles
     resources :structure_of_rooms
     resources :locations do
+      concerns :searchable
       member do
         get 'destroy_modal'
       end
     end
     resources :cinemas do
+      concerns :searchable
       member do
         get 'destroy_modal'
       end
     end
     resources :movies do
+      concerns :searchable
       member do
         get 'destroy_modal'
         put 'change_now_showing'
@@ -41,25 +50,28 @@ Rails.application.routes.draw do
       end
     end
     resources :rooms do
+      concerns :searchable
       member do
         get 'destroy_modal'
       end
     end
     resources :showtimes do
+      concerns :searchable
       member do
         get 'destroy_modal'
       end
     end
-    resources :users, only: [:index]
+    resources :users do
+      concerns :searchable
+    end
     resources :supplies do
+      concerns :searchable
       member do
         get 'destroy_modal'
       end
     end
     resources :tickets do
-      collection do
-        post 'search'
-      end
+      concerns :searchable
     end
   end
 

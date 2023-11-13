@@ -7,13 +7,13 @@
       li.flex.items-center.justify-center.mx-2.space-x-2 
         .seat.selected 
         small Selected  
-  .col-span-4.col-start-2.mb-10
+  .col-span-full.sm_col-span-4.sm_col-start-2.mb-10
     = image_tag("bg-screen.png", class: "w-full")
-  .col-span-4.col-start-2 
-    - Admin::RoomsHelper::STRUCTURE.each_with_index do |row, rowIndex| 
-      .row.justify-center 
-        - row.each_with_index do |col, columnIndex|
+  .col-span-full.sm_col-span-4.sm_col-start-2.pb-10.mx-auto.overflow-auto
+    - room.row_size.times do |rowIndex| 
+      .flex.flex-row
+        - room.column_size.times do |columnIndex|
           - structure = @structures.where(row_index: rowIndex, column_index: columnIndex).first
           - sold_ticket = @sold_tickets.where(seat_row: rowIndex, seat_column: columnIndex)
-          .seat class=[structure.type_seat == "INACTIVE" ? "hidden" : ""] data={action:"click->booking#selectSeat"} row-index="#{structure.row_index}" column-index="#{structure.column_index}" class=[sold_ticket.empty? ? "": "sold"]
-            = convert_coordinates_to_seat(rowIndex, columnIndex)
+          .seat.bg-gray-800.h-8.w-8.m-1.rounded-t-lg.hover_cursor-pointer.hover_scale-125.text-white.text-center class=[structure.type_seat == "INACTIVE" ? "invisible" : ""] data={action:"click->booking#selectSeat"} row-index="#{structure.row_index}" column-index="#{structure.column_index}" class=[sold_ticket.empty? ? "": "sold noHover"]
+            = seat_number_format(rowIndex, columnIndex)

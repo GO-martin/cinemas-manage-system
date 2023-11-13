@@ -4,7 +4,10 @@ ul.divide-y.divide-gray-200 role="list"
       li.py-3.sm_py-4
         .flex.items-center.space-x-4
           .flex-shrink-0
-            img.w-8.h-8.rounded-full[src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo"]
+            - if top_customer.profile.avatar.attached?
+              = image_tag(top_customer.profile.avatar, class: "w-8 h-8 rounded-full")
+            - else
+              = image_tag("logo.png", class: "w-8 h-8 rounded-full")
           .flex-1.min-w-0
             p.font-medium.text-gray-900.truncate 
               = top_customer.profile.fullname

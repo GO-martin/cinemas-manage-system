@@ -1,6 +1,21 @@
+- check_exist = action_name == "new" ? false : true
 .grid.grid-cols-6.gap-6 
   .col-span-6.sm_col-span-3
     = form.input :number_of_seats, label: "Number of seats", label_html: { class: "block mb-2 text-sm font-medium text-gray-900 dark_text-white" }, input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500", value: room&.number_of_seats, data: { "structure-target": "inputNumberOfSeats" }, readonly: :true}
+  .col-span-2.sm_col-span-1 
+    = form.input :row_size,
+                  as: :string,
+                  label_html: { class: "block mb-2 text-sm font-medium text-gray-900" },
+                  input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5", value: room&.row_size, data: { "structure-target": "inputRowSize" }, readonly: check_exist }
+  .col-span-2.sm_col-span-1 
+    = form.input :column_size,
+                  as: :string,
+                  label_html: { class: "block mb-2 text-sm font-medium text-gray-900" },
+                  input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5", value: room&.column_size, data: { "structure-target": "inputColumnSize" }, readonly: check_exist }
+  .col-span-2.sm_col-span-1.relative
+    - unless check_exist
+      button.text-white.bg-blue-700.hover_bg-blue-800.focus_ring-4.focus_ring-blue-300.font-medium.rounded-lg.text-sm.px-.focus_outline-none.border.bottom-0.w-full.absolute class="p-2.5" data={"action": "click->structure#setSize"}
+        | Set size
   .col-span-6
     label.mb-2.text-sm.font-medium.text-gray-900.dark_text-white Structure:
   .col-span-6 
@@ -13,8 +28,8 @@
         small Active
   .col-span-4.col-start-2.mb-10
     = image_tag("bg-screen.png", class: "w-full")
-  .col-span-6.mb-10
-    - Admin::RoomsHelper::STRUCTURE.each_with_index do |row, rowIndex| 
+  .col-span-6.mb-10#structure
+    - room.row_size.times do |rowIndex| 
       .row.justify-center 
-        - row.each_with_index do |col, columnIndex|  
+        - room.column_size.times do |columnIndex|  
           .seat.active row-index="#{rowIndex}" column-index="#{columnIndex}" data-action="click->structure#toggleActive" data-structure-target="seat" 

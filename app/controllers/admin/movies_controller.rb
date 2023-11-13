@@ -1,11 +1,10 @@
 class Admin::MoviesController < Admin::BaseController
   before_action :set_movie, only: %i[show edit update destroy destroy_modal change_now_showing change_coming_soon]
-  before_action :check_release_date, only: %i[create update]
   skip_before_action :verify_authenticity_token, only: %i[change_now_showing change_coming_soon]
 
   # GET admin/movies or admin/movies.json
   def index
-    @pagy, @movies = pagy(Movie.search(params[:term]))
+    @pagy, @movies = pagy(Movie.ordered)
   end
 
   # GET admin/movies/1 or admin/movies/1.json
@@ -87,6 +86,20 @@ class Admin::MoviesController < Admin::BaseController
     end
   end
 
+  def search
+    search_term = params[:searchTerm]
+    status_filter = params[:statusFilter]
+    @pagy, @movies = pagy(Movie.by_filter(search_term, status_filter).ordered)
+
+    respond_to do |format|
+      format.json do
+        render json: { movies_html: render_to_string(partial: 'admin/movies/movie', collection: @movies, layout: false, formats: [:html]),
+                       pagination_html: render_to_string(PaginationComponent.new(pagy: @pagy), layout: false,
+                                                                                               formats: [:html]) }
+      end
+    end
+  end
+
   private
 
   def set_movie
@@ -96,11 +109,5 @@ class Admin::MoviesController < Admin::BaseController
   def movie_params
     params.require(:movie).permit(:poster, :banner, :trailer, :status, :director, :description, :release_date, :length,
                                   :name)
-  end
-
-  def check_release_date
-    return unless params[:movie][:release_date] > Time.zone.now
-
-    params[:movie][:status] = 'coming_soon'
   end
 end

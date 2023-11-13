@@ -9,6 +9,19 @@ class Ticket < ApplicationRecord
   has_many :supplies, through: :ticket_supplies
   scope :ordered, -> { order(id: :desc) }
 
+  after_create_commit do
+    broadcast_prepend_to 'admin', partial: 'admin/tickets/ticket',
+                                  locals: { ticket: self }
+  end
+
+  after_update_commit do
+    broadcast_replace_to 'admin', partial: 'admin/tickets/ticket'
+  end
+
+  after_destroy_commit do
+    broadcast_remove_to 'admin'
+  end
+
   def self.by_filter(search_term, movie_filter, room_filter)
     left_outer_joins(showtime: %i[movie room])
       .where('LOWER(movies.name) LIKE ?', "%#{search_term.downcase}%")
