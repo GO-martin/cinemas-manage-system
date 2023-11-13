@@ -9,20 +9,7 @@ nav[class="fixed z-30 w-full bg-white border-b border-gray-200 dark_bg-gray-800 
           = image_tag("logo.png", class: "h-8 mr-3", alt: "Retro Cinema")
           span[class="self-center text-xl font-semibold sm_text-2xl whitespace-nowrap dark_text-white"]
             | Retro Cinema
-        form[action="#" method="GET" class="hidden lg_block lg_pl-2"]
-          label[for="topbar-search" class="sr-only"]
-            | Search
-          div[class="relative mt-1 lg_w-96"]
-            div[class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none"]
-              = inline_svg_tag("svg/search-icon.svg", class: "w-5 h-5 text-gray-500 dark_text-gray-400")
-            input[type="text" name="email" id="topbar-search" class="bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-primary-500 focus_border-primary-500 block w-full pl-10 p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-primary-500 dark_focus_border-primary-500" placeholder="Search"]
-
       div[class="flex items-center"]
-        /<!-- Search mobile -->
-        button[id="toggleSidebarMobileSearch" type="button" class="p-2 text-gray-500 rounded-lg lg_hidden hover_text-gray-900 hover_bg-gray-100 dark_text-gray-400 dark_hover_bg-gray-700 dark_hover_text-white"]
-          span[class="sr-only"]
-            | Search
-          = inline_svg_tag("svg/search-icon.svg", class: "w-6 h-6")
         /<!-- Notifications -->
         button[type="button" data-dropdown-toggle="notification-dropdown" class="p-2 text-gray-500 rounded-lg hover_text-gray-900 hover_bg-gray-100 dark_text-gray-400 dark_hover_text-white dark_hover_bg-gray-700"]
           span[class="sr-only"]

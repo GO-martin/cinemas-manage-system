@@ -1,9 +1,9 @@
 header
   nav.bg-white.border-gray-200.px-4.lg_px-6.py-2.5.dark_bg-gray-800
     .flex.flex-wrap.justify-between.items-center.mx-auto.max-w-screen-xl
-      a.flex.items-center[href="#"]
-        = image_tag("logo.png", class: "mr-3 h-6 sm:h-9", alt: "Retro Cinema")
-        span.self-center.text-xl.font-semibold.whitespace-nowrap.dark:text-white
+      = link_to root_path, class: "flex items-center", data: { turbo: false }
+        = image_tag("logo.png", class: "mr-3 h-6 sm_h-9", alt: "Retro Cinema")
+        span.self-center.text-xl.font-semibold.whitespace-nowrap.dark_text-white
           | Retro cinema
       .flex.items-center.lg_order-2
         - if user_signed_in?
@@ -19,12 +19,12 @@ header
                 = current_user.email
             ul.py-2[aria-labelledby="user-menu-button"]
               li
-                = link_to "Account Settings", edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                = link_to "Account Settings", edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white"
               li
-                = button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+                = button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white"
         - else
-          = link_to "Sign in", new_user_session_path, class: "text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-          = link_to "Sign up", new_user_registration_path, class: "text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          = link_to "Sign in", new_user_session_path, class: "text-gray-800 dark_text-white hover_bg-gray-50 focus_ring-4 focus_ring-gray-300 font-medium rounded-lg text-sm px-4 lg_px-5 py-2 lg_py-2.5 mr-2 dark_hover_bg-gray-700 focus_outline-none dark_focus_ring-gray-800"
+          = link_to "Sign up", new_user_registration_path, class: "text-white bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 font-medium rounded-lg text-sm px-4 lg_px-5 py-2 lg_py-2.5 mr-2 dark_bg-blue-600 dark_hover_bg-blue-700 focus_outline-none dark_focus_ring-blue-800"
         button.inline-flex.items-center.p-2.ml-1.text-sm.text-gray-500.rounded-lg.lg_hidden.hover_bg-gray-100.focus_outline-none.focus_ring-2.focus_ring-gray-200.dark_text-gray-400.dark_hover_bg-gray-700.dark_focus_ring-gray-600[data-collapse-toggle="mobile-menu-2" type="button" aria-controls="mobile-menu-2" aria-expanded="false"]
           span.sr-only
             | Open main menu
@@ -35,21 +35,21 @@ header
       #mobile-menu-2.hidden.justify-between.items-center.w-full.lg_flex.lg_w-auto.lg_order-1
         ul.flex.flex-col.mt-4.font-medium.lg_flex-row.lg_space-x-8.lg_mt-0
           li
-            a.block.py-2.pr-4.pl-3.text-white.rounded.bg-blue-700.lg_bg-transparent.lg_text-blue-700.lg_p-0.dark_text-white[href="#" aria-current="page"]
-              | Home
+            = link_to "Home", root_path, class: "block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover_bg-gray-50 lg_hover_bg-transparent lg_border-0 lg_hover_text-blue-700 lg_p-0 dark_text-gray-400 lg_dark_hover_text-white dark_hover_bg-gray-700 dark_hover_text-white lg_dark_hover_bg-transparent dark_border-gray-700", data: { turbo: false }
+          li
+            button.block.w-full.text-left.py-2.pr-4.pl-3.text-gray-700.border-b.border-gray-100.hover_bg-gray-50.lg_hover_bg-transparent.lg_border-0.lg_hover_text-blue-700.lg_p-0.dark_text-gray-400.lg_dark_hover_text-white.dark_hover_bg-gray-700.dark_hover_text-white.lg_dark_hover_bg-transparent.dark_border-gray-700 data-dropdown-toggle="movie-dropdown" data-dropdown-trigger="hover"
+              | Movie
+            #movie-dropdown.z-50.hidden.bg-white.divide-y.divide-gray-100.rounded-lg.shadow.w-44.dark_bg-gray-700
+              ul.py-2.text-sm.text-gray-700.dark_text-gray-200
+                li 
+                  = link_to "Now Showing", movies_now_showing_pages_path, class: "block px-4 py-2 hover_bg-gray-100 dark_hover_bg-gray-600 dark_hover_text-white", data: { turbo: false }
+                li 
+                  = link_to "Coming Soon", movies_coming_soon_pages_path, class: "block px-4 py-2 hover_bg-gray-100 dark_hover_bg-gray-600 dark_hover_text-white", data: { turbo: false }
           li
             a.block.py-2.pr-4.pl-3.text-gray-700.border-b.border-gray-100.hover_bg-gray-50.lg_hover_bg-transparent.lg_border-0.lg_hover_text-blue-700.lg_p-0.dark_text-gray-400.lg_dark_hover_text-white.dark_hover_bg-gray-700.dark_hover_text-white.lg_dark_hover_bg-transparent.dark_border-gray-700[href="#"]
-              | Company
-          li
-            a.block.py-2.pr-4.pl-3.text-gray-700.border-b.border-gray-100.hover_bg-gray-50.lg_hover_bg-transparent.lg_border-0.lg_hover_text-blue-700.lg_p-0.dark_text-gray-400.lg_dark_hover_text-white.dark_hover_bg-gray-700.dark_hover_text-white.lg_dark_hover_bg-transparent.dark_border-gray-700[href="#"]
-              | Marketplace
-          li
-            a.block.py-2.pr-4.pl-3.text-gray-700.border-b.border-gray-100.hover_bg-gray-50.lg_hover_bg-transparent.lg_border-0.lg_hover_text-blue-700.lg_p-0.dark_text-gray-400.lg_dark_hover_text-white.dark_hover_bg-gray-700.dark_hover_text-white.lg_dark_hover_bg-transparent.dark_border-gray-700[href="#"]
-              | Features
-          li
-            a.block.py-2.pr-4.pl-3.text-gray-700.border-b.border-gray-100.hover_bg-gray-50.lg_hover_bg-transparent.lg_border-0.lg_hover_text-blue-700.lg_p-0.dark_text-gray-400.lg_dark_hover_text-white.dark_hover_bg-gray-700.dark_hover_text-white.lg_dark_hover_bg-transparent.dark_border-gray-700[href="#"]
-              | Team
-          li
-            a.block.py-2.pr-4.pl-3.text-gray-700.border-b.border-gray-100.hover_bg-gray-50.lg_hover_bg-transparent.lg_border-0.lg_hover_text-blue-700.lg_p-0.dark_text-gray-400.lg_dark_hover_text-white.dark_hover_bg-gray-700.dark_hover_text-white.lg_dark_hover_bg-transparent.dark_border-gray-700[href="#"]
-              | Contact
+              | Cinema
+          - if user_signed_in?
+            li 
+              = link_to "My Ticket", customer_tickets_path, class: "block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover_bg-gray-50 lg_hover_bg-transparent lg_border-0 lg_hover_text-blue-700 lg_p-0 dark_text-gray-400 lg_dark_hover_text-white dark_hover_bg-gray-700 dark_hover_text-white lg_dark_hover_bg-transparent dark_border-gray-700", data: { turbo: false }
+          
 script[src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"]

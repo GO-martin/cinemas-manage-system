@@ -1,6 +1,6 @@
 class Admin::MoviesController < Admin::BaseController
   before_action :set_movie, only: %i[show edit update destroy destroy_modal]
-
+  before_action :check_release_date, only: %i[create update]
   # GET admin/movies or admin/movies.json
   def index
     @pagy, @movies = pagy(Movie.search(params[:term]))
@@ -66,6 +66,13 @@ class Admin::MoviesController < Admin::BaseController
   end
 
   def movie_params
-    params.require(:movie).permit(:poster, :trailer, :director, :description, :release_date, :length, :name)
+    params.require(:movie).permit(:poster, :banner, :trailer, :status, :director, :description, :release_date, :length,
+                                  :name)
+  end
+
+  def check_release_date
+    return unless params[:movie][:release_date] > Time.zone.now
+
+    params[:movie][:status] = 'coming_soon'
   end
 end

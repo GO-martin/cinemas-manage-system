@@ -1,12 +1,16 @@
 class Movie < ApplicationRecord
   resourcify
 
+  has_many :showtimes, dependent: :destroy
+
+  enum :status, { now_showing: 'now_showing', coming_soon: 'coming_soon' }
+
   validates :director, :name, :length, presence: true
 
   scope :ordered, -> { order(id: :desc) }
 
   has_one_attached :poster, dependent: :destroy
-  has_one_attached :trailer, dependent: :destroy
+  has_one_attached :banner, dependent: :destroy
 
   def self.search(term)
     if term

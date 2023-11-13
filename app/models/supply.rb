@@ -1,11 +1,16 @@
 class Supply < ApplicationRecord
   resourcify
 
+  has_many :ticket_supplies
+
+  has_many :tickets, through: :ticket_supplies
   belongs_to :cinema
 
   validates :name, :quantity, :price, :cinema_id, presence: true
 
   scope :ordered, -> { order(id: :desc) }
+
+  scope :quantity_more_than, ->(quantity) { where('quantity > ?', quantity) }
 
   has_one_attached :image, dependent: :destroy
 

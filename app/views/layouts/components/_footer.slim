@@ -1,0 +1,42 @@
+footer.p-4.bg-white.sm_p-6.dark_bg-gray-800
+  .mx-auto.max-w-screen-xl
+    .md_flex.md_justify-between
+      .mb-6.md_mb-0
+        = link_to root_path, class: "flex items-center", data: { turbo: false }
+          = image_tag("logo.png", class: "mr-3 h-6 sm_h-9", alt: "Retro Cinema")
+          span.self-center.text-xl.font-semibold.whitespace-nowrap.dark_text-white
+            | Retro cinema
+      .grid.grid-cols-2.gap-8.sm_gap-6.sm_grid-cols-3
+        div 
+          h2.mb-6.text-sm.font-semibold.text-gray-900.uppercase.dark_text-white
+            | Follow us
+          ul.text-gray-600.dark_text-gray-400
+            li.mb-4
+              a.hover_underline href="https://github.com/GO-martin/cinemas-manage-system"
+                | Github
+            li.mb-4 
+              a.hover_underline href="#"
+                | Discord
+        div 
+          h2.mb-6.text-sm.font-semibold.text-gray-900.uppercase.dark_text-white
+            | Legal
+          ul.text-gray-600.dark_text-gray-400
+            li.mb-4
+              a.hover_underline href="#"
+                | Privacy Policy
+            li.mb-4 
+              a.hover_underline href="#"
+                | Terms &amp; Conditions
+  hr.my-6.border-gray-200.sm_mx-auto.dark_border-gray-700.lg_my-8
+  .sm_flex.sm_items-center.sm_justify-between  
+    span.text-sm.text-gray-500.sm_text-center.dark_text-gray-400
+      | © 2022 Retro cinema. All Rights Reserved.  
+    .flex.mt-4.space-x-6.sm_justify-center.sm_mt-0
+      a.text-gray-500.hover_text-gray-900.dark_hover_text-white href="#"
+        = inline_svg_tag("svg/facebook-icon.svg", class: "w-5 h-5")
+      a.text-gray-500.hover_text-gray-900.dark_hover_text-white href="#"
+        = inline_svg_tag("svg/instagram-icon.svg", class: "w-5 h-5")
+      a.text-gray-500.hover_text-gray-900.dark_hover_text-white href="#"
+        = inline_svg_tag("svg/twitter-icon.svg", class: "w-5 h-5")
+      
+

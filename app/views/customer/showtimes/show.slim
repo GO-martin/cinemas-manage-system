@@ -1,0 +1,57 @@
+.max-w-7xl.mx-auto.p-6.md_px-12.xl_px-6 data={"controller": "booking", "booking-room-id-value": @showtime.room.id, "booking-price-value": @showtime.fare, "action": "turbo:frame-render->booking#loadPayment", "booking-showtime-id-value": @showtime.id}
+  .page-title.text-center.bg-black.p-6.rounded-t-3xl
+    p.text-3xl.text-white.font-semibold  
+      | Booking Online
+  .top-content.bg-amber-100.p-4
+    p.font-medium
+      = "Cinema: #{@showtime.cinema.name} | Room: #{@showtime.room.name}" 
+    p.font-medium 
+      = "#{@showtime.start_time.strftime("%B %d, %Y %I:%M %p")} ~ #{@showtime.end_time.strftime("%B %d, %Y %I:%M %p")}"
+  = turbo_frame_tag "booking-main-content", class: "p-4 mb-10"
+    #room
+  .bottom-content.bg-black.p-6.text-white
+    .grid.grid-cols-2.lg_grid-cols-8.gap-6
+      .col-span-1.hidden
+        button.bg-blue-700.hover_bg-blue-800.focus_ring-4.focus_outline-none.focus_ring-blue-300.font-medium.rounded-lg.text-xl.p-3.text-center.inline-flex.items-center.w-28.h-28
+          span.mx-auto
+            | Previous 
+      .minicart-wrapper.col-span-auto.lg_col-span-6.grid.grid-cols-6.gap-6.lg_col-start-2
+        .col-span-auto.lg_col-span-2
+          .grid.grid-rows-3.grid-flow-col.gap-4
+            .row-span-3
+              = image_tag(@showtime.movie.poster)
+            .col-span-2
+              = @showtime.movie.name.upcase
+        .col-span-auto.lg_col-span-2.lg_col-start-3
+          .grid.grid-rows-4.grid-flow-col.gap-4
+            p
+              = "Cinema: #{@showtime.cinema.name.upcase}"
+            p 
+              = "Showtime: #{@showtime.start_time.strftime("%B %d, %Y %I:%M %p")}"
+            p 
+              = "Room: #{@showtime.room.name}"
+            p 
+              = "Movie: #{@showtime.movie.name}"
+        .col-span-auto.lg_col-span-2.lg_col-start-5
+          .grid.grid-rows-4.grid-flow-col.gap-4
+            p 
+              = "Seat: "
+              span#seat
+            p 
+              = "Seat Price: "
+              span#seat-price 0
+              |  VND
+            p 
+              = "Supply Price: "
+              span#supply-price 0
+              |  VND
+            p
+              = "Total Price: "
+              span#total-price 0
+              |  VND
+      .col-span-1.lg_col-start-8
+        = link_to "/customer/supplies/booking/supplies?cinema_id=#{@showtime.cinema.id}", data: { turbo_frame: "booking-main-content", action: "click->booking#checkSelectedSeat turbo:visit->booking#loadPayment" }, class:"bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_outline-none focus_ring-blue-300 font-medium rounded-lg text-xl p-3 text-center inline-flex items-center w-28 h-28 float-right"
+          span.mx-auto
+            | Next
+
+

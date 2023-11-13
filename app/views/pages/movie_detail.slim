@@ -1,0 +1,30 @@
+.max-w-7xl.mx-auto.px-6.md_px-12.xl_px-6
+  = render "pages/breadcrumb", breadcrumbs: params[:breadcrumbs]&.present? ? params[:breadcrumbs] : [@movie.name]
+  .main.bg-white.grid.grid-cols-1.xl_grid-cols-3 
+    .col-span-auto.xl_col-auto
+      .p-4.mb-4.2xl_col-span-2.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        - if @movie.poster.attached?
+          = image_tag(@movie.poster)
+    .col-span-2
+      .p-4.mb-4.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        .mb-10.text-3xl.font-semibold.dark_text-white
+          = @movie.name
+        hr.my-6.border-2.border-slate-700.sm_mx-auto.dark_border-black-700.lg_my-8
+        .mb-4.text-xl.font-normal.dark_text-white 
+          .font-semibold.inline-flex Director: &nbsp;
+          = @movie.director       
+        .mb-4.text-xl.font-normal.dark_text-white 
+          .font-semibold.inline-flex Release date: &nbsp; 
+          = @movie.release_date&.strftime("%e/%m/%Y")
+        .mb-4.text-xl.font-normal.dark_text-white 
+          .font-semibold.inline-flex Length: &nbsp;
+          = "#{@movie.length} minutes"
+        .mb-4.text-xl.font-normal.dark_text-white 
+          .font-semibold Description: 
+          = @movie.description
+        - if @movie.now_showing?
+          = link_to booking_page_path(@movie), data: { turbo: false }, class: "inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800"
+            | Buy ticket
+    .col-start-2.col-span-1
+      .p-4.mb-4.dark_border-gray-700.sm_p-6.dark_bg-gray-800
+        = get_video_iframe(@movie.trailer)

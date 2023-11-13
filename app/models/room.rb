@@ -4,7 +4,9 @@ class Room < ApplicationRecord
 
   has_many :structure_of_rooms, dependent: :destroy
   has_many :showtimes, dependent: :destroy
+
   belongs_to :cinema
+
   validates :name, :cinema_id, presence: true
   after_initialize :set_defaults
 

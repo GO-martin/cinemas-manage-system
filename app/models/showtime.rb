@@ -1,8 +1,11 @@
 class Showtime < ApplicationRecord
   resourcify
 
+  has_many :tickets, dependent: :destroy
   belongs_to :room
   belongs_to :movie
+  belongs_to :location
+  belongs_to :cinema
 
   validates :room_id, :movie_id, :start_time, :fare, presence: true
 

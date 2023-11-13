@@ -2,6 +2,7 @@ class Location < ApplicationRecord
   resourcify
 
   has_many :cinemas
+  has_many :showtimes
 
   validates :name, presence: true, uniqueness: true
 

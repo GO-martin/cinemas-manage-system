@@ -1,0 +1,12 @@
+.max-w-7xl.mx-auto.p-6.md_px-12.xl_px-6 data={controller:"showtimes", "showtimes-movie-id-value": @movie.id}
+  #date-cards.grid.grid-cols-2.md_grid-cols-3.lg_grid-cols-6.gap-4.p-6
+    - (@start_date..@end_date).each do |date|
+      .date-card.bg-white.p-4.rounded-lg.shadow-md.hover_cursor-pointer data={action:"click->showtimes#fetchShowtimes"} date-value=date
+        .flex.justify-between  
+          .text-left 
+            p = date.strftime('%A')
+            p = date.strftime('%B')
+          .text-right 
+            p.text-3xl = date.day
+  #collateral-tabs
+  
