@@ -4,9 +4,21 @@ tr.hover_bg-gray-100.dark_hover_bg-gray-700 id=dom_id(movie)
   td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
     = movie&.id 
   td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
-    = movie&.length   
+    = "#{movie&.length} minutes"   
   td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
     = movie&.director
+  td.p-4.text-base.font-normal.text-gray-900.whitespace-nowrap.dark_text-white
+    - if movie.now_showing?
+      = button_to change_coming_soon_admin_movie_path(movie), method: :put, class: "flex items-center", "data-tooltip-target": "tooltip-#{movie.id}", "data-tooltip-placement": "bottom"
+        .h-3.w-3.rounded-full.bg-green-400.mr-2
+        | Now Showing
+    - elsif movie.coming_soon?
+      = button_to change_now_showing_admin_movie_path(movie), method: :put, class: "flex items-center", "data-tooltip-target": "tooltip-#{movie.id}", "data-tooltip-placement": "bottom"
+        .h-3.w-3.rounded-full.bg-red-500.mr-2
+        | Coming Soon
+    .absolute.z-10.invisible.inline-block.px-3.py-2.text-sm.font-medium.text-white.bg-gray-900.rounded-lg.shadow-sm.opacity-0.tooltip role="tooltip" id="tooltip-#{movie.id}"
+      | Change status
+      .tooltip-arrow data-popper-arrow
   td.p-4.space-x-2.whitespace-nowrap.flex
     = link_to edit_admin_movie_path(movie), class: "btn-update inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800"
       = inline_svg_tag("svg/update-icon.svg", class: "w-4 h-4 mr-2")

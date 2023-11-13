@@ -3,7 +3,7 @@ class Movie < ApplicationRecord
 
   has_many :showtimes, dependent: :destroy
 
-  enum :status, { now_showing: 'now_showing', coming_soon: 'coming_soon' }
+  enum :status, { now_showing: 0, coming_soon: 1 }
 
   validates :director, :name, :length, presence: true
 

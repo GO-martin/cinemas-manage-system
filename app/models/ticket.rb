@@ -8,11 +8,10 @@ class Ticket < ApplicationRecord
   has_many :supplies, through: :ticket_supplies
   scope :ordered, -> { order(id: :desc) }
 
-  def self.search(term)
-    if term
-      joins(:user).where('users.name LIKE ?', "%#{term}%").ordered
-    else
-      ordered
-    end
+  def self.by_filter(search_term, movie_filter, room_filter)
+    left_outer_joins(showtime: %i[movie room])
+      .where('LOWER(movies.name) LIKE ?', "%#{search_term.downcase}%")
+      .where(movies: { id: movie_filter.presence || Movie.ids })
+      .where(rooms: { id: room_filter.presence || Room.ids })
   end
 end

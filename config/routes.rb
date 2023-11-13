@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     resources :movies do
       member do
         get 'destroy_modal'
+        put 'change_now_showing'
+        put 'change_coming_soon'
       end
     end
     resources :rooms do
@@ -37,7 +39,11 @@ Rails.application.routes.draw do
         get 'destroy_modal'
       end
     end
-    resources :tickets
+    resources :tickets do
+      collection do
+        post 'search'
+      end
+    end
   end
 
   namespace :customer do
