@@ -19,7 +19,7 @@ header
                 = current_user.email
             ul.py-2[aria-labelledby="user-menu-button"]
               li
-                = link_to "Account Settings", edit_user_registration_path, class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white"
+                = link_to "Account Settings", edit_customer_profile_path(current_user.id), class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white"
               li
                 = button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white"
         - else

@@ -8,6 +8,13 @@ Rails.application.routes.draw do
   }
 
   namespace :admin do
+    resources :dashboards do
+      collection do
+        get 'update_main_chart'
+        get 'update_stats'
+      end
+    end
+    resources :profiles
     resources :structure_of_rooms
     resources :locations do
       member do
