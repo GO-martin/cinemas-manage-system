@@ -1,0 +1,27 @@
+.mx-auto.flex.flex-col.justify-center.items-center.px-6.pt-8.pt_mt-0
+  a.text-2xl.font-semibold.flex.justify-center.items-center.mb-8.lg_mb-10[href=""]
+    = image_tag("logo.png", class: "h-20 mr-4", alt: "Retro Cinema")
+    span.self-center.text-2xl.font-bold.whitespace-nowrap
+      | Retro Cinema
+  .bg-white.shadow.rounded-lg.md_mt-0.w-full.sm_max-w-screen-sm.xl_p-0.mb-8
+    .p-6.sm_p-8.lg_p-16.space-y-8
+      h2.text-2xl.lg_text-3xl.font-bold.text-gray-900
+        |  Sign in to platform 
+      = form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: "mt-8 space-y-6" }, data: {turbo: false}) do |f|
+        .field
+          = f.label :email, class: "text-sm font-medium text-gray-900 block mb-2"
+          = f.email_field :email, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5", placeholder: "name@company.com", required: true
+        .field
+          = f.label :password, class: "text-sm font-medium text-gray-900 block mb-2"
+          = f.password_field :password, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5", placeholder: "••••••••", required: true
+        .field.flex.items-start
+          .flex.items-center.h-5
+            = f.check_box :remember_me, class: "bg-gray-200 border-gray-300 focus:ring-3 focus:ring-cyan-200 h-4 w-4 rounded"
+          .text-sm.ml-3
+            = f.label :remember_me, class: "font-medium text-gray-900"
+          = link_to "Lost Password?", "#", class: "text-sm text-teal-500 hover:underline ml-auto"
+        .actions
+          = f.submit "Login to your account", class: "text-white bg-cyan-600 hover:bg-cyan-700 focus:ring-4 focus:ring-cyan-200 font-medium rounded-lg text-base px-5 py-3 w-full sm:w-auto text-center"
+        .text-sm.font-medium.text-gray-500
+          |  Not registered? 
+          = link_to "Create account", new_user_registration_path , class: "text-teal-500 hover:underline"

@@ -1,0 +1,3 @@
+abbr[title="required"] {
+    @apply !text-red-500 no-underline;
+}

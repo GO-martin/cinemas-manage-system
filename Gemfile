@@ -72,3 +72,45 @@ group :test do
 end
 
 gem "tailwindcss-rails", "~> 2.0"
+
+# Slim Template
+gem "slim"
+gem "slim-rails"
+
+# Authentication
+gem "devise"
+
+# Authorization
+gem "pundit"
+gem "rolify"
+
+# Simple Form
+gem "simple_form"
+gem 'simple_form-tailwind'
+
+# Inline Svg
+gem 'inline_svg'
+
+# Search
+gem 'ransack'
+
+# Populate our seed data
+gem "faker" 
+
+# Pagination
+gem "pagy"
+
+# Debug
+gem "byebug"
+
+gem "pry-byebug"
+
+# RuboCop: Ruby code style checking and code formatting tool
+gem "rubocop"
+gem "rufo"
+
+# Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
+gem "image_processing", "~> 1.2"
+
+gem "view_component"
+gem "hotwire-livereload", "~> 1.2", :group => :development

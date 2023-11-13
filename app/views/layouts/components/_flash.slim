@@ -1,0 +1,6 @@
+- flash.each do |flash_type, message| 
+  .flash-message.text-sm.text-white.bg-black.px-4.py-2.rounded-full[
+    data-controller="removals"
+    data-action="animationend->removals#remove"
+  ]
+    = message

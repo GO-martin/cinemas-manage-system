@@ -1,0 +1,42 @@
+.bg-gray-50
+  .mx-auto.flex.flex-col.justify-center.items-center.px-6.pt-8.pt_mt-0
+    a.text-2xl.font-semibold.flex.justify-center.items-center.mb-8.lg_mb-10[href=""]
+      = image_tag("logo.png", class: "h-20 mr-4", alt: "Retro Cinema")
+      span.self-center.text-2xl.font-bold.whitespace-nowrap
+        | Retro Cinema
+    .bg-white.shadow.rounded-lg.md_mt-0.w-full.sm_max-w-screen-sm.xl_p-0.mb-8
+      .p-6.sm_p-8.lg_p-16.space-y-8
+        h2.text-2xl.lg_text-3xl.font-bold.text-gray-900
+          |  Create a Free Account 
+        = form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "mt-8 space-y-6" }) do |f|
+          = render "devise/shared/error_messages", resource: resource
+          .field
+            = f.label :email, class: "text-sm font-medium text-gray-900 block mb-2"
+            = f.email_field :email, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5", placeholder: "name@company.com", required: true
+          .field
+            = f.label :password, class: "text-sm font-medium text-gray-900 block mb-2"
+            - if @minimum_password_length
+              em
+                | (
+                = @minimum_password_length
+                |  characters minimum)
+            br
+            = f.password_field :password, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5", autocomplete: "new-password", required: true
+          .field
+            = f.label :password_confirmation, class: "text-sm font-medium text-gray-900 block mb-2"
+            br
+            = f.password_field :password_confirmation, class: "bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-cyan-600 focus:border-cyan-600 block w-full p-2.5", autocomplete: "new-password", required: true
+          .field.flex.items-start
+            .flex.items-center.h-5
+              input#remember.bg-gray-200.border-gray-300.focus_ring-3.focus_ring-cyan-200.h-4.w-4.rounded[aria-describedby="remember" name="remember" type="checkbox" required]
+            .text-sm.ml-3
+              label.font-medium.text-gray-900[for="remember"]
+                | I accept the 
+                a.text-teal-500.hover_underline[href="#"]
+                  | Terms and Conditions
+          .actions
+            button.text-white.bg-cyan-600.hover_bg-cyan-700.focus_ring-4.focus_ring-cyan-200.font-medium.rounded-lg.text-base.px-5.py-3.w-full.sm_w-auto.text-center[type="submit"]
+              | Create account
+          .text-sm.font-medium.text-gray-500
+            |  Already have an account? 
+            = link_to "Login here", new_user_session_path, class: "text-teal-500 hover:underline"

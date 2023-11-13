@@ -1,0 +1,15 @@
+doctype html
+html
+  head
+    title CinemaManagement
+    meta[content="width=device-width,initial-scale=1" name="viewport"] 
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag "application", "data-turbo-track": "reload"
+    = javascript_importmap_tags 
+    = stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" 
+  body
+    .flash.fixed.top-20.left-1/2.transform.-translate-x-1/2.flex.flex-col.items-center.gap-4.max-w-full.w-max-content.px-4
+      = render "layouts/components/flash"
+    = render "layouts/components/navbar"
+    = yield
