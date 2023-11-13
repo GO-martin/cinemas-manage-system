@@ -1,0 +1,58 @@
+= turbo_frame_tag "modal"
+.p-4.bg-white.block.sm_flex.items-center.justify-between.border-b.border-gray-200.dark_bg-gray-800.dark_border-gray-700 class="lg_mt-1.5"
+  .w-full.mb-1
+    .mb-4
+      nav.flex.mb-5 aria-label="Breadcrumb"
+        ol.inline-flex.items-center.space-x-1.text-sm.font-medium.md_space-x-2
+          li.inline-flex.items-center
+            a.inline-flex.items-center.text-gray-700.hover_text-blue-600.dark_text-gray-300.dark_hover_text-white href="#"
+              = inline_svg_tag("svg/home-icon.svg", class: "w-5 h-5 mr-2.5") 
+              |  Home 
+          li
+            .flex.items-center
+              = inline_svg_tag("svg/rightArrow-icon.svg", class: "w-6 h-6 text-gray-400")
+              a.ml-1.text-gray-700.hover_text-blue-600.md_ml-2.dark_text-gray-300.dark_hover_text-white[href="#"]
+                | Main 
+          li
+            .flex.items-center
+              = inline_svg_tag("svg/rightArrow-icon.svg", class: "w-6 h-6 text-gray-400")
+              span.ml-1.text-gray-400.md_ml-2.dark_text-gray-500[aria-current="page"]
+                | Supplies
+      h1.text-xl.font-semibold.text-gray-900.sm_text-2xl.dark_text-white
+        | All supplies
+    div[class="items-center justify-between block sm_flex md_divide-x md_divide-gray-100 dark_divide-gray-700"]
+      div[class="flex items-center mb-4 sm_mb-0"]
+        = form_tag(admin_supplies_path, method: :get, class: "flex space-x-3") do 
+          = text_field_tag :term, params[:term], placeholder: "Search by name", class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2.5 dark_bg-gray-700 dark_border-gray-600 dark_placeholder-gray-400 dark_text-white dark_focus_ring-blue-500 dark_focus_border-blue-500"
+          = submit_tag "Search", class: "cursor-pointer text-white bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark_bg-blue-600 dark_hover_bg-blue-700 focus_outline-none dark_focus_ring-blue-800"
+      
+      = link_to "New supply", new_admin_supply_path, data: { turbo_frame: "modal" }, class: "text-white bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark_bg-blue-600 dark_hover_bg-blue-700 focus_outline-none dark_focus_ring-blue-800"
+.flex.flex-col
+  .overflow-x-auto 
+    .inline-block.min-w-full.align-middle 
+      .overflow-hidden.shadow 
+        table.min-w-full.divide-y.divide-gray-200.table-fixed.dark_divide-gray-600
+          thead.bg-gray-100.dark_bg-gray-700
+            tr 
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | Supply name 
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | ID
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | Quantity
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | Price
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | Actions
+          tbody#supplies.bg-white.divide-y.divide-gray-200.dark_bg-gray-800.dark_divide-gray-700
+            - if @supplies
+              - @supplies.each do |supply|
+                = render "supply", supply: supply 
+
+/ Pagination 
+div[class="sticky bottom-0 right-0 items-center w-full p-4 bg-white border-t border-gray-200 sm_flex sm_justify-between dark_bg-gray-800 dark_border-gray-700"]                
+  .flex.items-center.mb-4.sm_mb-0.space-x-3
+    == pagy_nav(@pagy)
+    span[class="font-semibold text-gray-900 dark_text-white"]
+      == pagy_info(@pagy)
+
