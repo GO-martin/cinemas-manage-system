@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       get 'search'
     end
   end
+  mount Sidekiq::Web => '/sidekiq'
 
   namespace :admin do
     resources :notifications
