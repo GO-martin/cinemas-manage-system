@@ -5,6 +5,9 @@ class Notification < ApplicationRecord
   scope :unviewed, -> { where(viewed: false) }
   default_scope { latest }
 
+  enum :user_role, { admin: 0, customer: 1 }
+  enum :schedule, { no_schedule: 0, coming_up: 1 }
+
   after_create_commit do
     broadcast_prepend_to "broadcast_to_user_#{user_id}",
                          target: :notifications,

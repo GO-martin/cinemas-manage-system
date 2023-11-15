@@ -1,6 +1,7 @@
 class Admin::DashboardsController < Admin::BaseController
   def index
     @main_chart_data = get_main_chart_data(7)
+    @location_chart_data = get_location_chart_data(7)
     @top_movies = get_top_movies(5, 7)
     @top_customers = get_top_customers(5, 7)
     @new_customers_chart_data = get_new_customers_chart_data(30)
@@ -30,6 +31,15 @@ class Admin::DashboardsController < Admin::BaseController
     end
   end
 
+  def update_location_chart
+    @location_chart_data = get_location_chart_data(params[:period].to_i)
+    respond_to do |format|
+      format.json do
+        render json: { location_chart_data: @location_chart_data }
+      end
+    end
+  end
+
   private
 
   def get_main_chart_data(period)
@@ -42,6 +52,15 @@ class Admin::DashboardsController < Admin::BaseController
     main_chart_data[:total_revenue] = total_revenue
 
     main_chart_data
+  end
+
+  def get_location_chart_data(period)
+    location_chart_data = {}
+
+    current_location_chart_data = Location.joins(showtimes: :tickets).select('locations.*, SUM(tickets.price) as total_price').where(tickets: { created_at: (Time.current - period.days).. }).group('locations.id').order('total_price ASC')
+
+    location_chart_data[:current_location_chart_data] = current_location_chart_data
+    location_chart_data
   end
 
   def get_top_movies(number, period)
