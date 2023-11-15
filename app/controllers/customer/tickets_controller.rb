@@ -6,10 +6,12 @@ class Customer::TicketsController < Customer::BaseController
   def new; end
 
   def create
+    puts '==================================================================================='
     @ticket = Ticket.new(ticket_params)
     respond_to do |format|
       if @ticket.save
         TicketMailerJob.perform_async(@ticket.id)
+        TicketMailer.new_ticket_notification(@ticket).deliver_now
         format.json { render json: { ticket_id: @ticket.id } }
       else
         format.html { render :new, status: :unprocessable_entity }
