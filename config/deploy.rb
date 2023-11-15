@@ -38,3 +38,9 @@ set :keep_releases, 5
 
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
+task :restart, :clear_cache do
+  on roles(:app) do
+    execute "cd /home/deploy/#{fetch :application}"
+    execute :sudo, :systemctl, :restart, :sidekiq
+  end
+end

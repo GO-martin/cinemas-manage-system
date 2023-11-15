@@ -11,7 +11,6 @@ class Customer::TicketsController < Customer::BaseController
     respond_to do |format|
       if @ticket.save
         TicketMailerJob.perform_async(@ticket.id)
-        TicketMailer.new_ticket_notification(@ticket).deliver_now
         format.json { render json: { ticket_id: @ticket.id } }
       else
         format.html { render :new, status: :unprocessable_entity }
