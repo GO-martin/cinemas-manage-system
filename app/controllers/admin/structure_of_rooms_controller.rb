@@ -13,14 +13,7 @@ class Admin::StructureOfRoomsController < Admin::BaseController
   end
 
   def update
-    respond_to do |format|
-      if @structure_of_room.update(structure_of_room_params)
-        # format.html { redirect_to admin_rooms_url, notice: 'Structure Of Room was successfully updated.' }
-
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-      end
-    end
+    @structure_of_room.update(structure_of_room_params)
   end
 
   private

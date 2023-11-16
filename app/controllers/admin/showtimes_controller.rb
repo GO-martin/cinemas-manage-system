@@ -1,6 +1,5 @@
 class Admin::ShowtimesController < Admin::BaseController
-  before_action :set_showtime, only: %i[show edit update destroy destroy_modal]
-
+  include Findable
   # GET admin/showtimes or admin/showtimes.json
   def index
     @pagy, @showtimes = pagy(Showtime.ordered)
@@ -99,16 +98,12 @@ class Admin::ShowtimesController < Admin::BaseController
 
   private
 
-  def set_showtime
-    @showtime = Showtime.find(params[:id])
-  end
-
   def showtime_params
-    params[:showtime][:duration] = Movie.find(params[:showtime][:movie_id]).length
+    params[:showtime][:duration] = Movie.find_by(id: params[:showtime][:movie_id]).length
     start_time = DateTime.parse(params[:showtime][:start_time])
     params[:showtime][:end_time] = start_time + params[:showtime][:duration].minutes
-    params[:showtime][:cinema_id] = Room.find(params[:showtime][:room_id]).cinema.id
-    params[:showtime][:location_id] = Room.find(params[:showtime][:room_id]).cinema.location.id
+    params[:showtime][:cinema_id] = Room.find_by(id: params[:showtime][:room_id]).cinema.id
+    params[:showtime][:location_id] = Room.find_by(id: params[:showtime][:room_id]).cinema.location.id
 
     params.require(:showtime).permit(:room_id, :movie_id, :location_id, :cinema_id, :start_time, :fare, :duration,
                                      :end_time)

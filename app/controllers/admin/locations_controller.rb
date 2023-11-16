@@ -1,6 +1,5 @@
 class Admin::LocationsController < Admin::BaseController
-  before_action :set_location, only: %i[show edit update destroy destroy_modal]
-
+  include Findable
   # GET admin/locations or admin/locations.json
   def index
     @pagy, @locations = pagy(Location.ordered)
@@ -96,10 +95,6 @@ class Admin::LocationsController < Admin::BaseController
   end
 
   private
-
-  def set_location
-    @location = Location.find(params[:id])
-  end
 
   def location_params
     params.require(:location).permit(:name)

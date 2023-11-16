@@ -1,6 +1,5 @@
 class Customer::RoomsController < Customer::BaseController
-  before_action :set_room, only: %i[show]
-
+  include Findable
   def show
     @structures = @room.structure_of_rooms
     @sold_tickets = Ticket.where(showtime_id: params[:showtime_id])
@@ -11,11 +10,5 @@ class Customer::RoomsController < Customer::BaseController
                                       formats: [:html])
       end
     end
-  end
-
-  private
-
-  def set_room
-    @room = Room.find(params[:id])
   end
 end

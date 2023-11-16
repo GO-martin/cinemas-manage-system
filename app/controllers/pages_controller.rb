@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   end
 
   def movie_detail
-    @movie = Movie.find(params[:id])
+    @movie = Movie.find_by(id: params[:id])
   end
 
   def movies_now_showing
@@ -19,7 +19,7 @@ class PagesController < ApplicationController
   end
 
   def booking
-    @movie = Movie.find(params[:id])
+    @movie = Movie.find_by(id: params[:id])
     @start_date = Date.today
     @end_date = @start_date + 15.days
     @selected_date = params[:selected_date] || @start_date
