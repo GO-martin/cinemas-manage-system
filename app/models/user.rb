@@ -41,6 +41,10 @@ class User < ApplicationRecord
     end
   end
 
+  def delete_roles
+    roles.delete(roles.where(id: roles.ids))
+  end
+
   def change_role_admin
     return unless has_role? :customer
 
