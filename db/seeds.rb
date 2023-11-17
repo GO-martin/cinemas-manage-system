@@ -71,14 +71,17 @@ admin_profile.save!
       )
     end
   end
+
+  room_sample = Room.pluck(:id).sample
+
   showtime = Showtime.create!(
-    room_id: Room.pluck(:id).sample, # Randomly select a room_id from existing rooms
+    room_id: room_sample, # Randomly select a room_id from existing rooms
     movie_id: Movie.pluck(:id).sample, # Randomly select a movie_id from existing movies
     start_time: Faker::Time.between(from: DateTime.now, to: DateTime.now + 15.days), # Start time within the next 30 days
     fare: Faker::Number.between(from: 80_000, to: 90_000), # Random fare between 5 and 20
     duration: Faker::Number.between(from: 60, to: 90), # Random duration between 60 and 180 minutes
-    location_id: Location.pluck(:id).sample, # Randomly select a location_id from existing locations
-    cinema_id: Cinema.pluck(:id).sample # Randomly select a cinema_id from existing cinemas
+    location_id: Room.find_by(id: room_sample).cinema.id, # Randomly select a location_id from existing locations
+    cinema_id: Room.find_by(id: room_sample).cinema.location.id # Randomly select a cinema_id from existing cinemas
   )
   showtime.update(end_time: showtime.start_time + showtime.duration.minutes)
 
