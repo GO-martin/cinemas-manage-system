@@ -156,6 +156,7 @@ export default class extends Controller {
     let _this = this;
 
     $(".main-chart-dropdown-button").on("click", async function (e) {
+      e.preventDefault();
       let obj = $(e.currentTarget),
         period = obj.attr("data-filter"),
         type = obj.attr("data-type");
@@ -213,6 +214,8 @@ export default class extends Controller {
 
     let _this = this;
     $(".location-chart-dropdown-button").on("click", async function (e) {
+      e.preventDefault();
+
       let obj = $(e.currentTarget),
         period = obj.attr("data-filter"),
         type = obj.attr("data-type");

@@ -32,4 +32,20 @@ class Ticket < ApplicationRecord
   def user_ids
     User.where.not(id: user_id).with_role(:admin).ids
   end
+
+  scope :total_revenue, ->(period) {
+    where(created_at: (Time.current - period.days)..).sum(:price)
+  }
+
+  scope :main_chart_data, ->(period) {
+    order('date(created_at) ASC').group('date(created_at)').where(created_at: (Time.current - period.days)..).sum(:price)
+  }
+
+  scope :tickets_chart_data, ->(period) {
+    order('date(created_at) ASC').group('date(created_at)').where(created_at: (Time.current - period.days)..).count(:id)
+  }
+
+  scope :total_new_tickets, ->(period) {
+    order('date(created_at) ASC').where(created_at: (Time.current - period.days)..).count
+  }
 end

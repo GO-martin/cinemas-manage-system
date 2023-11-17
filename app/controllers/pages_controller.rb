@@ -36,7 +36,7 @@ class PagesController < ApplicationController
       end_time = selected_date.end_of_day
     end
 
-    locations = Location.all
+    locations = Location.includes(:cinemas).all
     location_data = []
 
     locations.each do |location|

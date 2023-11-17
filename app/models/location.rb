@@ -8,6 +8,10 @@ class Location < ApplicationRecord
 
   scope :ordered, -> { order(id: :desc) }
 
+  scope :locations_chart_data, ->(period) {
+    joins(showtimes: :tickets).select('locations.*, SUM(tickets.price) as total_price').where(tickets: { created_at: (Time.current - period.days).. }).group('locations.id').order('total_price ASC')
+  }
+
   after_create_commit lambda {
                         broadcast_prepend_to 'admin', partial: 'admin/locations/location',
                                                       locals: { location: self }
