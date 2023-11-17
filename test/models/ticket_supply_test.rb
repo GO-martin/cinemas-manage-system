@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class TicketSupplyTest < ActiveSupport::TestCase
   # test "the truth" do

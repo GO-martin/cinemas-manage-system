@@ -65,20 +65,20 @@ class Admin::DashboardsController < Admin::BaseController
 
   def get_top_movies(number, period)
     Movie.joins(showtimes: :tickets)
-         .select('movies.*, SUM(tickets.price) as total_price')
-         .where(tickets: { created_at: (Time.current - period.days).. })
-         .group('movies.id')
-         .order('total_price DESC')
-         .limit(number)
+      .select('movies.*, SUM(tickets.price) as total_price')
+      .where(tickets: { created_at: (Time.current - period.days).. })
+      .group('movies.id')
+      .order('total_price DESC')
+      .limit(number)
   end
 
   def get_top_customers(number, period)
     User.joins(:tickets)
-        .select('users.*, SUM(tickets.price) as total_price')
-        .where(tickets: { created_at: (Time.current - period.days).. })
-        .group('users.id')
-        .order('total_price DESC')
-        .limit(number)
+      .select('users.*, SUM(tickets.price) as total_price')
+      .where(tickets: { created_at: (Time.current - period.days).. })
+      .group('users.id')
+      .order('total_price DESC')
+      .limit(number)
   end
 
   def get_new_customers_chart_data(period)

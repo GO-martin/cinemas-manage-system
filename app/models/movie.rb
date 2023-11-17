@@ -5,7 +5,7 @@ class Movie < ApplicationRecord
 
   enum :status, { now_showing: 0, coming_soon: 1 }
 
-  validates :poster, :director, :name, :length, :release_date, :trailer, :description, presence: true
+  validates :director, :name, :length, :release_date, :trailer, :description, presence: true
 
   scope :ordered, -> { order(id: :desc) }
 
