@@ -1,5 +1,6 @@
 class Supply < ApplicationRecord
   resourcify
+  include DeletableAttachment
 
   has_many :ticket_supplies
 
@@ -25,6 +26,10 @@ class Supply < ApplicationRecord
 
   after_destroy_commit do
     broadcast_remove_to 'admin'
+  end
+
+  def attachment_name
+    :image
   end
 
   def self.by_filter(search_term, cinema_filter)

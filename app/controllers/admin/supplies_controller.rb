@@ -41,6 +41,9 @@ class Admin::SuppliesController < Admin::BaseController
 
   # PATCH/PUT admin/supplies/1 or admin/supplies/1.json
   def update
+    if params.dig(:supply, :image).present?
+      @supply.delete_attachment
+    end
     respond_to do |format|
       if @supply.update(supply_params)
         format.turbo_stream do

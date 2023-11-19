@@ -31,6 +31,9 @@ class Admin::MoviesController < Admin::BaseController
 
   # PATCH/PUT admin/movies/1 or admin/movies/1.json
   def update
+    if params.dig(:movie, :poster).present?
+      @movie.delete_attachment
+    end
     respond_to do |format|
       if @movie.update(movie_params)
         format.html { redirect_to admin_movies_url, notice: 'Movie was successfully updated.' }

@@ -1,5 +1,6 @@
 class Movie < ApplicationRecord
   resourcify
+  include DeletableAttachment
 
   has_many :showtimes, dependent: :destroy
 
@@ -28,6 +29,10 @@ class Movie < ApplicationRecord
   def self.by_filter(search_term, status_filter)
     where('LOWER(movies.name) LIKE ?', "%#{search_term.downcase}%")
       .where(status: status_filter.presence || Movie.distinct.pluck(:status))
+  end
+
+  def attachment_name
+    :poster
   end
 
   scope :get_top_movies, ->(number, period) {
