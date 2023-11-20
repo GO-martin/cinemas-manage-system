@@ -35,6 +35,10 @@ header
             ul.py-2[aria-labelledby="user-menu-button"]
               li
                 = link_to "Account Settings", edit_customer_profile_path(current_user.profile.id), class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white", data: { turbo: false }
+              - if current_user.has_role?(:admin)
+                li 
+                  = link_to admin_dashboards_path, class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_text-gray-300 dark_hover_bg-gray-600 dark_hover_text-white", data: { turbo: false }
+                    | Switch
               li
                 = button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white"
         - else
