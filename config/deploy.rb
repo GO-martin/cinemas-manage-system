@@ -36,6 +36,11 @@ append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bund
 # Default value for keep_releases is 5
 set :keep_releases, 5
 
+set :rollbar_token, '4ffe21436f42400e856b2df0ad9d2dd4'
+set :rollbar_env, Proc.new { fetch :stage }
+set :rollbar_role, Proc.new { :app }
+
+
 # Uncomment the following to require manually verifying the host key before first deploy.
 # set :ssh_options, verify_host_key: :secure
 task :restart, :clear_cache do
