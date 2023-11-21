@@ -26,7 +26,7 @@
                 .font-semibold.inline-flex Release date: &nbsp;
                 = movie.release_date&.strftime("%e/%m/%Y")
               .p-5.flex.justify-end.items-center 
-                = link_to booking_page_path(movie.id), class: "px-5 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800"
+                = link_to booking_page_path(movie.id), data: { turbo: false }, class: "px-5 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800"
                   | Buy ticket
               
 
