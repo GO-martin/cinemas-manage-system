@@ -26,4 +26,28 @@ class Location < ApplicationRecord
   def self.by_filter(search_term)
     where('LOWER(locations.name) LIKE ?', "%#{search_term.downcase}%")
   end
+
+  def self.collateral_tabs_data(start_time, end_time, movie_id)
+    locations = Location.includes(:cinemas).all
+    location_data = []
+
+    locations.each do |location|
+      cinema_data = []
+      cinemas = location.cinemas
+
+      cinemas.each do |cinema|
+        showtimes = Showtime.where(
+          location_id: location.id,
+          cinema_id: cinema.id,
+          start_time: start_time..end_time,
+          movie_id:
+        )
+
+        cinema_data << { id: cinema.id, name: cinema.name, showtimes: } if showtimes.present?
+      end
+
+      location_data << { cinemas: cinema_data, id: location.id, name: location.name } if cinema_data.present?
+    end
+    location_data
+  end
 end
