@@ -32,6 +32,10 @@ class User < ApplicationRecord
     order('date(created_at) ASC').where(created_at: (Time.current - period.days)..).count
   }
 
+  scope :other_users, ->(user_id) {
+    where.not(id: user_id)
+  }
+
   after_create_commit do
     broadcast_prepend_to 'admin', partial: 'admin/users/user',
                                   locals: { user: self }

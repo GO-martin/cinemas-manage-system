@@ -100,7 +100,7 @@ class Admin::ShowtimesController < Admin::BaseController
 
   def showtime_params
     params[:showtime][:duration] = Movie.find_by(id: params[:showtime][:movie_id]).length
-    start_time = DateTime.parse(params[:showtime][:start_time])
+    start_time = Time.parse(params[:showtime][:start_time])
     params[:showtime][:end_time] = start_time + params[:showtime][:duration].minutes
     params[:showtime][:cinema_id] = Room.find_by(id: params[:showtime][:room_id]).cinema.id
     params[:showtime][:location_id] = Room.find_by(id: params[:showtime][:room_id]).cinema.location.id

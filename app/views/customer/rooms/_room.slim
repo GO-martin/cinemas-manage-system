@@ -10,10 +10,11 @@
   .col-span-full.sm_col-span-4.sm_col-start-2.mb-10
     = image_tag("bg-screen.png", class: "w-full")
   .col-span-full.sm_col-span-4.sm_col-start-2.pb-10.mx-auto.overflow-auto
-    - room.row_size.times do |rowIndex| 
+    - room.row_size.times do |row_index| 
       .flex.flex-row
-        - room.column_size.times do |columnIndex|
-          - structure = @structures.where(row_index: rowIndex, column_index: columnIndex).first
-          - sold_ticket = @sold_tickets.where(seat_row: rowIndex, seat_column: columnIndex)
-          .seat.bg-gray-800.h-8.w-8.m-1.rounded-t-lg.hover_cursor-pointer.hover_scale-125.text-white.text-center class=[structure.type_seat == "INACTIVE" ? "invisible" : ""] data={action:"click->booking#selectSeat"} row-index="#{structure.row_index}" column-index="#{structure.column_index}" class=[sold_ticket.empty? ? "": "sold noHover"]
-            = seat_number_format(rowIndex, columnIndex)
+        - room.column_size.times do |column_index|
+          - structure = @structures.where(row_index: row_index, column_index: column_index).first
+          - sold_ticket = @sold_tickets.where(seat_row: row_index, seat_column: column_index)
+          - selecting_seat = @selecting_seats.where(row_index: row_index, column_index: column_index)
+          = render "customer/rooms/seat", type_seat: structure.type_seat, row_index:, column_index:, selecting_seat:, sold_ticket:
+          
