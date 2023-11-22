@@ -14,7 +14,7 @@ class Customer::BookingsController < ApplicationController
   def destroy
     @booking = Booking.find_by(id: params[:id])
     @booking.destroy
-    head :no_content
+    format.json { head :no_content }
   end
 
   private
