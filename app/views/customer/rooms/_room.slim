@@ -16,5 +16,5 @@
           - structure = @structures.where(row_index: row_index, column_index: column_index).first
           - sold_ticket = @sold_tickets.where(seat_row: row_index, seat_column: column_index)
           - selecting_seat = @selecting_seats.where(row_index: row_index, column_index: column_index)
-          = render "customer/rooms/seat", type_seat: structure.type_seat, row_index:, column_index:, selecting_seat:, sold_ticket:
+          = render "customer/rooms/seat", type_seat: structure.type_seat, row_index:, column_index:, selecting_seat:, sold_ticket:, showtime_id:
           
