@@ -5,14 +5,14 @@ def seat_number_format(row_index, column_index)
 end
 
 # Admin
-admin = User.create!(email: 'martin.nguyen.goldenowl@gmail.com', password: 'password')
-admin.delete_roles
-admin.add_role :admin
-admin_profile = Profile.new(fullname: Faker::Lorem.sentence,
-                            birthday: Faker::Date.birthday(min_age: 18, max_age: 65), address: Faker::Address.full_address, user_id: admin.id)
-admin_profile.avatar.attach(io: File.open(Rails.root.join(*%w[app assets images HoneySweet.jpg])),
-                            filename: 'HoneySweet.jpg')
-admin_profile.save!
+# admin = User.create!(email: 'martin.nguyen.goldenowl@gmail.com', password: 'password')
+# admin.delete_roles
+# admin.add_role :admin
+# admin_profile = Profile.new(fullname: Faker::Lorem.sentence,
+#                             birthday: Faker::Date.birthday(min_age: 18, max_age: 65), address: Faker::Address.full_address, user_id: admin.id)
+# admin_profile.avatar.attach(io: File.open(Rails.root.join(*%w[app assets images HoneySweet.jpg])),
+#                             filename: 'HoneySweet.jpg')
+# admin_profile.save!
 
 10.times do
   customer = User.create!(
@@ -117,7 +117,7 @@ admin_profile.save!
 
   ticket.update(seat_name: seat_number_format(ticket.seat_row, ticket.seat_column))
 
-  ticket_supplies = TicketSupply.create!(
+  TicketSupply.create!(
     ticket_id: ticket.id,
     supply_id: supply.id,
     quantity: 1
