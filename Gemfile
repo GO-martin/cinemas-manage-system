@@ -100,9 +100,6 @@ gem 'inline_svg'
 # Search
 gem 'ransack'
 
-# Populate our seed data
-# gem "faker" 
-
 # Pagination
 gem "pagy"
 

@@ -155,9 +155,9 @@ export default class extends Controller {
 
     $("#structure").empty();
 
-    for (var i = 0; i < rowSize; i++) {
+    for (let i = 0; i < rowSize; i++) {
       const row = $("<div>").addClass("row justify-center");
-      for (var j = 0; j < columnSize; j++) {
+      for (let j = 0; j < columnSize; j++) {
         const column = $("<div>").addClass("seat active");
         column.attr({
           "row-index": i,
@@ -172,15 +172,15 @@ export default class extends Controller {
   }
 
   createStructureRecords(roomId, inactiveValue, rowSize, columnSize) {
-    for (var i = 0; i < rowSize; i++) {
-      for (var j = 0; j < columnSize; j++) {
-        var type =
+    for (let i = 0; i < rowSize; i++) {
+      for (let j = 0; j < columnSize; j++) {
+        let type =
           inactiveValue.findIndex(
             (item) => item.row_index == i && item.column_index == j
           ) == -1
             ? "ACTIVE"
             : "INACTIVE";
-        var seat = {
+        let seat = {
           row_index: i,
           column_index: j,
           type_seat: type,
@@ -192,7 +192,7 @@ export default class extends Controller {
   }
 
   createStructureRecord(roomId, seat) {
-    var formData = { structure_of_room: { ...seat, room_id: roomId } };
+    let formData = { structure_of_room: { ...seat, room_id: roomId } };
 
     fetch("/admin/structure_of_rooms", {
       method: "POST",

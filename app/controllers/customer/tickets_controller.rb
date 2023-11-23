@@ -6,7 +6,6 @@ class Customer::TicketsController < Customer::BaseController
   def new; end
 
   def create
-    puts '==================================================================================='
     @ticket = Ticket.new(ticket_params)
     respond_to do |format|
       if @ticket.save
