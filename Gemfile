@@ -51,6 +51,12 @@ gem "bootsnap", require: false
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
+  gem "rspec-rails"
+  gem "faker"
+  gem "factory_bot_rails"
+  gem "shoulda-matchers"
+  gem "rails-controller-testing"
+  gem 'simplecov', require: false
 end
 
 group :development do
@@ -94,9 +100,6 @@ gem 'inline_svg'
 # Search
 gem 'ransack'
 
-# Populate our seed data
-gem "faker" 
-
 # Pagination
 gem "pagy"
 
@@ -122,3 +125,18 @@ gem "heroicon"
 gem "sidekiq"
 
 gem "sidekiq-cron"
+
+gem "rollbar"
+
+group :production do
+  gem 'unicorn'
+end
+
+gem 'capistrano', '~> 3.11'
+gem 'capistrano-rails', '~> 1.4'
+gem 'capistrano-passenger', '~> 0.2.0'
+gem 'capistrano-rbenv', '~> 2.1', '>= 2.1.4'
+gem 'ed25519', '>= 1.2', '< 2.0'
+gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
+gem 'faker'
+gem 'rollbar'

@@ -44,47 +44,48 @@ export default class extends Controller {
         column_size: columnSize,
       },
     };
+    let _this = this;
 
     let inactiveValue = this.inactiveValue;
     if (this.idValue) {
-      $.ajax({
-        url: "/admin/rooms/" + this.idValue,
-        type: "PUT",
+      fetch(`/admin/rooms/${this.idValue}`, {
+        method: "PUT",
         headers: {
+          "Content-Type": "application/json",
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
             .content,
         },
-        data: formData,
-        success: function (response) {
-          window.location = "/admin/rooms";
-        },
-        error: function (error) {
-          console.error("Lỗi khi gửi Ajax: ", error);
-        },
-      });
+        body: JSON.stringify(formData),
+      })
+        .then((response) => (window.location = "/admin/rooms"))
+        .catch((error) => {
+          console.error("Error: ", error);
+        });
     } else {
       $("#loading").toggle("hidden");
-      $.ajax({
-        url: "/admin/rooms",
-        type: "POST",
+
+      fetch("/admin/rooms", {
+        method: "POST",
         headers: {
+          "Content-Type": "application/json",
           "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
             .content,
         },
-        data: formData,
-        success: function (response) {
-          createStructureRecords(
-            response.room_id,
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((res) => {
+          _this.createStructureRecords(
+            res.room_id,
             inactiveValue,
             rowSize,
             columnSize
           );
-        },
-        error: function (error) {
+        })
+        .catch((error) => {
           $("#loading").toggle("hidden");
-          console.error("Lỗi khi gửi Ajax: ", error);
-        },
-      });
+          console.error("Error: ", error);
+        });
     }
   }
 
@@ -154,9 +155,9 @@ export default class extends Controller {
 
     $("#structure").empty();
 
-    for (var i = 0; i < rowSize; i++) {
+    for (let i = 0; i < rowSize; i++) {
       const row = $("<div>").addClass("row justify-center");
-      for (var j = 0; j < columnSize; j++) {
+      for (let j = 0; j < columnSize; j++) {
         const column = $("<div>").addClass("seat active");
         column.attr({
           "row-index": i,
@@ -168,6 +169,45 @@ export default class extends Controller {
       }
       $("#structure").append(row);
     }
+  }
+
+  createStructureRecords(roomId, inactiveValue, rowSize, columnSize) {
+    for (let i = 0; i < rowSize; i++) {
+      for (let j = 0; j < columnSize; j++) {
+        let type =
+          inactiveValue.findIndex(
+            (item) => item.row_index == i && item.column_index == j
+          ) == -1
+            ? "ACTIVE"
+            : "INACTIVE";
+        let seat = {
+          row_index: i,
+          column_index: j,
+          type_seat: type,
+        };
+
+        this.createStructureRecord(roomId, seat);
+      }
+    }
+  }
+
+  createStructureRecord(roomId, seat) {
+    let formData = { structure_of_room: { ...seat, room_id: roomId } };
+
+    fetch("/admin/structure_of_rooms", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+          .content,
+      },
+      body: JSON.stringify(formData),
+    })
+      .then((response) => (window.location = "/admin/rooms"))
+      .catch((error) => {
+        $("#loading").toggle("hidden");
+        console.error("Error create structure: ", error);
+      });
   }
 }
 
@@ -218,41 +258,4 @@ function checkExist(element, rowIndex, columnIndex, typeSeat) {
         e.type_seat == typeSeat
     ) > -1
   );
-}
-
-function createStructureRecords(roomId, inactiveValue, rowSize, columnSize) {
-  for (var i = 0; i < rowSize; i++) {
-    for (var j = 0; j < columnSize; j++) {
-      var type =
-        inactiveValue.findIndex(
-          (item) => item.row_index == i && item.column_index == j
-        ) == -1
-          ? "ACTIVE"
-          : "INACTIVE";
-      var seat = {
-        row_index: i,
-        column_index: j,
-        type_seat: type,
-      };
-
-      createStructureRecord(roomId, seat);
-    }
-  }
-}
-
-function createStructureRecord(roomId, seat) {
-  $.ajax({
-    url: "/admin/structure_of_rooms",
-    type: "POST",
-    headers: {
-      "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-    },
-    data: { structure_of_room: { ...seat, room_id: roomId } },
-    success: function (response) {
-      window.location = "/admin/rooms";
-    },
-    error: function (error) {
-      console.error("Lỗi khi gửi Ajax: ", error);
-    },
-  });
 }

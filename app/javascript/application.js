@@ -3,7 +3,7 @@ import "@hotwired/turbo-rails";
 import "controllers";
 import "flowbite";
 import "flowbite-datepicker";
-import "./src/jquery";
+import "src/jquery";
 import "apexcharts";
 
 // // Reload Flowbite for Ruby on Rails at turbo
