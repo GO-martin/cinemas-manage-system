@@ -4,9 +4,9 @@ class Admin::TicketsController < Admin::BaseController
   end
 
   def search
-    search_term = params[:searchTerm]
-    movie_filter = params[:movieFilter]
-    room_filter = params[:roomFilter]
+    search_term = params[:search_term]
+    movie_filter = params[:movie_filter]
+    room_filter = params[:room_filter]
     @pagy, @tickets = pagy(Ticket.by_filter(search_term, movie_filter, room_filter).ordered)
 
     respond_to do |format|

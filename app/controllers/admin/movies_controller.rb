@@ -88,8 +88,8 @@ class Admin::MoviesController < Admin::BaseController
   end
 
   def search
-    search_term = params[:searchTerm]
-    status_filter = params[:statusFilter]
+    search_term = params[:search_term]
+    status_filter = params[:status_filter]
     @pagy, @movies = pagy(Movie.by_filter(search_term, status_filter).ordered)
 
     respond_to do |format|

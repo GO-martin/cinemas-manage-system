@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   has_many :tickets, dependent: :destroy
   has_one :profile, dependent: :destroy
-  has_many :notifications
+  has_many :notifications, dependent: :destroy
 
   accepts_nested_attributes_for :profile
 
@@ -51,7 +51,7 @@ class User < ApplicationRecord
 
   def self.by_filter(search_term)
     left_outer_joins(:profile)
-      .where('LOWER(profiles.fullname) LIKE ?', "%#{search_term.downcase}%")
+      .where('LOWER(profiles.fullname) LIKE ?', "%#{search_term&.downcase}%")
   end
 
   def assign_default_role

@@ -1,7 +1,8 @@
 .col-span-1
   .grid.grid-cols-1.xl_grid-cols-3.xl_gap-4
     .col-span-full.xl_col-auto
-      = image_tag(supply.image)
+      - if supply.image.attached?
+        = image_tag(supply.image)
     .col-span-2
       .p-4
         p.font-bold

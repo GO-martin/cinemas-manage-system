@@ -6,6 +6,8 @@ class Profile < ApplicationRecord
 
   has_one_attached :avatar, dependent: :destroy
 
+  validates :fullname, presence: true
+
   def attachment_name
     :avatar
   end

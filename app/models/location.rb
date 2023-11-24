@@ -24,7 +24,7 @@ class Location < ApplicationRecord
                        }
 
   def self.by_filter(search_term)
-    where('LOWER(locations.name) LIKE ?', "%#{search_term.downcase}%")
+    where('LOWER(locations.name) LIKE ?', "%#{search_term&.downcase}%")
   end
 
   def self.collateral_tabs_data(start_time, end_time, movie_id)
