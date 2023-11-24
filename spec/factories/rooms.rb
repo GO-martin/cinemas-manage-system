@@ -1,8 +1,5 @@
 FactoryBot.define do
   factory :room do
-<<<<<<< HEAD
-    
-=======
     name { Faker::Number.between(from: 1, to: 10).to_s }
     row_size { Faker::Number.between(from: 1, to: 9) }
     column_size { Faker::Number.between(from: 1, to: 9) }
@@ -12,6 +9,5 @@ FactoryBot.define do
       cinema = create(:cinema)
       room.cinema_id = cinema.id
     end
->>>>>>> 15396e5 (Update factories)
   end
 end

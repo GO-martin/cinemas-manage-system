@@ -1,8 +1,5 @@
 FactoryBot.define do
   factory :showtime do
-<<<<<<< HEAD
-    
-=======
     start_time { Faker::Time.between(from: DateTime.now, to: DateTime.now + 15.days) }
     fare { Faker::Number.between(from: 80_000, to: 90_000) }
 
@@ -16,6 +13,5 @@ FactoryBot.define do
       showtime.duration = movie.length
       showtime.end_time = showtime.start_time + showtime.duration.minutes
     end
->>>>>>> 15396e5 (Update factories)
   end
 end

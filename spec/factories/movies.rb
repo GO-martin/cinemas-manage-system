@@ -1,8 +1,5 @@
 FactoryBot.define do
   factory :movie do
-<<<<<<< HEAD
-    
-=======
     name { Faker::Movie.title }
     director { Faker::Name.name }
     description { Faker::Lorem.paragraph }
@@ -16,6 +13,5 @@ FactoryBot.define do
         filename: 'HoneySweet.jpg'
       )
     end
->>>>>>> 15396e5 (Update factories)
   end
 end

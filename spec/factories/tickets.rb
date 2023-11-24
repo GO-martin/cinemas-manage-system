@@ -5,9 +5,6 @@ def seat_number_format(row_index, column_index)
 end
 FactoryBot.define do
   factory :ticket do
-<<<<<<< HEAD
-    
-=======
     after(:build) do |ticket|
       showtime = create(:showtime)
       supply = create(:supply, cinema_id: showtime.room.cinema.id)
@@ -25,6 +22,5 @@ FactoryBot.define do
       ticket.stripe_payment_id = payment_intent.id
       ticket.seat_name = seat_number_format(ticket.seat_row, ticket.seat_column)
     end
->>>>>>> 15396e5 (Update factories)
   end
 end
