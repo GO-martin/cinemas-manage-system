@@ -5,14 +5,14 @@ def seat_number_format(row_index, column_index)
 end
 
 # Admin
-# admin = User.create!(email: 'martin.nguyen.goldenowl@gmail.com', password: 'password')
-# admin.delete_roles
-# admin.add_role :admin
-# admin_profile = Profile.new(fullname: Faker::Lorem.sentence,
-#                             birthday: Faker::Date.birthday(min_age: 18, max_age: 65), address: Faker::Address.full_address, user_id: admin.id)
-# admin_profile.avatar.attach(io: File.open(Rails.root.join(*%w[app assets images HoneySweet.jpg])),
-#                             filename: 'HoneySweet.jpg')
-# admin_profile.save!
+admin = User.create!(email: 'martin.nguyen.goldenowl@gmail.com', password: 'password')
+admin.delete_roles
+admin.add_role :admin
+admin_profile = Profile.new(fullname: Faker::Lorem.sentence,
+                            birthday: Faker::Date.birthday(min_age: 18, max_age: 65), address: Faker::Address.full_address, user_id: admin.id)
+admin_profile.avatar.attach(io: File.open(Rails.root.join(*%w[app assets images HoneySweet.jpg])),
+                            filename: 'HoneySweet.jpg')
+admin_profile.save!
 
 10.times do
   customer = User.create!(
@@ -45,18 +45,18 @@ end
     release_date: Faker::Date.between(from: 5.years.ago, to: Date.today),
     length: Faker::Number.between(from: 60, to: 180),
     trailer: 'https://youtu.be/d-ck5QxqgMg?si=Tgj-TvmvW5IHQm8F',
-    status: 0
+    status: rand(2)
   )
   movie.poster.attach(io: File.open(Rails.root.join(*%w[app assets images HoneySweet.jpg])), filename: 'HoneySweet.jpg')
   movie.save!
   room = Room.create!(
-    name: Faker::Number.unique.between(from: 1, to: 10).to_s, # Unique room names between 1 and 10
+    name: Faker::Number.between(from: 1, to: 10).to_s, 
     number_of_seats: Faker::Number.between(from: 1, to: 81),
-    cinema_id: Cinema.pluck(:id).sample, # Randomly select a cinema_id from existing cinemas
+    cinema_id: Cinema.pluck(:id).sample, 
     row_size: Faker::Number.between(from: 1, to: 9),
     column_size: Faker::Number.between(from: 1, to: 9)
   )
-  # number_of_seats = room.number_of_seats
+  
   row_size = room.row_size
   column_size = room.column_size
   room.update(number_of_seats: row_size * column_size)
@@ -75,21 +75,21 @@ end
   room_sample = Room.pluck(:id).sample
 
   showtime = Showtime.create!(
-    room_id: room_sample, # Randomly select a room_id from existing rooms
-    movie_id: Movie.pluck(:id).sample, # Randomly select a movie_id from existing movies
-    start_time: Faker::Time.between(from: DateTime.now, to: DateTime.now + 15.days), # Start time within the next 30 days
-    fare: Faker::Number.between(from: 80_000, to: 90_000), # Random fare between 5 and 20
-    duration: Faker::Number.between(from: 60, to: 90), # Random duration between 60 and 180 minutes
-    location_id: Room.find_by(id: room_sample).cinema.id, # Randomly select a location_id from existing locations
-    cinema_id: Room.find_by(id: room_sample).cinema.location.id # Randomly select a cinema_id from existing cinemas
+    room_id: room_sample, 
+    movie_id: Movie.pluck(:id).sample, 
+    start_time: Faker::Time.between(from: DateTime.now, to: DateTime.now + 15.days), 
+    fare: Faker::Number.between(from: 80_000, to: 90_000), 
+    duration: Faker::Number.between(from: 60, to: 90),
+    location_id: Room.find_by(id: room_sample).cinema.id, 
+    cinema_id: Room.find_by(id: room_sample).cinema.location.id 
   )
   showtime.update(end_time: showtime.start_time + showtime.duration.minutes)
 
   supply = Supply.new(
     quantity: Faker::Number.between(from: 50, to: 100),
     price: Faker::Number.between(from: 100_000, to: 500_000),
-    name: Faker::Commerce.product_name,
-    cinema_id: Cinema.pluck(:id).sample, # Randomly select a cinema_id from existing cinemas
+    name: Faker::Commerce.unique.product_name,
+    cinema_id: Cinema.pluck(:id).sample, 
     description: Faker::Lorem.paragraph
   )
 
