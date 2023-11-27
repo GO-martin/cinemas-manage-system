@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Supply, type: :model do
+  let!(:supplies) { create_list(:supply, 3) }
   describe 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:quantity) }
@@ -16,5 +17,10 @@ RSpec.describe Supply, type: :model do
 
   describe 'attached' do
     it { should have_one_attached(:image) }
+  end
+  describe 'scopes' do
+    it 'return ordered' do
+      expect(Supply.ordered.to_a).to eq supplies.sort_by(&:id).reverse
+    end
   end
 end
