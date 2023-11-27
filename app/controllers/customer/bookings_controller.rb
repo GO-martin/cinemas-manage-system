@@ -5,8 +5,10 @@ class Customer::BookingsController < ApplicationController
     respond_to do |format|
       if @booking.save
         format.json { render json: { id: @booking.id } }
+        format.html { head :ok }
       else
         format.json { render json: @booking.errors, status: :unprocessable_entity }
+        format.html { head :unprocessable_entity }
       end
     end
   end
@@ -14,7 +16,9 @@ class Customer::BookingsController < ApplicationController
   def destroy
     @booking = Booking.find_by(id: params[:id])
     @booking.destroy
-    format.json { head :no_content }
+    respond_to do |format|
+      format.html { head :ok }
+    end
   end
 
   private

@@ -31,7 +31,6 @@ class Admin::LocationsController < Admin::BaseController
           ]
         end
         format.html { redirect_to admin_locations_url, notice: 'Location was successfully created.' }
-        # format.json { render :show, status: :created, location: @location }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @location.errors, status: :unprocessable_entity }

@@ -71,6 +71,7 @@ class Admin::MoviesController < Admin::BaseController
           render_flash_message
         ]
       end
+      format.html { redirect_to admin_movies_url }
     end
   end
 
@@ -84,6 +85,7 @@ class Admin::MoviesController < Admin::BaseController
           render_flash_message
         ]
       end
+      format.html { redirect_to admin_movies_url }
     end
   end
 

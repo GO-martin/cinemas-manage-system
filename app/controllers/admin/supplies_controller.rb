@@ -31,7 +31,6 @@ class Admin::SuppliesController < Admin::BaseController
           ]
         end
         format.html { redirect_to admin_supplies_url, notice: 'Supply was successfully created.' }
-        # format.json { render :show, status: :created, supply: @supply }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @supply.errors, status: :unprocessable_entity }

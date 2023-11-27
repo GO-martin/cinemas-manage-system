@@ -3,17 +3,23 @@ class Admin::StructureOfRoomsController < Admin::BaseController
 
   def create
     @structure_of_room = StructureOfRoom.new(structure_of_room_params)
-    respond_to do |format|
-      if @structure_of_room.save
+    if @structure_of_room.save
+      respond_to do |format|
         format.html { redirect_to admin_rooms_path, notice: 'Structure Of Room was successfully created.' }
-      else
-        format.html { render :new, status: :unprocessable_entity }
       end
+    else
+      head :unprocessable_entity
     end
   end
 
   def update
-    @structure_of_room.update(structure_of_room_params)
+    if @structure_of_room.update(structure_of_room_params)
+      respond_to do |format|
+        format.html { redirect_to admin_rooms_path, notice: 'Structure Of Room was successfully updated.' }
+      end
+    else
+      head :unprocessable_entity
+    end
   end
 
   private
