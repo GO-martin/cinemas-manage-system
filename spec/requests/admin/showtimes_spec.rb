@@ -6,6 +6,7 @@ RSpec.describe 'Admin::Showtimes', type: :request do
   let!(:valid_attributes) { attributes_for(:showtime, room_id: room.id, movie_id: movie.id) }
   let!(:invalid_attributes) { attributes_for(:showtime, fare: nil, room_id: room.id, movie_id: movie.id) }
   let!(:showtime) { create(:showtime) }
+
   context 'not logged in' do
     describe 'GET index' do
       it 'redirect sign in' do
@@ -30,12 +31,14 @@ RSpec.describe 'Admin::Showtimes', type: :request do
         expect(response).to be_successful
       end
     end
+
     describe 'GET #new' do
       it 'returns a success response' do
         get new_admin_showtime_path
         expect(response).to be_successful
       end
     end
+
     describe 'POST #create' do
       context 'with valid parameters' do
         it 'creates a new showtime' do
@@ -52,6 +55,7 @@ RSpec.describe 'Admin::Showtimes', type: :request do
         end
       end
     end
+
     describe 'PUT #update' do
       context 'with valid parameters' do
         it 'updates the requested showtime' do
@@ -68,6 +72,7 @@ RSpec.describe 'Admin::Showtimes', type: :request do
         end
       end
     end
+
     describe 'DELETE #destroy' do
       it 'destroys the requested showtime' do
         expect do
@@ -75,6 +80,7 @@ RSpec.describe 'Admin::Showtimes', type: :request do
         end.to change(Showtime, :count).by(-1)
       end
     end
+
     describe 'GET #search' do
       it 'returns a success response' do
         get search_admin_showtimes_path, params: { search_term: Faker::Lorem.word }

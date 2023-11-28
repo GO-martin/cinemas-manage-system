@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Customer::Supplies', type: :request do
-  let(:supply) { create(:supply) }
+  let!(:supply) { create(:supply) }
+
   context 'not logged in' do
     describe 'GET #index' do
       it 'redirect sign in' do
@@ -19,9 +20,9 @@ RSpec.describe 'Customer::Supplies', type: :request do
       @profile = create(:profile, user: @user)
       sign_in @user
     end
+
     describe 'GET #booking_supplies' do
       it 'return a successful response' do
-        supply
         get booking_supplies_customer_supplies_path, params: { cinema_id: supply.cinema.id }
         expect(response).to be_successful
       end

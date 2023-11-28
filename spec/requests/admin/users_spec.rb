@@ -9,6 +9,7 @@ RSpec.describe 'Admin::Users', type: :request do
       end
     end
   end
+
   context 'logged in' do
     before do
       @user = create(:user)

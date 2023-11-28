@@ -4,6 +4,7 @@ RSpec.describe 'Admin::Locations', type: :request do
   let!(:location) { create(:location) }
   let!(:valid_attributes) { attributes_for(:location) }
   let!(:invalid_attributes) { attributes_for(:location, name: nil) }
+
   context 'not logged in' do
     describe 'GET index' do
       it 'redirect sign in' do
@@ -21,18 +22,21 @@ RSpec.describe 'Admin::Locations', type: :request do
       @profile = create(:profile, user: @user)
       sign_in @user
     end
+
     describe 'GET #index' do
       it 'return a successful response' do
         get admin_locations_path
         expect(response).to have_http_status(200)
       end
     end
+
     describe 'GET #new' do
       it 'returns a success response' do
         get new_admin_location_path
         expect(response).to be_successful
       end
     end
+
     describe 'POST #create' do
       context 'with valid parameters' do
         it 'creates a new Location' do
@@ -49,12 +53,14 @@ RSpec.describe 'Admin::Locations', type: :request do
         end
       end
     end
+
     describe 'GET #edit' do
       it 'returns a success response' do
         get edit_admin_location_path(location)
         expect(response).to be_successful
       end
     end
+
     describe 'PUT #update' do
       context 'with valid parameters' do
         it 'updates the requested location' do
@@ -71,6 +77,7 @@ RSpec.describe 'Admin::Locations', type: :request do
         end
       end
     end
+
     describe 'DELETE #destroy' do
       it 'deletes the requested location' do
         location = create(:location)
@@ -79,6 +86,7 @@ RSpec.describe 'Admin::Locations', type: :request do
         end.to change(Location, :count).by(-1)
       end
     end
+
     describe 'GET #search' do
       it 'returns a success response' do
         get search_admin_locations_path, params: { search_term: Faker::Lorem.word }

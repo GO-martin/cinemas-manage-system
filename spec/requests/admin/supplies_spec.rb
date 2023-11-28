@@ -14,6 +14,7 @@ RSpec.describe 'Admin::Supplies', type: :request do
       end
     end
   end
+
   context 'logged in' do
     before do
       @user = create(:user)
@@ -36,6 +37,7 @@ RSpec.describe 'Admin::Supplies', type: :request do
         expect(response).to be_successful
       end
     end
+
     describe 'POST #create' do
       context 'with valid parameters' do
         it 'creates a new supply' do
@@ -52,12 +54,14 @@ RSpec.describe 'Admin::Supplies', type: :request do
         end
       end
     end
+
     describe 'GET #edit' do
       it 'returns a success response' do
         get edit_admin_supply_path(supply)
         expect(response).to be_successful
       end
     end
+
     describe 'PUT #update' do
       context 'with valid parameters' do
         it 'updates the requested supply' do
@@ -74,6 +78,7 @@ RSpec.describe 'Admin::Supplies', type: :request do
         end
       end
     end
+
     describe 'DELETE #destroy' do
       it 'destroys the requested room' do
         expect do
@@ -81,6 +86,7 @@ RSpec.describe 'Admin::Supplies', type: :request do
         end.to change(Supply, :count).by(-1)
       end
     end
+
     describe 'GET #search' do
       it 'returns a success response' do
         get search_admin_supplies_path, params: { search_term: Faker::Lorem.word }

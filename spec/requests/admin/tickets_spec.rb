@@ -25,6 +25,7 @@ RSpec.describe 'Admin::Tickets', type: :request do
         expect(response).to be_successful
       end
     end
+
     describe 'GET #search' do
       it 'returns a success response' do
         get search_admin_tickets_path, params: { search_term: Faker::Lorem.word }
