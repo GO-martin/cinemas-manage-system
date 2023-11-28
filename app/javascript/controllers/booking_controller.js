@@ -11,6 +11,8 @@ export default class extends Controller {
     selectedSeat: Object,
     totalPrice: Number,
     showtimeId: Number,
+    userId: Number,
+    selectingSeat: Object,
   };
 
   connect() {
@@ -57,11 +59,11 @@ export default class extends Controller {
   }
 
   renderStripe() {
-    var stripe = Stripe($("#payment-form").attr("data-public-key"));
+    let stripe = Stripe($("#payment-form").attr("data-public-key"));
 
-    var elements = stripe.elements();
+    let elements = stripe.elements();
 
-    var cardElement = elements.create("card", {
+    let cardElement = elements.create("card", {
       style: {
         base: {
           iconColor: "#cccccc",
@@ -88,9 +90,9 @@ export default class extends Controller {
 
     const submitBtn = $("#payment-submit");
 
-    var totalPriceValue = this.totalPriceValue;
+    let totalPriceValue = this.totalPriceValue;
 
-    var ticketData = {
+    let ticketData = {
       ticket: {
         seat_row: this.selectedValue[0].row_index,
         seat_column: this.selectedValue[0].column_index,
@@ -183,7 +185,7 @@ export default class extends Controller {
 
   createTicketSupplies(ticketId) {
     for (const id in this.selectedSupplyValue) {
-      var data = {
+      let data = {
         ticket_supply: {
           ticket_id: ticketId,
           supply_id: id,
@@ -235,6 +237,7 @@ export default class extends Controller {
         if (selectedArray.length == 1) {
           alert("You can only choose 1 seat");
         } else {
+          this.createSelectingSeat(row_index, column_index);
           seat.classList.add("selected");
 
           selectedArray.push({
@@ -245,6 +248,7 @@ export default class extends Controller {
           this.updateSeat(this.priceValue, seat, row_index, column_index);
         }
       } else {
+        this.deleteSelectingSeat();
         seat.classList.remove("selected");
         selectedArray.pop();
         this.updateSeat(-this.priceValue);
@@ -252,6 +256,53 @@ export default class extends Controller {
 
       this.selectedValue = selectedArray;
       this.updateTotal();
+    }
+  }
+
+  async createSelectingSeat(row_index, column_index) {
+    try {
+      const bookingData = {
+        booking: {
+          row_index,
+          column_index,
+          showtime_id: this.showtimeIdValue,
+          user_id: this.userIdValue,
+        },
+      };
+      const response = await fetch("/customer/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+            .content,
+        },
+        body: JSON.stringify(bookingData),
+      });
+
+      const result = await response.json();
+      this.selectingSeatValue = {
+        id: result.id,
+      };
+    } catch (error) {
+      console.error("Error: ", error);
+    }
+  }
+
+  async deleteSelectingSeat() {
+    try {
+      const booking_id = this.selectingSeatValue.id;
+      await fetch(`/customer/bookings/${booking_id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+            .content,
+        },
+      });
+
+      this.selectingSeatValue = {};
+    } catch (error) {
+      console.error("Error: ", error);
     }
   }
 

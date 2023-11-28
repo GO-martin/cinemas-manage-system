@@ -2,7 +2,6 @@ class SetShowtimeParamsService < ApplicationService
   attr_accessor :params
 
   def initialize(params)
-    super
     @params = params
   end
 

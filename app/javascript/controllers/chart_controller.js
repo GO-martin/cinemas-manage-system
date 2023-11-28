@@ -143,9 +143,9 @@ export default class extends Controller {
   }
 
   renderMainChart() {
-    var { current_main_chart_data } = this.mainChartValue;
+    let { current_main_chart_data } = this.mainChartValue;
 
-    var { dates, values } = this.formatObject(current_main_chart_data);
+    let { dates, values } = this.formatObject(current_main_chart_data);
 
     const chart = new ApexCharts(
       document.getElementById("main-chart"),
@@ -161,7 +161,7 @@ export default class extends Controller {
         period = obj.attr("data-filter"),
         type = obj.attr("data-type");
 
-      var content = await fetch(
+      let content = await fetch(
         `/admin/dashboards/update_main_chart?period=${period}`,
         {
           headers: {
@@ -171,11 +171,11 @@ export default class extends Controller {
         }
       );
 
-      var response = await content.json();
-      var main_chart_data = response.main_chart_data,
+      let response = await content.json();
+      let main_chart_data = response.main_chart_data,
         { current_main_chart_data } = main_chart_data;
 
-      var { dates, values } = _this.formatObject(current_main_chart_data);
+      let { dates, values } = _this.formatObject(current_main_chart_data);
 
       $("#main-chart-total-revenue").next().html(`Sales last ${period} days`);
 
@@ -192,20 +192,21 @@ export default class extends Controller {
   }
 
   formatObject(obj) {
-    var dates = Object.keys(obj).map((key) => {
-      var date = new Date(key),
+    let dates = Object.keys(obj).map((key) => {
+      let date = new Date(key),
         day = date.getDate(),
         month = date.getMonth() + 1;
       return `${day}/${month}`;
     });
 
-    var values = Object.values(obj);
+    let values = Object.values(obj);
 
     return { dates, values };
   }
 
   renderLocationChart() {
-    var { current_location_chart_data } = this.locationChartValue;
+    let { current_location_chart_data } = this.locationChartValue;
+
     const chart = new ApexCharts(
       document.getElementById("location-chart"),
       this.getLocationChartOptions(current_location_chart_data)
@@ -220,7 +221,8 @@ export default class extends Controller {
         period = obj.attr("data-filter"),
         type = obj.attr("data-type");
 
-      var content = await fetch(
+
+      let content = await fetch(
         `/admin/dashboards/update_location_chart?period=${period}`,
         {
           headers: {
@@ -230,8 +232,8 @@ export default class extends Controller {
         }
       );
 
-      var response = await content.json();
-      var location_chart_data = response.location_chart_data,
+      let response = await content.json();
+      let location_chart_data = response.location_chart_data,
         { current_location_chart_data } = location_chart_data;
 
       $("#location-chart-name").next().html(`Sales last ${period} days`);
@@ -305,9 +307,9 @@ export default class extends Controller {
   }
 
   renderNewCustomersChart() {
-    var { current_data } = this.newCustomersChartValue;
+    let { current_data } = this.newCustomersChartValue;
 
-    var data = this.formatNewGeneralObject(current_data);
+    let data = this.formatNewGeneralObject(current_data);
 
     const chart = new ApexCharts(
       document.getElementById("new-customers-chart"),
@@ -319,7 +321,7 @@ export default class extends Controller {
   formatNewGeneralObject(obj) {
     let newArray = [];
     Object.keys(obj).forEach((key) => {
-      var date = new Date(key),
+      let date = new Date(key),
         day = date.getDate(),
         month = date.getMonth() + 1;
       newArray.push({ x: `${day}/${month}`, y: obj[key] });
@@ -428,9 +430,9 @@ export default class extends Controller {
   }
 
   renderNewTicketsChart() {
-    var { current_data } = this.newTicketsChartValue;
+    let { current_data } = this.newTicketsChartValue;
 
-    var data = this.formatNewGeneralObject(current_data);
+    let data = this.formatNewGeneralObject(current_data);
 
     const chart = new ApexCharts(
       document.getElementById("new-tickets-chart"),

@@ -15,11 +15,15 @@ Within the system, there will be 2 roles:
   **Customer** View a list of movie. Choose seat and supplies. Manage tickets, profiles.
 
 ## Technologies
+Architecture diagram:
+![Architecture diagram - Final](https://github.com/GO-martin/cinemas-manage-system/assets/144194606/d177f8ed-e765-4c74-9065-4923a52ba035)
+
 
 To develop the CinemaManagement website, we utilize the following technologies:
 
     - Rails 7
-    - HTML, Tailwind Css, Js, Slim
+    - HTML, Tailwind Css, Slim template
+    - Stimulus, Jquery
     - Devise, pundit, rolify (Authentication, Authorization)
     - Active Mailer (Send mail)
     - Background Job (Sidekiq)

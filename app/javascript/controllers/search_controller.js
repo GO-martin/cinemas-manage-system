@@ -20,11 +20,11 @@ export default class extends Controller {
   search(e) {
     e.preventDefault();
 
-    var filter = this.filterValue;
+    let filter = this.filterValue;
 
     this.filterTargets.forEach((target) => {
-      var searchType = $(target).attr("data-search-type");
-      var searchValue = $(target).val() || "";
+      let searchType = $(target).attr("data-search-type");
+      let searchValue = $(target).val() || "";
       filter[searchType] = searchValue;
     });
 
@@ -34,11 +34,11 @@ export default class extends Controller {
   clear(e) {
     e.preventDefault();
 
-    var filter = this.filterValue;
+    let filter = this.filterValue;
     this.filterTargets.forEach((target) => {
       $(target).val("");
-      var searchType = $(target).attr("data-search-type");
-      var searchValue = "";
+      let searchType = $(target).attr("data-search-type");
+      let searchValue = "";
       filter[searchType] = searchValue;
     });
 
@@ -62,7 +62,7 @@ export default class extends Controller {
           .content,
       },
       success: function (data) {
-        var target_html = `${_this.controllerNameValue}_html`;
+        let target_html = `${_this.controllerNameValue}_html`;
 
         $(`#${_this.controllerNameValue}`).html(data[target_html]);
         $("#pagination").html(data.pagination_html);
