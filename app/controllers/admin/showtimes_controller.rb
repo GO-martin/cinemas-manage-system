@@ -19,7 +19,8 @@ class Admin::ShowtimesController < Admin::BaseController
 
   # POST admin/showtimes or admin/showtimes.json
   def create
-    @showtime = Showtime.new(showtime_params)
+    data = SetShowtimeParamsService.call(showtime_params)
+    @showtime = Showtime.new(data)
 
     respond_to do |format|
       if @showtime.save
@@ -32,7 +33,6 @@ class Admin::ShowtimesController < Admin::BaseController
           ]
         end
         format.html { redirect_to admin_showtimes_url, notice: 'Showtime was successfully created.' }
-        # format.json { render :show, status: :created, showtime: @showtime }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @showtime.errors, status: :unprocessable_entity }
@@ -42,8 +42,9 @@ class Admin::ShowtimesController < Admin::BaseController
 
   # PATCH/PUT admin/showtimes/1 or admin/showtimes/1.json
   def update
+    data = SetShowtimeParamsService.call(showtime_params)
     respond_to do |format|
-      if @showtime.update(showtime_params)
+      if @showtime.update(data)
         format.turbo_stream do
           flash[:notice] = 'Showtime was successfully updated.'
           render turbo_stream: [
@@ -53,7 +54,6 @@ class Admin::ShowtimesController < Admin::BaseController
           ]
         end
         format.html { redirect_to admin_showtimes_url, notice: 'Showtime was successfully updated.' }
-        # format.json { render :show, status: :ok, showtime: @showtime }
       else
         format.html { render :edit, status: :unprocessable_entity }
         format.json { render json: @showtime.errors, status: :unprocessable_entity }
@@ -74,7 +74,6 @@ class Admin::ShowtimesController < Admin::BaseController
         ]
       end
       format.html { redirect_to admin_showtimes_url, notice: 'Showtime was successfully destroyed.' }
-      # format.json { head :no_content }
     end
   end
 
@@ -104,12 +103,6 @@ class Admin::ShowtimesController < Admin::BaseController
   end
 
   def showtime_params
-    params[:showtime][:duration] = Movie.find(params[:showtime][:movie_id]).length
-    start_time = DateTime.parse(params[:showtime][:start_time])
-    params[:showtime][:end_time] = start_time + params[:showtime][:duration].minutes
-    params[:showtime][:cinema_id] = Room.find(params[:showtime][:room_id]).cinema.id
-    params[:showtime][:location_id] = Room.find(params[:showtime][:room_id]).cinema.location.id
-
     params.require(:showtime).permit(:room_id, :movie_id, :location_id, :cinema_id, :start_time, :fare, :duration,
                                      :end_time)
   end
