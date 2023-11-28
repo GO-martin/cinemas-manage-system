@@ -1,6 +1,6 @@
 class Customer::TicketsController < Customer::BaseController
   def index
-    @tickets = Ticket.where(user_id: current_user.id).order(id: :desc)
+    @tickets = Ticket.where(user_id: current_user.id).ordered
   end
 
   def new; end
