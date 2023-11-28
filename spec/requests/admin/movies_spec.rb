@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::Movies', type: :request do
-  let(:valid_attributes) { attributes_for(:movie) }
-  let(:invalid_attributes) { attributes_for(:movie, name: nil) }
-  let(:movie) { create(:movie) }
+  let!(:valid_attributes) { attributes_for(:movie) }
+  let!(:invalid_attributes) { attributes_for(:movie, name: nil) }
+  let!(:movie) { create(:movie) }
 
   context 'not logged in' do
     describe 'GET index' do
@@ -74,7 +74,7 @@ RSpec.describe 'Admin::Movies', type: :request do
     end
     describe 'DELETE #destroy' do
       it 'destroys the requested movie' do
-        movie
+        movie = create(:movie)
         expect do
           delete admin_movie_path(movie)
         end.to change(Movie, :count).by(-1)

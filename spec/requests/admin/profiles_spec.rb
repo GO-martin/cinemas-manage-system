@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::Profiles', type: :request do
-  let(:user) { create(:user) }
-  let(:valid_attributes) { attributes_for(:profile, user_id: user.id) }
-  let(:invalid_attributes) { attributes_for(:profile, fullname: nil, user_id: user.id) }
-  let(:profile) { create(:profile, user:) }
+  let!(:user) { create(:user) }
+  let!(:profile) { create(:profile, user:) }
+  let!(:valid_attributes) { attributes_for(:profile, user_id: user.id) }
+  let!(:invalid_attributes) { attributes_for(:profile, fullname: nil, user_id: user.id) }
   context 'not logged in' do
     describe 'GET index' do
       it 'redirect sign in' do

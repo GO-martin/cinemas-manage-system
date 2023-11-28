@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::Showtimes', type: :request do
-  let(:room) { create(:room) }
-  let(:movie) { create(:movie) }
-  let(:valid_attributes) { attributes_for(:showtime, room_id: room.id, movie_id: movie.id) }
-  let(:invalid_attributes) { attributes_for(:showtime, fare: nil, room_id: room.id, movie_id: movie.id) }
-  let(:showtime) { create(:showtime) }
+  let!(:room) { create(:room) }
+  let!(:movie) { create(:movie) }
+  let!(:valid_attributes) { attributes_for(:showtime, room_id: room.id, movie_id: movie.id) }
+  let!(:invalid_attributes) { attributes_for(:showtime, fare: nil, room_id: room.id, movie_id: movie.id) }
+  let!(:showtime) { create(:showtime) }
   context 'not logged in' do
     describe 'GET index' do
       it 'redirect sign in' do
@@ -70,7 +70,6 @@ RSpec.describe 'Admin::Showtimes', type: :request do
     end
     describe 'DELETE #destroy' do
       it 'destroys the requested showtime' do
-        showtime
         expect do
           delete admin_showtime_path(showtime)
         end.to change(Showtime, :count).by(-1)

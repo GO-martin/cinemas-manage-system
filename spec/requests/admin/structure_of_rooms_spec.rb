@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::StructureOfRooms', type: :request do
-  let(:valid_attributes) { attributes_for(:structure_of_room) }
-  let(:invalid_attributes) { attributes_for(:structure_of_room, type_seat: nil) }
-  let(:structure_of_room) { create(:structure_of_room) }
+  let!(:valid_attributes) { attributes_for(:structure_of_room) }
+  let!(:invalid_attributes) { attributes_for(:structure_of_room, type_seat: nil) }
+  let!(:structure_of_room) { create(:structure_of_room) }
 
   before do
     @user = create(:user)
@@ -15,8 +15,7 @@ RSpec.describe 'Admin::StructureOfRooms', type: :request do
   describe 'POST #create' do
     context 'with valid parameters' do
       it 'creates a new structure of room' do
-        room = create(:room)
-        valid_attributes[:room_id] = room.id
+        valid_attributes[:room_id] = structure_of_room.room.id
         expect do
           post admin_structure_of_rooms_path, params: { structure_of_room: valid_attributes }
         end.to change(StructureOfRoom, :count).by(1)
