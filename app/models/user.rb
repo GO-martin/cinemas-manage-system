@@ -15,6 +15,23 @@ class User < ApplicationRecord
 
   scope :ordered, -> { order(id: :desc) }
 
+  scope :get_top_customers, ->(number, period) {
+    joins(:tickets)
+      .select('users.*, SUM(tickets.price) as total_price')
+      .where(tickets: { created_at: (Time.current - period.days).. })
+      .group('users.id')
+      .order('total_price DESC')
+      .limit(number)
+  }
+
+  scope :customers_chart_data, ->(period) {
+    order('date(created_at) ASC').group('date(created_at)').where(created_at: (Time.current - period.days)..).count(:id)
+  }
+
+  scope :total_new_users, ->(period) {
+    order('date(created_at) ASC').where(created_at: (Time.current - period.days)..).count
+  }
+
   after_create_commit do
     broadcast_prepend_to 'admin', partial: 'admin/users/user',
                                   locals: { user: self }

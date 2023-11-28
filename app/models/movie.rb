@@ -5,7 +5,7 @@ class Movie < ApplicationRecord
 
   enum :status, { now_showing: 0, coming_soon: 1 }
 
-  validates :poster, :director, :name, :length, :release_date, :trailer, :description, presence: true
+  validates :director, :name, :length, :release_date, :trailer, :description, presence: true
 
   scope :ordered, -> { order(id: :desc) }
 
@@ -29,4 +29,12 @@ class Movie < ApplicationRecord
     where('LOWER(movies.name) LIKE ?', "%#{search_term.downcase}%")
       .where(status: status_filter.presence || Movie.distinct.pluck(:status))
   end
+  scope :get_top_movies, ->(number, period) {
+    joins(showtimes: :tickets)
+      .select('movies.*, SUM(tickets.price) as total_price')
+      .where(tickets: { created_at: (Time.current - period.days).. })
+      .group('movies.id')
+      .order('total_price DESC')
+      .limit(number)
+  }
 end
