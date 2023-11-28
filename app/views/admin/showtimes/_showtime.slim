@@ -1,10 +1,16 @@
-tr.hover_bg-gray-100.Sdark_hover_bg-gray-700 id=dom_id(showtime)
+tr.hover_bg-gray-100.dark_hover_bg-gray-700 id=dom_id(showtime)
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = showtime&.id
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = showtime&.location&.name  
+  td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
+    = showtime&.cinema&.name
   td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
     = showtime&.room&.name 
   td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
     = showtime&.movie&.name 
   td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
-    = showtime&.start_time.strftime("%B %d, %Y %I:%M %p")
+    = showtime&.start_time&.strftime("%B %d, %Y %I:%M %p")
   td.p-4.space-x-2.whitespace-nowrap.flex
     = link_to edit_admin_showtime_path(showtime), data: { turbo_frame: "modal" }, class: "btn-update inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800"
       = inline_svg_tag("svg/update-icon.svg", class: "w-4 h-4 mr-2")

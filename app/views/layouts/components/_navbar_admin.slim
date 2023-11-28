@@ -46,6 +46,9 @@ nav[class="fixed z-30 w-full bg-white border-b border-gray-200 dark_bg-gray-800 
               li
                 = link_to edit_admin_profile_path(current_user.profile.id), class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_text-gray-300 dark_hover_bg-gray-600 dark_hover_text-white", data: { turbo: false }, role: "menuitem"
                   | Settings
+              li 
+                = link_to root_path, class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_text-gray-300 dark_hover_bg-gray-600 dark_hover_text-white", data: { turbo: false }, role: "menuitem"
+                  | Switch 
               li
                 = button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_text-gray-300 dark_hover_bg-gray-600 dark_hover_text-white"
 

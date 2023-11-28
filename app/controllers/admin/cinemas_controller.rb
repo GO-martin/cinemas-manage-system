@@ -81,8 +81,8 @@ class Admin::CinemasController < Admin::BaseController
   def destroy_modal; end
 
   def search
-    search_term = params[:searchTerm]
-    location_filter = params[:locationFilter]
+    search_term = params[:search_term]
+    location_filter = params[:location_filter]
     @pagy, @cinemas = pagy(Cinema.by_filter(search_term, location_filter).ordered)
 
     respond_to do |format|

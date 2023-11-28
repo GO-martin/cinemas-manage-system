@@ -20,6 +20,6 @@ class Location < ApplicationRecord
                        }
 
   def self.by_filter(search_term)
-    where('LOWER(locations.name) LIKE ?', "%#{search_term.downcase}%")
+    where('LOWER(locations.name) LIKE ?', "%#{search_term&.downcase}%")
   end
 end

@@ -81,9 +81,9 @@ class Admin::ShowtimesController < Admin::BaseController
   def destroy_modal; end
 
   def search
-    search_term = params[:searchTerm]
-    room_filter = params[:roomFilter]
-    movie_filter = params[:movieFilter]
+    search_term = params[:search_term]
+    room_filter = params[:room_filter]
+    movie_filter = params[:movie_filter]
 
     @pagy, @showtimes = pagy(Showtime.by_filter(search_term, room_filter, movie_filter).ordered)
 

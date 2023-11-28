@@ -2,9 +2,9 @@
 
 class TurboModalComponent < ViewComponent::Base
   include Turbo::FramesHelper
-  def initialize(title:, titleType:)
+  def initialize(title:, title_type:)
     @title = title
-    @titleType = titleType
+    @title_type = title_type
   end
 
   def check_modal(*modal_title, title)

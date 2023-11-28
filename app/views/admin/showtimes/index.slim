@@ -22,14 +22,14 @@
         | All showtimes
     = simple_form_for('/admin/showtimes/search', html: { class: "items-center justify-between block sm_flex", data: { controller: "search", "search-controller-name-value": "showtimes"} }) do |f|
       .flex.space-x-3.items-center.mb-4.sm_mb-0 
-        = f.input :search_term, as: :string,input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2", data: {"search-target": "filter", "search-type": "searchTerm"} }, placeholder: "Search by movie name", label: false
+        = f.input :search_term, as: :string,input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2", data: {"search-target": "filter", "search-type": "search_term"} }, placeholder: "Search by movie name", label: false
         button.text-white.bg-blue-700.hover_bg-blue-800.focus_ring-4.focus_ring-blue-300.font-medium.rounded-lg.text-sm.px-5.py-2.dark_bg-blue-600.dark_hover_bg-blue-700.focus_outline-none.dark_focus_ring-blue-800.border data={"action": "click->search#search"} type="submit"
           | Search
         button.focus_outline-none.text-white.bg-red-700.hover_bg-red-800.focus_ring-4.focus_ring-red-300.font-medium.rounded-lg.text-sm.px-5.py-2.border data={"action": "click->search#clear"}
           | Clear
       .flex.flex-col.items-stretch.justify-end.flex-shrink-0.w-full.space-y-2.md_w-auto.md_flex-row.md_space-y-0.md_items-center.md_space-x-3
-        = f.input :room_filter, as: :select, input_html: { class: "flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md_w-32 focus_outline-none hover_bg-gray-100 focus_z-10 focus_ring-4 focus_ring-gray-200 cursor-pointer", data: {"search-target": "filter", "search-type": "roomFilter"} }, include_blank: "Room", collection: Room.ordered, label: false
-        = f.input :movie_filter, as: :select, input_html: { class: "flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md_w-32 focus_outline-none hover_bg-gray-100 focus_z-10 focus_ring-4 focus_ring-gray-200 cursor-pointer", data: {"search-target": "filter", "search-type": "movieFilter"} }, include_blank: "Movie", collection: Movie.ordered, label: false
+        = f.input :room_filter, as: :select, input_html: { class: "flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md_w-32 focus_outline-none hover_bg-gray-100 focus_z-10 focus_ring-4 focus_ring-gray-200 cursor-pointer", data: {"search-target": "filter", "search-type": "room_filter"} }, include_blank: "Room", collection: Room.ordered, label: false
+        = f.input :movie_filter, as: :select, input_html: { class: "flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg md_w-32 focus_outline-none hover_bg-gray-100 focus_z-10 focus_ring-4 focus_ring-gray-200 cursor-pointer", data: {"search-target": "filter", "search-type": "movie_filter"} }, include_blank: "Movie", collection: Movie.ordered, label: false
         = link_to "New showtime", new_admin_showtime_path, data: { turbo_frame: "modal" }, class: "text-white bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 dark_bg-blue-600 dark_hover_bg-blue-700 focus_outline-none dark_focus_ring-blue-800 border"
 .flex.flex-col
   .overflow-x-auto 
@@ -38,6 +38,12 @@
         table.min-w-full.divide-y.divide-gray-200.table-fixed.dark_divide-gray-600
           thead.bg-gray-100.dark_bg-gray-700
             tr 
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | ID
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | Location name  
+              th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
+                | Cinema name
               th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
                 | Room name
               th.p-4.text-xs.font-medium.text-left.text-gray-500.uppercase.dark_text-gray-400 scope="col" 
