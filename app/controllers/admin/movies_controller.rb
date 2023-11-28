@@ -1,7 +1,5 @@
 class Admin::MoviesController < Admin::BaseController
-  before_action :set_movie, only: %i[show edit update destroy destroy_modal change_now_showing change_coming_soon]
-  skip_before_action :verify_authenticity_token, only: %i[change_now_showing change_coming_soon]
-
+  include Findable
   # GET admin/movies or admin/movies.json
   def index
     @pagy, @movies = pagy(Movie.ordered)
@@ -33,6 +31,9 @@ class Admin::MoviesController < Admin::BaseController
 
   # PATCH/PUT admin/movies/1 or admin/movies/1.json
   def update
+    if params.dig(:movie, :poster).present?
+      @movie.delete_attachment
+    end
     respond_to do |format|
       if @movie.update(movie_params)
         format.html { redirect_to admin_movies_url, notice: 'Movie was successfully updated.' }
@@ -70,6 +71,7 @@ class Admin::MoviesController < Admin::BaseController
           render_flash_message
         ]
       end
+      format.html { redirect_to admin_movies_url }
     end
   end
 
@@ -83,12 +85,13 @@ class Admin::MoviesController < Admin::BaseController
           render_flash_message
         ]
       end
+      format.html { redirect_to admin_movies_url }
     end
   end
 
   def search
-    search_term = params[:searchTerm]
-    status_filter = params[:statusFilter]
+    search_term = params[:search_term]
+    status_filter = params[:status_filter]
     @pagy, @movies = pagy(Movie.by_filter(search_term, status_filter).ordered)
 
     respond_to do |format|
@@ -97,14 +100,11 @@ class Admin::MoviesController < Admin::BaseController
                        pagination_html: render_to_string(PaginationComponent.new(pagy: @pagy), layout: false,
                                                                                                formats: [:html]) }
       end
+      format.html { render :index }
     end
   end
 
   private
-
-  def set_movie
-    @movie = Movie.find(params[:id])
-  end
 
   def movie_params
     params.require(:movie).permit(:poster, :banner, :trailer, :status, :director, :description, :release_date, :length,

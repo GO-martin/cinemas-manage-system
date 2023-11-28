@@ -3,10 +3,10 @@ td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
 td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white.uppercase
   = notification.notifiable_id
 td.p-4.text-base.font-medium.text-gray-900.whitespace-nowrap.dark_text-white
-  = notification.user.email
+  = notification.notifiable.user.email
 td.p-4.text-base.font-medium.text-gray-900.whitespace-wrap.dark_text-white
   span.font-semibold.text-gray-900
-      = notification.notifiable.user.profile.fullname
+    = notification.notifiable.user.profile.fullname
   |  buy a new ticket.
   .text-xs.font-medium.text-primary-700.dark_text-primary-400
     = notification.created_at.strftime("%B %d, %Y %I:%M %p")

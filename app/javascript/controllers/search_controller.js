@@ -57,6 +57,7 @@ export default class extends Controller {
       type: "GET",
       data: filter,
       headers: {
+        "Content-Type": "application/json",
         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
           .content,
       },

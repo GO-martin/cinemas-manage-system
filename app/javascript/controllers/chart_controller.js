@@ -6,6 +6,7 @@ export default class extends Controller {
     mainChart: Object,
     newCustomersChart: Object,
     newTicketsChart: Object,
+    locationChart: Object,
   };
 
   connect() {
@@ -16,6 +17,7 @@ export default class extends Controller {
     this.renderMainChart();
     this.renderNewCustomersChart();
     this.renderNewTicketsChart();
+    this.renderLocationChart();
   }
 
   getMainChartOptions(values, dates) {
@@ -154,6 +156,7 @@ export default class extends Controller {
     let _this = this;
 
     $(".main-chart-dropdown-button").on("click", async function (e) {
+      e.preventDefault();
       let obj = $(e.currentTarget),
         period = obj.attr("data-filter"),
         type = obj.attr("data-type");
@@ -203,6 +206,7 @@ export default class extends Controller {
 
   renderLocationChart() {
     let { current_location_chart_data } = this.locationChartValue;
+
     const chart = new ApexCharts(
       document.getElementById("location-chart"),
       this.getLocationChartOptions(current_location_chart_data)
@@ -216,6 +220,7 @@ export default class extends Controller {
       let obj = $(e.currentTarget),
         period = obj.attr("data-filter"),
         type = obj.attr("data-type");
+
 
       let content = await fetch(
         `/admin/dashboards/update_location_chart?period=${period}`,

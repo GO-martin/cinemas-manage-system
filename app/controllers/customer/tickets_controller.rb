@@ -1,6 +1,6 @@
 class Customer::TicketsController < Customer::BaseController
   def index
-    @tickets = Ticket.where(user_id: current_user.id).order(id: :desc)
+    @tickets = Ticket.where(user_id: current_user.id).ordered
   end
 
   def new; end
@@ -9,7 +9,6 @@ class Customer::TicketsController < Customer::BaseController
     @ticket = Ticket.new(ticket_params)
     respond_to do |format|
       if @ticket.save
-        TicketMailerJob.perform_async(@ticket.id)
         format.json { render json: { ticket_id: @ticket.id } }
       else
         format.html { render :new, status: :unprocessable_entity }

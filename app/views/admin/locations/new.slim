@@ -15,5 +15,5 @@
           span.ml-1.text-gray-400.md_ml-2.dark_text-gray-500 aria-current="page"
             | Locations
     h1.text-xl.font-semibold.text-gray-900.sm_text-2xl.dark_text-white
-= render TurboModalComponent.new(title: "Location", titleType: "New") do
+= render TurboModalComponent.new(title: "Location", title_type: "New") do
   = render "form", location: @location, button_submit: "Add new location"

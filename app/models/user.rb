@@ -7,13 +7,34 @@ class User < ApplicationRecord
 
   has_many :tickets, dependent: :destroy
   has_one :profile, dependent: :destroy
-  has_many :notifications
+  has_many :notifications, dependent: :destroy
 
   accepts_nested_attributes_for :profile
 
   after_create :assign_default_role
 
   scope :ordered, -> { order(id: :desc) }
+
+  scope :get_top_customers, lambda { |number, period|
+    joins(:tickets)
+      .select('users.*, SUM(tickets.price) as total_price')
+      .where(tickets: { created_at: (Time.current - period.days).. })
+      .group('users.id')
+      .order('total_price DESC')
+      .limit(number)
+  }
+
+  scope :customers_chart_data, lambda { |period|
+    order('date(created_at) ASC').group('date(created_at)').where(created_at: (Time.current - period.days)..).count(:id)
+  }
+
+  scope :total_new_users, lambda { |period|
+    order('date(created_at) ASC').where(created_at: (Time.current - period.days)..).count
+  }
+
+  scope :other_users, lambda { |user_id|
+    where.not(id: user_id)
+  }
 
   after_create_commit do
     broadcast_prepend_to 'admin', partial: 'admin/users/user',
@@ -30,7 +51,7 @@ class User < ApplicationRecord
 
   def self.by_filter(search_term)
     left_outer_joins(:profile)
-      .where('LOWER(profiles.fullname) LIKE ?', "%#{search_term.downcase}%")
+      .where('LOWER(profiles.fullname) LIKE ?', "%#{search_term&.downcase}%")
   end
 
   def assign_default_role
@@ -39,6 +60,10 @@ class User < ApplicationRecord
     else
       add_role(:customer)
     end
+  end
+
+  def delete_roles
+    roles.delete(roles.where(id: roles.ids))
   end
 
   def change_role_admin

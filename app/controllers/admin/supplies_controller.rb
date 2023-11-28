@@ -1,6 +1,5 @@
 class Admin::SuppliesController < Admin::BaseController
-  before_action :set_supply, only: %i[show edit update destroy destroy_modal]
-
+  include Findable
   # GET admin/supplies or admin/supplies.json
   def index
     @pagy, @supplies = pagy(Supply.ordered)
@@ -32,7 +31,6 @@ class Admin::SuppliesController < Admin::BaseController
           ]
         end
         format.html { redirect_to admin_supplies_url, notice: 'Supply was successfully created.' }
-        # format.json { render :show, status: :created, supply: @supply }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @supply.errors, status: :unprocessable_entity }
@@ -42,6 +40,9 @@ class Admin::SuppliesController < Admin::BaseController
 
   # PATCH/PUT admin/supplies/1 or admin/supplies/1.json
   def update
+    if params.dig(:supply, :image).present?
+      @supply.delete_attachment
+    end
     respond_to do |format|
       if @supply.update(supply_params)
         format.turbo_stream do
@@ -81,8 +82,8 @@ class Admin::SuppliesController < Admin::BaseController
   def destroy_modal; end
 
   def search
-    search_term = params[:searchTerm]
-    cinema_filter = params[:cinemaFilter]
+    search_term = params[:search_term]
+    cinema_filter = params[:cinema_filter]
     @pagy, @supplies = pagy(Supply.by_filter(search_term, cinema_filter).ordered)
 
     respond_to do |format|
@@ -96,10 +97,6 @@ class Admin::SuppliesController < Admin::BaseController
   end
 
   private
-
-  def set_supply
-    @supply = Supply.find(params[:id])
-  end
 
   def supply_params
     params.require(:supply).permit(:name, :quantity, :price, :cinema_id, :image, :description)

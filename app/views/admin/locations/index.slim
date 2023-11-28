@@ -1,4 +1,3 @@
-= turbo_stream_from "admin"
 = turbo_frame_tag "modal"
 .p-4.bg-white.block.sm_flex.items-center.justify-between.border-b.border-gray-200.dark_bg-gray-800.dark_border-gray-700
   .w-full.mb-1
@@ -23,7 +22,7 @@
         | All locations
     = simple_form_for('/admin/locations/search', html: { class: "items-center justify-between block sm_flex", data: { controller: "search", "search-controller-name-value": "locations"} }) do |f|
       .flex.space-x-3.items-center.mb-4.sm_mb-0 
-        = f.input :search_term, as: :string,input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2", data: {"search-target": "filter", "search-type": "searchTerm"} }, placeholder: "Search by name", label: false
+        = f.input :search_term, as: :string,input_html: { class: "bg-gray-50 border border-gray-300 text-gray-900 sm_text-sm rounded-lg focus_ring-blue-500 focus_border-blue-500 block w-full p-2", data: {"search-target": "filter", "search-type": "search_term"} }, placeholder: "Search by name", label: false
         button.text-white.bg-blue-700.hover_bg-blue-800.focus_ring-4.focus_ring-blue-300.font-medium.rounded-lg.text-sm.px-5.py-2.dark_bg-blue-600.dark_hover_bg-blue-700.focus_outline-none.dark_focus_ring-blue-800.border data={"action": "click->search#search"} type="submit"
           | Search
         button.focus_outline-none.text-white.bg-red-700.hover_bg-red-800.focus_ring-4.focus_ring-red-300.font-medium.rounded-lg.text-sm.px-5.py-2.border data={"action": "click->search#clear"}

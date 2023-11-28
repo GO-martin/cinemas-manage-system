@@ -26,6 +26,7 @@ Rails.application.routes.draw do
       collection do
         get 'update_main_chart'
         get 'update_stats'
+        get 'update_location_chart'
       end
     end
     resources :profiles

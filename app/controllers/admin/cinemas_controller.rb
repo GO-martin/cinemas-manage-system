@@ -1,6 +1,5 @@
 class Admin::CinemasController < Admin::BaseController
-  before_action :set_cinema, only: %i[show edit update destroy destroy_modal]
-
+  include Findable
   # GET admin/cinemas or admin/cinemas.json
   def index
     @pagy, @cinemas = pagy(Cinema.ordered)
@@ -81,8 +80,8 @@ class Admin::CinemasController < Admin::BaseController
   def destroy_modal; end
 
   def search
-    search_term = params[:searchTerm]
-    location_filter = params[:locationFilter]
+    search_term = params[:search_term]
+    location_filter = params[:location_filter]
     @pagy, @cinemas = pagy(Cinema.by_filter(search_term, location_filter).ordered)
 
     respond_to do |format|
@@ -96,10 +95,6 @@ class Admin::CinemasController < Admin::BaseController
   end
 
   private
-
-  def set_cinema
-    @cinema = Cinema.find(params[:id])
-  end
 
   def cinema_params
     params.require(:cinema).permit(:name, :description, :location_id)
