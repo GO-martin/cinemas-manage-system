@@ -25,6 +25,7 @@ class Admin::RoomsController < Admin::BaseController
     respond_to do |format|
       if @room.save
         format.json { render json: { room_id: @room.id } }
+        format.html { redirect_to admin_rooms_path }
       else
         format.html { render :new, status: :unprocessable_entity }
       end
@@ -36,6 +37,7 @@ class Admin::RoomsController < Admin::BaseController
     respond_to do |format|
       if @room.update(room_params)
         format.json { render json: { room_id: @room.id } }
+        format.html { redirect_to admin_rooms_path }
       else
         format.html { render :edit, status: :unprocessable_entity }
       end
