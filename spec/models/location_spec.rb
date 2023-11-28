@@ -15,6 +15,7 @@ RSpec.describe Location, type: :model do
       expect(Location.ordered.to_a).to eq locations.sort_by(&:id).reverse
     end
   end
+
   describe 'locations_chart_data' do
     it 'returns location chart data based on period' do
       user = create(:user)

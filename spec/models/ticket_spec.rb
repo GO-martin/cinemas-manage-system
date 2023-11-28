@@ -3,12 +3,14 @@ require 'rails_helper'
 RSpec.describe Ticket, type: :model do
   let!(:user) { create(:user) }
   let!(:profile) { create(:profile, user:) }
+
   describe 'associations' do
     it { should belong_to(:user) }
     it { should belong_to(:showtime) }
     it { should have_many(:ticket_supplies) }
     it { should have_many(:supplies) }
   end
+
   describe 'total_revenue' do
     it 'returns the total revenue for a given period' do
       ticket1 = create(:ticket, user:)
