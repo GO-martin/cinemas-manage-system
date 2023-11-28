@@ -59,11 +59,11 @@ export default class extends Controller {
   }
 
   renderStripe() {
-    var stripe = Stripe($("#payment-form").attr("data-public-key"));
+    let stripe = Stripe($("#payment-form").attr("data-public-key"));
 
-    var elements = stripe.elements();
+    let elements = stripe.elements();
 
-    var cardElement = elements.create("card", {
+    let cardElement = elements.create("card", {
       style: {
         base: {
           iconColor: "#cccccc",
@@ -90,9 +90,9 @@ export default class extends Controller {
 
     const submitBtn = $("#payment-submit");
 
-    var totalPriceValue = this.totalPriceValue;
+    let totalPriceValue = this.totalPriceValue;
 
-    var ticketData = {
+    let ticketData = {
       ticket: {
         seat_row: this.selectedValue[0].row_index,
         seat_column: this.selectedValue[0].column_index,
@@ -185,7 +185,7 @@ export default class extends Controller {
 
   createTicketSupplies(ticketId) {
     for (const id in this.selectedSupplyValue) {
-      var data = {
+      let data = {
         ticket_supply: {
           ticket_id: ticketId,
           supply_id: id,
