@@ -6,6 +6,7 @@ export default class extends Controller {
     mainChart: Object,
     newCustomersChart: Object,
     newTicketsChart: Object,
+    locationChart: Object,
   };
 
   connect() {
@@ -16,6 +17,7 @@ export default class extends Controller {
     this.renderMainChart();
     this.renderNewCustomersChart();
     this.renderNewTicketsChart();
+    this.renderLocationChart();
   }
 
   getMainChartOptions(values, dates) {
@@ -154,6 +156,7 @@ export default class extends Controller {
     let _this = this;
 
     $(".main-chart-dropdown-button").on("click", async function (e) {
+      e.preventDefault();
       let obj = $(e.currentTarget),
         period = obj.attr("data-filter"),
         type = obj.attr("data-type");
@@ -199,6 +202,106 @@ export default class extends Controller {
     var values = Object.values(obj);
 
     return { dates, values };
+  }
+
+  renderLocationChart() {
+    var { current_location_chart_data } = this.locationChartValue;
+    const chart = new ApexCharts(
+      document.getElementById("location-chart"),
+      this.getLocationChartOptions(current_location_chart_data)
+    );
+    chart.render();
+
+    let _this = this;
+    $(".location-chart-dropdown-button").on("click", async function (e) {
+      e.preventDefault();
+
+      let obj = $(e.currentTarget),
+        period = obj.attr("data-filter"),
+        type = obj.attr("data-type");
+
+      var content = await fetch(
+        `/admin/dashboards/update_location_chart?period=${period}`,
+        {
+          headers: {
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+              .content,
+          },
+        }
+      );
+
+      var response = await content.json();
+      var location_chart_data = response.location_chart_data,
+        { current_location_chart_data } = location_chart_data;
+
+      $("#location-chart-name").next().html(`Sales last ${period} days`);
+
+      $("#location-chart-button")
+        .children("span")
+        .html(type == "today" ? "Today" : `Last ${period} days`);
+
+      chart.updateOptions(
+        _this.getLocationChartOptions(current_location_chart_data)
+      );
+    });
+  }
+
+  getLocationChartOptions(object) {
+    return {
+      labels: object.map((i) => i.name),
+      series: object.map((i) => i["total_price"]),
+      chart: {
+        type: "pie",
+        height: 400,
+        fontFamily: "Inter, sans-serif",
+      },
+      responsive: [
+        {
+          breakpoint: 430,
+          options: {
+            chart: {
+              height: 300,
+            },
+          },
+        },
+      ],
+      stroke: {
+        colors: "#ffffff",
+      },
+      states: {
+        hover: {
+          filter: {
+            type: "darken",
+            value: 0.9,
+          },
+        },
+      },
+      tooltip: {
+        shared: true,
+        followCursor: false,
+        fillSeriesColor: false,
+        inverseOrder: true,
+        style: {
+          fontSize: "14px",
+          fontFamily: "Inter, sans-serif",
+        },
+        x: {
+          show: true,
+          formatter: function (_, { seriesIndex, w }) {
+            const label = w.config.labels[seriesIndex];
+            return label;
+          },
+        },
+        y: {
+          formatter: function (value) {
+            return value + " VND";
+          },
+        },
+      },
+      grid: {
+        show: false,
+      },
+    };
   }
 
   renderNewCustomersChart() {
