@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe Room, type: :model do
   let!(:rooms) { create_list(:room, 3) }
   let!(:cinema) { create(:cinema) }
+
   describe 'validations' do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:cinema_id) }

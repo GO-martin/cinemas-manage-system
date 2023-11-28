@@ -7,6 +7,7 @@ RSpec.describe Cinema, type: :model do
     it { should validate_presence_of(:name) }
     it { should validate_presence_of(:location_id) }
   end
+
   describe 'associations' do
     it { should have_many(:rooms) }
     it { should have_many(:supplies) }
