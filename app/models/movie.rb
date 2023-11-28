@@ -1,5 +1,6 @@
 class Movie < ApplicationRecord
   resourcify
+  include DeletableAttachment
 
   has_many :showtimes, dependent: :destroy
 
@@ -29,4 +30,17 @@ class Movie < ApplicationRecord
     where('LOWER(movies.name) LIKE ?', "%#{search_term.downcase}%")
       .where(status: status_filter.presence || Movie.distinct.pluck(:status))
   end
+
+  def attachment_name
+    :poster
+  end
+
+  scope :get_top_movies, lambda { |number, period|
+    joins(showtimes: :tickets)
+      .select('movies.*, SUM(tickets.price) as total_price')
+      .where(tickets: { created_at: (Time.current - period.days).. })
+      .group('movies.id')
+      .order('total_price DESC')
+      .limit(number)
+  }
 end

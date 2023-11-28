@@ -32,7 +32,6 @@ class Admin::SuppliesController < Admin::BaseController
           ]
         end
         format.html { redirect_to admin_supplies_url, notice: 'Supply was successfully created.' }
-        # format.json { render :show, status: :created, supply: @supply }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @supply.errors, status: :unprocessable_entity }
@@ -42,6 +41,9 @@ class Admin::SuppliesController < Admin::BaseController
 
   # PATCH/PUT admin/supplies/1 or admin/supplies/1.json
   def update
+    if params.dig(:supply, :image).present?
+      @supply.delete_attachment
+    end
     respond_to do |format|
       if @supply.update(supply_params)
         format.turbo_stream do
