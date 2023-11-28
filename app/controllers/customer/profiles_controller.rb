@@ -1,7 +1,6 @@
 class Customer::ProfilesController < Customer::BaseController
-  before_action :set_profile, only: %i[edit update]
   before_action :check_admin_login
-
+  include Findable
   def edit; end
 
   def update
@@ -23,10 +22,6 @@ class Customer::ProfilesController < Customer::BaseController
     return unless current_user.has_role?(:admin)
 
     redirect_to root_path
-  end
-
-  def set_profile
-    @profile = Profile.find(params[:id])
   end
 
   def profile_params

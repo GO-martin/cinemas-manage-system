@@ -1,7 +1,5 @@
 class Admin::MoviesController < Admin::BaseController
-  before_action :set_movie, only: %i[show edit update destroy destroy_modal change_now_showing change_coming_soon]
-  skip_before_action :verify_authenticity_token, only: %i[change_now_showing change_coming_soon]
-
+  include Findable
   # GET admin/movies or admin/movies.json
   def index
     @pagy, @movies = pagy(Movie.ordered)
@@ -92,8 +90,8 @@ class Admin::MoviesController < Admin::BaseController
   end
 
   def search
-    search_term = params[:searchTerm]
-    status_filter = params[:statusFilter]
+    search_term = params[:search_term]
+    status_filter = params[:status_filter]
     @pagy, @movies = pagy(Movie.by_filter(search_term, status_filter).ordered)
 
     respond_to do |format|
@@ -107,10 +105,6 @@ class Admin::MoviesController < Admin::BaseController
   end
 
   private
-
-  def set_movie
-    @movie = Movie.find(params[:id])
-  end
 
   def movie_params
     params.require(:movie).permit(:poster, :banner, :trailer, :status, :director, :description, :release_date, :length,

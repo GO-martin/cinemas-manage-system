@@ -1,6 +1,5 @@
 class Admin::LocationsController < Admin::BaseController
-  before_action :set_location, only: %i[show edit update destroy destroy_modal]
-
+  include Findable
   # GET admin/locations or admin/locations.json
   def index
     @pagy, @locations = pagy(Location.ordered)
@@ -32,7 +31,6 @@ class Admin::LocationsController < Admin::BaseController
           ]
         end
         format.html { redirect_to admin_locations_url, notice: 'Location was successfully created.' }
-        # format.json { render :show, status: :created, location: @location }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @location.errors, status: :unprocessable_entity }
@@ -81,7 +79,7 @@ class Admin::LocationsController < Admin::BaseController
   def destroy_modal; end
 
   def search
-    search_term = params[:searchTerm]
+    search_term = params[:search_term]
 
     @pagy, @locations = pagy(Location.by_filter(search_term).ordered)
 
@@ -96,10 +94,6 @@ class Admin::LocationsController < Admin::BaseController
   end
 
   private
-
-  def set_location
-    @location = Location.find(params[:id])
-  end
 
   def location_params
     params.require(:location).permit(:name)

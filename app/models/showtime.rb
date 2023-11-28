@@ -36,19 +36,19 @@ class Showtime < ApplicationRecord
 
   def self.by_filter(search_term, room_filter, movie_filter)
     left_outer_joins(:movie, :room)
-      .where('LOWER(movies.name) LIKE ?', "%#{search_term.downcase}%")
+      .where('LOWER(movies.name) LIKE ?', "%#{search_term&.downcase}%")
       .where(movies: { id: movie_filter.presence || Movie.ids })
       .where(rooms: { id: room_filter.presence || Room.ids })
   end
 
   def no_overlapping_showtimes
     overlapping_showtimes = Showtime.where(room_id:)
-                                    .where.not(id:)
-                                    .where(
-                                      '(start_time <= :start_time AND :start_time <= end_time)
+      .where.not(id:)
+      .where(
+        '(start_time <= :start_time AND :start_time <= end_time)
                                       OR (start_time >= :start_time AND start_time <= :end_time)',
-                                      { start_time:, end_time: }
-                                    )
+        { start_time:, end_time: }
+      )
 
     errors.add(:start_time, 'conflicts with existing showtimes') if overlapping_showtimes.exists?
   end

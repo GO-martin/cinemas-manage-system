@@ -6,7 +6,7 @@ class Movie < ApplicationRecord
 
   enum :status, { now_showing: 0, coming_soon: 1 }
 
-  validates :poster, :director, :name, :length, :release_date, :trailer, :description, presence: true
+  validates :director, :name, :length, :release_date, :trailer, :description, presence: true
 
   scope :ordered, -> { order(id: :desc) }
 
@@ -27,7 +27,7 @@ class Movie < ApplicationRecord
   end
 
   def self.by_filter(search_term, status_filter)
-    where('LOWER(movies.name) LIKE ?', "%#{search_term.downcase}%")
+    where('LOWER(movies.name) LIKE ?', "%#{search_term&.downcase}%")
       .where(status: status_filter.presence || Movie.distinct.pluck(:status))
   end
 

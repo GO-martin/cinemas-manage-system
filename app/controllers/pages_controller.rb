@@ -7,7 +7,7 @@ class PagesController < ApplicationController
   end
 
   def movie_detail
-    @movie = Movie.find(params[:id])
+    @movie = Movie.find_by(id: params[:id])
   end
 
   def movies_now_showing
@@ -19,7 +19,7 @@ class PagesController < ApplicationController
   end
 
   def booking
-    @movie = Movie.find(params[:id])
+    @movie = Movie.find_by(id: params[:id])
     @start_date = Date.today
     @end_date = @start_date + 15.days
     @selected_date = params[:selected_date] || @start_date
@@ -36,26 +36,7 @@ class PagesController < ApplicationController
       end_time = selected_date.end_of_day
     end
 
-    locations = Location.all
-    location_data = []
-
-    locations.each do |location|
-      cinema_data = []
-      cinemas = location.cinemas
-
-      cinemas.each do |cinema|
-        showtimes = Showtime.where(
-          location_id: location.id,
-          cinema_id: cinema.id,
-          start_time: start_time..end_time,
-          movie_id: params[:id]
-        )
-
-        cinema_data << { id: cinema.id, name: cinema.name, showtimes: } if showtimes.present?
-      end
-
-      location_data << { cinemas: cinema_data, id: location.id, name: location.name } if cinema_data.present?
-    end
+    location_data = Location.collateral_tabs_data(start_time, end_time, params[:id])
 
     respond_to do |format|
       format.json do

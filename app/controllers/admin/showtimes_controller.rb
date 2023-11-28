@@ -1,6 +1,5 @@
 class Admin::ShowtimesController < Admin::BaseController
-  before_action :set_showtime, only: %i[show edit update destroy destroy_modal]
-
+  include Findable
   # GET admin/showtimes or admin/showtimes.json
   def index
     @pagy, @showtimes = pagy(Showtime.ordered)
@@ -80,9 +79,9 @@ class Admin::ShowtimesController < Admin::BaseController
   def destroy_modal; end
 
   def search
-    search_term = params[:searchTerm]
-    room_filter = params[:roomFilter]
-    movie_filter = params[:movieFilter]
+    search_term = params[:search_term]
+    room_filter = params[:room_filter]
+    movie_filter = params[:movie_filter]
 
     @pagy, @showtimes = pagy(Showtime.by_filter(search_term, room_filter, movie_filter).ordered)
 
@@ -97,10 +96,6 @@ class Admin::ShowtimesController < Admin::BaseController
   end
 
   private
-
-  def set_showtime
-    @showtime = Showtime.find(params[:id])
-  end
 
   def showtime_params
     params.require(:showtime).permit(:room_id, :movie_id, :location_id, :cinema_id, :start_time, :fare, :duration,

@@ -34,12 +34,16 @@ header
                 = current_user.email
             ul.py-2[aria-labelledby="user-menu-button"]
               li
-                = link_to "Account Settings", edit_customer_profile_path(current_user.profile.id), class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white"
+                = link_to "Account Settings", edit_customer_profile_path(current_user.profile.id), class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white", data: { turbo: false }
+              - if current_user.has_role?(:admin)
+                li 
+                  = link_to admin_dashboards_path, class: "block px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_text-gray-300 dark_hover_bg-gray-600 dark_hover_text-white", data: { turbo: false }
+                    | Switch
               li
                 = button_to "Sign out", destroy_user_session_path, method: :delete, data: { turbo: false }, class: "block w-full text-left px-4 py-2 text-sm text-gray-700 hover_bg-gray-100 dark_hover_bg-gray-600 dark_text-gray-200 dark_hover_text-white"
         - else
-          = link_to "Sign in", new_user_session_path, class: "text-gray-800 dark_text-white hover_bg-gray-50 focus_ring-4 focus_ring-gray-300 font-medium rounded-lg text-sm px-4 lg_px-5 py-2 lg_py-2.5 mr-2 dark_hover_bg-gray-700 focus_outline-none dark_focus_ring-gray-800"
-          = link_to "Sign up", new_user_registration_path, class: "text-white bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 font-medium rounded-lg text-sm px-4 lg_px-5 py-2 lg_py-2.5 mr-2 dark_bg-blue-600 dark_hover_bg-blue-700 focus_outline-none dark_focus_ring-blue-800"
+          = link_to "Sign in", new_user_session_path, class: "text-gray-800 dark_text-white hover_bg-gray-50 focus_ring-4 focus_ring-gray-300 font-medium rounded-lg text-sm px-4 lg_px-5 py-2 lg_py-2.5 mr-2 dark_hover_bg-gray-700 focus_outline-none dark_focus_ring-gray-800", data: { turbo: false }
+          = link_to "Sign up", new_user_registration_path, class: "text-white bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 font-medium rounded-lg text-sm px-4 lg_px-5 py-2 lg_py-2.5 mr-2 dark_bg-blue-600 dark_hover_bg-blue-700 focus_outline-none dark_focus_ring-blue-800", data: { turbo: false }
         button.inline-flex.items-center.p-2.ml-1.text-sm.text-gray-500.rounded-lg.lg_hidden.hover_bg-gray-100.focus_outline-none.focus_ring-2.focus_ring-gray-200.dark_text-gray-400.dark_hover_bg-gray-700.dark_focus_ring-gray-600[data-collapse-toggle="mobile-menu-2" type="button" aria-controls="mobile-menu-2" aria-expanded="false"]
           span.sr-only
             | Open main menu

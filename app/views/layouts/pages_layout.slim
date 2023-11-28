@@ -12,6 +12,8 @@ html
     link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
     script src="https://js.stripe.com/v3/"
   body
+    - if user_signed_in?
+      = turbo_stream_from dom_id(current_user, :broadcast_to)
     #flash.flash.fixed.top-20.transform.flex.flex-col.items-center.gap-4.max-w-full.w-max-content.px-4.z-50 class="left-1/2 -translate-x-1/2"
       = render "layouts/components/flash"
     = render "layouts/components/navbar"

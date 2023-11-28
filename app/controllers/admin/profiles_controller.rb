@@ -1,5 +1,5 @@
 class Admin::ProfilesController < Admin::BaseController
-  before_action :set_profile, only: %i[edit update]
+  include Findable
 
   def edit; end
 
@@ -17,10 +17,6 @@ class Admin::ProfilesController < Admin::BaseController
   end
 
   private
-
-  def set_profile
-    @profile = Profile.find(params[:id])
-  end
 
   def profile_params
     params.require(:profile).permit(:avatar, :fullname, :birthday, :address, :user_id)

@@ -1,6 +1,5 @@
 class Admin::RoomsController < Admin::BaseController
-  before_action :set_room, only: %i[show edit update destroy destroy_modal]
-
+  include Findable
   # GET admin/rooms or admin/rooms.json
   def index
     @pagy, @rooms = pagy(Room.ordered)
@@ -64,8 +63,8 @@ class Admin::RoomsController < Admin::BaseController
   def destroy_modal; end
 
   def search
-    search_term = params[:searchTerm]
-    cinema_filter = params[:cinemaFilter]
+    search_term = params[:search_term]
+    cinema_filter = params[:cinema_filter]
     @pagy, @rooms = pagy(Room.by_filter(search_term, cinema_filter).ordered)
 
     respond_to do |format|
@@ -79,10 +78,6 @@ class Admin::RoomsController < Admin::BaseController
   end
 
   private
-
-  def set_room
-    @room = Room.find(params[:id])
-  end
 
   def room_params
     params.require(:room).permit(:name, :number_of_seats, :cinema_id, :row_size, :column_size)
