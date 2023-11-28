@@ -76,8 +76,8 @@ class Admin::DashboardsController < Admin::BaseController
   def get_new_tickets_chart_data(period)
     new_tickets_chart_data = {}
 
-    current_data = Ticket.order('date(created_at) ASC').group('date(created_at)').where(created_at: (Time.current - period.days)..).count(:id)
-    total_new_tickets = Ticket.order('date(created_at) ASC').where(created_at: (Time.current - period.days)..).count
+    current_data = Ticket.tickets_chart_data(period)
+    total_new_tickets = Ticket.total_new_tickets(period)
     new_tickets_chart_data[:current_data] = current_data
     new_tickets_chart_data[:total_new_tickets] = total_new_tickets
 
