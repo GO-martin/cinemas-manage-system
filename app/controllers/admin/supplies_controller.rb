@@ -1,6 +1,5 @@
 class Admin::SuppliesController < Admin::BaseController
-  before_action :set_supply, only: %i[show edit update destroy destroy_modal]
-
+  include Findable
   # GET admin/supplies or admin/supplies.json
   def index
     @pagy, @supplies = pagy(Supply.ordered)
@@ -96,10 +95,6 @@ class Admin::SuppliesController < Admin::BaseController
   end
 
   private
-
-  def set_supply
-    @supply = Supply.find(params[:id])
-  end
 
   def supply_params
     params.require(:supply).permit(:name, :quantity, :price, :cinema_id, :image, :description)

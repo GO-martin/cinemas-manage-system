@@ -1,6 +1,5 @@
 class Admin::RoomsController < Admin::BaseController
-  before_action :set_room, only: %i[show edit update destroy destroy_modal]
-
+  include Findable
   # GET admin/rooms or admin/rooms.json
   def index
     @pagy, @rooms = pagy(Room.ordered)
@@ -77,10 +76,6 @@ class Admin::RoomsController < Admin::BaseController
   end
 
   private
-
-  def set_room
-    @room = Room.find(params[:id])
-  end
 
   def room_params
     params.require(:room).permit(:name, :number_of_seats, :cinema_id, :row_size, :column_size)

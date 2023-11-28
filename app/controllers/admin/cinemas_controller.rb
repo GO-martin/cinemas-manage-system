@@ -1,6 +1,5 @@
 class Admin::CinemasController < Admin::BaseController
-  before_action :set_cinema, only: %i[show edit update destroy destroy_modal]
-
+  include Findable
   # GET admin/cinemas or admin/cinemas.json
   def index
     @pagy, @cinemas = pagy(Cinema.ordered)
@@ -96,10 +95,6 @@ class Admin::CinemasController < Admin::BaseController
   end
 
   private
-
-  def set_cinema
-    @cinema = Cinema.find(params[:id])
-  end
 
   def cinema_params
     params.require(:cinema).permit(:name, :description, :location_id)
