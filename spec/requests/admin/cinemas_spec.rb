@@ -1,10 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::Cinemas', type: :request do
-  let(:valid_attributes) { attributes_for(:cinema) }
-  let(:invalid_attributes) { attributes_for(:cinema, name: nil) }
-  let(:location) { create(:location) }
-  let(:cinema) { create(:cinema, location:) }
+  let!(:valid_attributes) { attributes_for(:cinema) }
+  let!(:invalid_attributes) { attributes_for(:cinema, name: nil) }
+  let!(:cinema) { create(:cinema) }
   context 'not logged in' do
     describe 'GET index' do
       it 'redirect sign in' do
@@ -37,8 +36,7 @@ RSpec.describe 'Admin::Cinemas', type: :request do
     describe 'POST #create' do
       context 'with valid parameters' do
         it 'creates a new Cinema' do
-          location = create(:location)
-          valid_attributes[:location_id] = location.id
+          valid_attributes[:location_id] = cinema.location.id
           expect do
             post admin_cinemas_path, params: { cinema: valid_attributes }
           end.to change(Cinema, :count).by(1)
@@ -77,7 +75,6 @@ RSpec.describe 'Admin::Cinemas', type: :request do
     end
     describe 'DELETE #destroy' do
       it 'destroys the requested cinema' do
-        cinema
         expect do
           delete admin_cinema_path(cinema)
         end.to change(Cinema, :count).by(-1)

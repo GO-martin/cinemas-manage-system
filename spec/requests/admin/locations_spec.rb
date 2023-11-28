@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::Locations', type: :request do
-  let(:location) { create(:location) }
-  let(:valid_attributes) { attributes_for(:location) }
-  let(:invalid_attributes) { attributes_for(:location, name: nil) }
+  let!(:location) { create(:location) }
+  let!(:valid_attributes) { attributes_for(:location) }
+  let!(:invalid_attributes) { attributes_for(:location, name: nil) }
   context 'not logged in' do
     describe 'GET index' do
       it 'redirect sign in' do

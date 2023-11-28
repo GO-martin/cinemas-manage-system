@@ -1,10 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::Supplies', type: :request do
-  let(:cinema) { create(:cinema) }
-  let(:valid_attributes) { attributes_for(:supply, cinema_id: cinema.id) }
-  let(:invalid_attributes) { attributes_for(:supply, name: nil, cinema_id: cinema.id) }
-  let(:supply) { create(:supply) }
+  let!(:cinema) { create(:cinema) }
+  let!(:valid_attributes) { attributes_for(:supply, cinema_id: cinema.id) }
+  let!(:invalid_attributes) { attributes_for(:supply, name: nil, cinema_id: cinema.id) }
+  let!(:supply) { create(:supply) }
 
   context 'not logged in' do
     describe 'GET index' do
@@ -76,7 +76,6 @@ RSpec.describe 'Admin::Supplies', type: :request do
     end
     describe 'DELETE #destroy' do
       it 'destroys the requested room' do
-        supply
         expect do
           delete admin_supply_path(supply)
         end.to change(Supply, :count).by(-1)

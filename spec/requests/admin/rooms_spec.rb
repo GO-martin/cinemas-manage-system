@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe 'Admin::Rooms', type: :request do
-  let(:valid_attributes) { attributes_for(:room) }
-  let(:invalid_attributes) { attributes_for(:room, name: nil) }
-  let(:room) { create(:room) }
+  let!(:valid_attributes) { attributes_for(:room) }
+  let!(:invalid_attributes) { attributes_for(:room, name: nil) }
+  let!(:room) { create(:room) }
 
   context 'not logged in' do
     describe 'GET index' do
@@ -77,7 +77,6 @@ RSpec.describe 'Admin::Rooms', type: :request do
     end
     describe 'DELETE #destroy' do
       it 'destroys the requested room' do
-        room
         expect do
           delete admin_room_path(room)
         end.to change(Room, :count).by(-1)
