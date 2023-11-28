@@ -7,11 +7,25 @@ header
           | Retro cinema
       .flex.items-center.lg_order-2
         - if user_signed_in?
+          button.relative.inline-flex.items-center.p-2.text-gray-500.rounded-lg.hover_text-gray-900.hover_bg-gray-100.mr-3 data-dropdown-toggle="notification-dropdown" aria-expanded="false"
+            = heroicon "bell", variant: :solid, options: { class: "h-6 w-6" }
+            = tag.div id: :customer_notifications_count do 
+              = render "notifications/count", count: current_user.unviewed_notifications_count
           button#user-menu-button.flex.mr-3.text-sm.bg-gray-800.rounded-full.md_mr-0.focus_ring-4.focus_ring-gray-300.dark_focus_ring-gray-600[type="button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom"]
             - if current_user.profile.avatar.attached?
               = image_tag current_user.profile.avatar, class: "w-8 h-8 rounded-full"
             - else
               = image_tag "logo.png", class: "w-8 h-8 rounded-full"
+          #notification-dropdown.z-50.hidden.max-w-sm.my-4.text-base.list-none.bg-white.divide-y.divide-gray-100.rounded.shadow-lg.w-72
+            .block.px-4.py-2.text-base.font-medium.text-center.text-gray-700.bg-gray-50.dark_bg-gray-700.dark_text-gray-400
+              |  Notifications 
+            .h-64.overflow-y-auto
+              = tag.div id: :customer_notifications_navbar do 
+                = render "notifications/navbar", notifications: current_user.unviewed_notifications
+            = button_to view_all_notifications_path, class: "block py-2 text-base font-normal text-center text-gray-900 bg-gray-50 hover_bg-gray-100 w-full"
+              .inline-flex.items-center
+                = inline_svg_tag("svg/viewAll-icon.svg", class: "w-5 h-5 mr-2")
+                  |  View all     
           #user-dropdown.z-50.hidden.my-4.text-base.list-none.bg-white.divide-y.divide-gray-100.rounded-lg.shadow.dark_bg-gray-700.dark_divide-gray-600
             .px-4.py-3
               span.block.text-sm.text-gray-900.dark_text-white

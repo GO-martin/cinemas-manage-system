@@ -7,7 +7,7 @@ class User < ApplicationRecord
 
   has_many :tickets, dependent: :destroy
   has_one :profile, dependent: :destroy
-  has_many :notifications
+  has_many :notifications, dependent: :destroy
 
   accepts_nested_attributes_for :profile
 
@@ -30,6 +30,10 @@ class User < ApplicationRecord
 
   scope :total_new_users, ->(period) {
     order('date(created_at) ASC').where(created_at: (Time.current - period.days)..).count
+  }
+
+  scope :other_users, ->(user_id) {
+    where.not(id: user_id)
   }
 
   after_create_commit do
@@ -56,6 +60,10 @@ class User < ApplicationRecord
     else
       add_role(:customer)
     end
+  end
+
+  def delete_roles
+    roles.delete(roles.where(id: roles.ids))
   end
 
   def change_role_admin
