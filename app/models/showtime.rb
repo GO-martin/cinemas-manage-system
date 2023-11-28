@@ -43,12 +43,12 @@ class Showtime < ApplicationRecord
 
   def no_overlapping_showtimes
     overlapping_showtimes = Showtime.where(room_id:)
-                                    .where.not(id:)
-                                    .where(
-                                      '(start_time <= :start_time AND :start_time <= end_time)
+      .where.not(id:)
+      .where(
+        '(start_time <= :start_time AND :start_time <= end_time)
                                       OR (start_time >= :start_time AND start_time <= :end_time)',
-                                      { start_time:, end_time: }
-                                    )
+        { start_time:, end_time: }
+      )
 
     errors.add(:start_time, 'conflicts with existing showtimes') if overlapping_showtimes.exists?
   end

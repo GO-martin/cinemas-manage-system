@@ -1,6 +1,5 @@
 class Admin::ShowtimesController < Admin::BaseController
-  before_action :set_showtime, only: %i[show edit update destroy destroy_modal]
-
+  include Findable
   # GET admin/showtimes or admin/showtimes.json
   def index
     @pagy, @showtimes = pagy(Showtime.ordered)
@@ -98,10 +97,6 @@ class Admin::ShowtimesController < Admin::BaseController
   end
 
   private
-
-  def set_showtime
-    @showtime = Showtime.find(params[:id])
-  end
 
   def showtime_params
     params[:showtime][:duration] = Movie.find(params[:showtime][:movie_id]).length
