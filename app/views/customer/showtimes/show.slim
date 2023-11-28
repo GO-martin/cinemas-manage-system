@@ -1,4 +1,4 @@
-.max-w-7xl.mx-auto.p-6.md_px-12.xl_px-6 data={"controller": "booking", "booking-room-id-value": @showtime.room.id, "booking-price-value": @showtime.fare, "action": "turbo:frame-render->booking#loadPayment", "booking-showtime-id-value": @showtime.id}
+.max-w-7xl.mx-auto.p-6.md_px-12.xl_px-6 data={"controller": "booking", "booking-room-id-value": @showtime.room.id, "booking-price-value": @showtime.fare, "action": "turbo:frame-render->booking#loadPayment beforeunload@window->booking#deleteSelectingSeat", "booking-showtime-id-value": @showtime.id, "booking-user-id-value": current_user.id}
   .page-title.text-center.bg-black.p-6.rounded-t-3xl
     p.text-3xl.text-white.font-semibold  
       | Booking Online
