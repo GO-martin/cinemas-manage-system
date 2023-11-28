@@ -26,7 +26,7 @@ class Movie < ApplicationRecord
   end
 
   def self.by_filter(search_term, status_filter)
-    where('LOWER(movies.name) LIKE ?', "%#{search_term.downcase}%")
+    where('LOWER(movies.name) LIKE ?', "%#{search_term&.downcase}%")
       .where(status: status_filter.presence || Movie.distinct.pluck(:status))
   end
 end

@@ -29,7 +29,7 @@ class Supply < ApplicationRecord
 
   def self.by_filter(search_term, cinema_filter)
     left_outer_joins(:cinema)
-      .where('LOWER(supplies.name) LIKE ?', "%#{search_term.downcase}%")
+      .where('LOWER(supplies.name) LIKE ?', "%#{search_term&.downcase}%")
       .where(cinemas: { id: cinema_filter.presence || Cinema.ids })
   end
 end
