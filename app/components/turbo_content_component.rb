@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class TurboContentComponent < ViewComponent::Base
-  def initialize(title:, titleType:)
+  def initialize(title:, title_type:)
     @title = title
-    @titleType = titleType
+    @title_type = title_type
   end
 end

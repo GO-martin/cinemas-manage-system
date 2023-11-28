@@ -81,7 +81,7 @@ class Admin::LocationsController < Admin::BaseController
   def destroy_modal; end
 
   def search
-    search_term = params[:searchTerm]
+    search_term = params[:search_term]
 
     @pagy, @locations = pagy(Location.by_filter(search_term).ordered)
 

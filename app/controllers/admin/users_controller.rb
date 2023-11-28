@@ -5,7 +5,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def search
-    search_term = params[:searchTerm]
+    search_term = params[:search_term]
     @pagy, @users = pagy(User.by_filter(search_term).ordered)
 
     respond_to do |format|

@@ -36,7 +36,7 @@ class Showtime < ApplicationRecord
 
   def self.by_filter(search_term, room_filter, movie_filter)
     left_outer_joins(:movie, :room)
-      .where('LOWER(movies.name) LIKE ?', "%#{search_term.downcase}%")
+      .where('LOWER(movies.name) LIKE ?', "%#{search_term&.downcase}%")
       .where(movies: { id: movie_filter.presence || Movie.ids })
       .where(rooms: { id: room_filter.presence || Room.ids })
   end
