@@ -141,9 +141,9 @@ export default class extends Controller {
   }
 
   renderMainChart() {
-    var { current_main_chart_data } = this.mainChartValue;
+    let { current_main_chart_data } = this.mainChartValue;
 
-    var { dates, values } = this.formatObject(current_main_chart_data);
+    let { dates, values } = this.formatObject(current_main_chart_data);
 
     const chart = new ApexCharts(
       document.getElementById("main-chart"),
@@ -158,7 +158,7 @@ export default class extends Controller {
         period = obj.attr("data-filter"),
         type = obj.attr("data-type");
 
-      var content = await fetch(
+      let content = await fetch(
         `/admin/dashboards/update_main_chart?period=${period}`,
         {
           headers: {
@@ -168,11 +168,11 @@ export default class extends Controller {
         }
       );
 
-      var response = await content.json();
-      var main_chart_data = response.main_chart_data,
+      let response = await content.json();
+      let main_chart_data = response.main_chart_data,
         { current_main_chart_data } = main_chart_data;
 
-      var { dates, values } = _this.formatObject(current_main_chart_data);
+      let { dates, values } = _this.formatObject(current_main_chart_data);
 
       $("#main-chart-total-revenue").next().html(`Sales last ${period} days`);
 
@@ -189,22 +189,122 @@ export default class extends Controller {
   }
 
   formatObject(obj) {
-    var dates = Object.keys(obj).map((key) => {
-      var date = new Date(key),
+    let dates = Object.keys(obj).map((key) => {
+      let date = new Date(key),
         day = date.getDate(),
         month = date.getMonth() + 1;
       return `${day}/${month}`;
     });
 
-    var values = Object.values(obj);
+    let values = Object.values(obj);
 
     return { dates, values };
   }
 
-  renderNewCustomersChart() {
-    var { current_data } = this.newCustomersChartValue;
+  renderLocationChart() {
+    let { current_location_chart_data } = this.locationChartValue;
+    const chart = new ApexCharts(
+      document.getElementById("location-chart"),
+      this.getLocationChartOptions(current_location_chart_data)
+    );
+    chart.render();
 
-    var data = this.formatNewGeneralObject(current_data);
+    let _this = this;
+    $(".location-chart-dropdown-button").on("click", async function (e) {
+      e.preventDefault();
+
+      let obj = $(e.currentTarget),
+        period = obj.attr("data-filter"),
+        type = obj.attr("data-type");
+
+      let content = await fetch(
+        `/admin/dashboards/update_location_chart?period=${period}`,
+        {
+          headers: {
+            "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]')
+              .content,
+          },
+        }
+      );
+
+      let response = await content.json();
+      let location_chart_data = response.location_chart_data,
+        { current_location_chart_data } = location_chart_data;
+
+      $("#location-chart-name").next().html(`Sales last ${period} days`);
+
+      $("#location-chart-button")
+        .children("span")
+        .html(type == "today" ? "Today" : `Last ${period} days`);
+
+      chart.updateOptions(
+        _this.getLocationChartOptions(current_location_chart_data)
+      );
+    });
+  }
+
+  getLocationChartOptions(object) {
+    return {
+      labels: object.map((i) => i.name),
+      series: object.map((i) => i["total_price"]),
+      chart: {
+        type: "pie",
+        height: 400,
+        fontFamily: "Inter, sans-serif",
+      },
+      responsive: [
+        {
+          breakpoint: 430,
+          options: {
+            chart: {
+              height: 300,
+            },
+          },
+        },
+      ],
+      stroke: {
+        colors: "#ffffff",
+      },
+      states: {
+        hover: {
+          filter: {
+            type: "darken",
+            value: 0.9,
+          },
+        },
+      },
+      tooltip: {
+        shared: true,
+        followCursor: false,
+        fillSeriesColor: false,
+        inverseOrder: true,
+        style: {
+          fontSize: "14px",
+          fontFamily: "Inter, sans-serif",
+        },
+        x: {
+          show: true,
+          formatter: function (_, { seriesIndex, w }) {
+            const label = w.config.labels[seriesIndex];
+            return label;
+          },
+        },
+        y: {
+          formatter: function (value) {
+            return value + " VND";
+          },
+        },
+      },
+      grid: {
+        show: false,
+      },
+    };
+  }
+
+  renderNewCustomersChart() {
+    let { current_data } = this.newCustomersChartValue;
+
+    let data = this.formatNewGeneralObject(current_data);
 
     const chart = new ApexCharts(
       document.getElementById("new-customers-chart"),
@@ -216,7 +316,7 @@ export default class extends Controller {
   formatNewGeneralObject(obj) {
     let newArray = [];
     Object.keys(obj).forEach((key) => {
-      var date = new Date(key),
+      let date = new Date(key),
         day = date.getDate(),
         month = date.getMonth() + 1;
       newArray.push({ x: `${day}/${month}`, y: obj[key] });
@@ -325,9 +425,9 @@ export default class extends Controller {
   }
 
   renderNewTicketsChart() {
-    var { current_data } = this.newTicketsChartValue;
+    let { current_data } = this.newTicketsChartValue;
 
-    var data = this.formatNewGeneralObject(current_data);
+    let data = this.formatNewGeneralObject(current_data);
 
     const chart = new ApexCharts(
       document.getElementById("new-tickets-chart"),
