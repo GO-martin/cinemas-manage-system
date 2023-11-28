@@ -78,6 +78,7 @@ Rails.application.routes.draw do
 
   namespace :customer do
     mount Sidekiq::Web => '/sidekiq'
+    resources :bookings
     resources :profiles
     resources :tickets
     resources :showtimes
