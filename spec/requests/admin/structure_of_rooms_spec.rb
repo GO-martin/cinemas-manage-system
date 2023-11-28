@@ -12,6 +12,7 @@ RSpec.describe 'Admin::StructureOfRooms', type: :request do
     @profile = create(:profile, user: @user)
     sign_in @user
   end
+
   describe 'POST #create' do
     context 'with valid parameters' do
       it 'creates a new structure of room' do

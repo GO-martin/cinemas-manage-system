@@ -9,6 +9,7 @@ RSpec.describe 'Admin::Notifications', type: :request do
       end
     end
   end
+
   context 'logged in' do
     before do
       @user = create(:user)
@@ -17,6 +18,7 @@ RSpec.describe 'Admin::Notifications', type: :request do
       @profile = create(:profile, user: @user)
       sign_in @user
     end
+
     describe 'GET #index' do
       it 'return a successful response' do
         get admin_notifications_path

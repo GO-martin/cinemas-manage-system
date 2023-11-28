@@ -4,6 +4,7 @@ RSpec.describe 'Admin::Cinemas', type: :request do
   let!(:valid_attributes) { attributes_for(:cinema) }
   let!(:invalid_attributes) { attributes_for(:cinema, name: nil) }
   let!(:cinema) { create(:cinema) }
+
   context 'not logged in' do
     describe 'GET index' do
       it 'redirect sign in' do
@@ -21,18 +22,21 @@ RSpec.describe 'Admin::Cinemas', type: :request do
       @profile = create(:profile, user: @user)
       sign_in @user
     end
+
     describe 'GET #index' do
       it 'return a successful response' do
         get admin_cinemas_path
         expect(response).to be_successful
       end
     end
+
     describe 'GET #new' do
       it 'returns a success response' do
         get new_admin_cinema_path
         expect(response).to be_successful
       end
     end
+
     describe 'POST #create' do
       context 'with valid parameters' do
         it 'creates a new Cinema' do
@@ -57,6 +61,7 @@ RSpec.describe 'Admin::Cinemas', type: :request do
         expect(response).to be_successful
       end
     end
+
     describe 'PUT #update' do
       context 'with valid parameters' do
         it 'updates the requested cinema' do
@@ -73,6 +78,7 @@ RSpec.describe 'Admin::Cinemas', type: :request do
         end
       end
     end
+
     describe 'DELETE #destroy' do
       it 'destroys the requested cinema' do
         expect do
@@ -80,6 +86,7 @@ RSpec.describe 'Admin::Cinemas', type: :request do
         end.to change(Cinema, :count).by(-1)
       end
     end
+
     describe 'GET #search' do
       it 'returns a success response' do
         get search_admin_cinemas_path, params: { search_term: Faker::Lorem.word }

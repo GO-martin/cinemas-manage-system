@@ -22,18 +22,21 @@ RSpec.describe 'Admin::Movies', type: :request do
       @profile = create(:profile, user: @user)
       sign_in @user
     end
+
     describe 'GET #index' do
       it 'return a successful response' do
         get admin_movies_path
         expect(response).to be_successful
       end
     end
+
     describe 'GET #new' do
       it 'returns a success response' do
         get new_admin_movie_path
         expect(response).to be_successful
       end
     end
+
     describe 'POST #create' do
       context 'with valid parameters' do
         it 'creates a new movie' do
@@ -50,12 +53,14 @@ RSpec.describe 'Admin::Movies', type: :request do
         end
       end
     end
+
     describe 'GET #edit' do
       it 'returns a success response' do
         get edit_admin_movie_path(movie)
         expect(response).to be_successful
       end
     end
+
     describe 'PUT #update' do
       context 'with valid parameters' do
         it 'updates the requested movie' do
@@ -72,6 +77,7 @@ RSpec.describe 'Admin::Movies', type: :request do
         end
       end
     end
+
     describe 'DELETE #destroy' do
       it 'destroys the requested movie' do
         movie = create(:movie)
@@ -80,12 +86,14 @@ RSpec.describe 'Admin::Movies', type: :request do
         end.to change(Movie, :count).by(-1)
       end
     end
+
     describe 'GET #search' do
       it 'returns a success response' do
         get search_admin_movies_path, params: { search_term: Faker::Lorem.word }
         expect(response).to be_successful
       end
     end
+
     describe 'PUT #change_now_showing' do
       it 'updates status' do
         movie
@@ -94,6 +102,7 @@ RSpec.describe 'Admin::Movies', type: :request do
         expect(movie.status).to eq('now_showing')
       end
     end
+
     describe 'PUT #change_now_showing' do
       it 'updates status' do
         movie
