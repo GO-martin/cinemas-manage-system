@@ -13,7 +13,7 @@
             .max-w-sm.bg-white.border.border-gray-200.rounded-lg.shadow.dark_bg-gray-800.dark_border-gray-700
               = link_to movie_page_path(:id => movie.id, :breadcrumbs => ["Movie", "Now Showing", movie.name]  ), data: { turbo: false }
                 - if movie.poster.attached?
-                  = image_tag(movie.poster, class: "h-96 w-full")
+                  = image_tag(movie.poster, class: "w-full")
               .p-5.mb-2.text-base.font-bold.tracking-tight.text-gray-900.dark_text-white 
                 = movie.name
               .px-5.text-base.font-normal.dark_text-white 
@@ -26,7 +26,7 @@
                 .font-semibold.inline-flex Release date: &nbsp;
                 = movie.release_date&.strftime("%e/%m/%Y")
               .p-5.flex.justify-end.items-center 
-                = link_to booking_page_path(movie.id), class: "px-5 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800"
+                = link_to booking_page_path(movie.id), data: { turbo: false }, class: "px-5 py-2 text-sm font-medium text-center text-white rounded-lg bg-blue-700 hover_bg-blue-800 focus_ring-4 focus_ring-blue-300 dark_bg-blue-600 dark_hover_bg-blue-700 dark_focus_ring-blue-800"
                   | Buy ticket
               
 
