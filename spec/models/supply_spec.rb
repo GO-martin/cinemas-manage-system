@@ -23,4 +23,13 @@ RSpec.describe Supply, type: :model do
       expect(Supply.ordered.to_a).to eq supplies.sort_by(&:id).reverse
     end
   end
+  describe 'quantity_more_than' do
+    it 'returns supplies with quantity more than a specified value' do
+      create(:supply, quantity: 50000)
+      supply2 = create(:supply, quantity: 100000)
+      create(:supply, quantity: 30000)
+
+      expect(Supply.quantity_more_than(60000)).to contain_exactly(supply2)
+    end
+  end
 end
