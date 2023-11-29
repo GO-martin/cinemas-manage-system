@@ -1,8 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe SetShowtimeParamsService, type: :model do
-  let(:movie) { create(:movie) }
-  let(:room) { create(:room) }
+  let!(:movie) { create(:movie) }
+  let!(:room) { create(:room) }
   describe '#call' do
     it 'set showtime params' do
       params = { room_id: room.id, movie_id: movie.id, start_time: Faker::Time.between(from: Time.now, to: Time.now + 15.days).to_s, fare: 80000 }
