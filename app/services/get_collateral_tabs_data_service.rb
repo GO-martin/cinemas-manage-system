@@ -1,6 +1,4 @@
 class GetCollateralTabsDataService < ApplicationService
-  attr_reader :selected_date, :movie_id
-
   def initialize(selected_date, movie_id)
     @selected_date = selected_date
     @movie_id = movie_id

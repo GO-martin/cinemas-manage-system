@@ -1,6 +1,4 @@
 class GetNewTicketsChartDataService < ApplicationService
-  attr_reader :period
-
   def initialize(period)
     @period = period
   end
