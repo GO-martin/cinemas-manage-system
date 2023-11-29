@@ -27,17 +27,9 @@ class PagesController < ApplicationController
 
   def get_showtimes
     selected_date = Date.parse(params[:selected_date])
+    movie_id = params[:id]
 
-    if selected_date == Date.today
-      start_time = Time.current
-      end_time = Time.current.end_of_day
-    else
-      start_time = selected_date.beginning_of_day
-      end_time = selected_date.end_of_day
-    end
-
-    location_data = Location.collateral_tabs_data(start_time, end_time, params[:id])
-
+    location_data = GetCollateralTabsDataService.call(selected_date, movie_id)
     respond_to do |format|
       format.json do
         render json: render_to_string(partial: 'pages/collateral_tabs', locals: { locations: location_data },
