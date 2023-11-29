@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Location, type: :model do
+  let!(:locations) { create_list(:location, 3) }
+
   describe 'validations' do
     it { should validate_presence_of(:name) }
   end
@@ -23,11 +25,8 @@ RSpec.describe Location, type: :model do
       ticket = create(:ticket, user:)
 
       period = 7
-      expected_result = [{ id: ticket.showtime.location.id, name: ticket.showtime.location.name,
-                           total_price: ticket.price }]
-      got_result = Location.locations_chart_data(period).map(&:attributes).map do |item|
-        { id: item['id'], name: item['name'], total_price: item['total_price'] }
-      end
+      expected_result = [{ id: ticket.showtime.location.id, name: ticket.showtime.location.name, total_price: ticket.price }]
+      got_result = Location.locations_chart_data(period).map(&:attributes).map { |item| { id: item['id'], name: item['name'], total_price: item['total_price'] } }
 
       expect(got_result).to eq(expected_result)
     end

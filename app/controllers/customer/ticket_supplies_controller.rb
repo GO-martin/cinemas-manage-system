@@ -19,12 +19,6 @@ class Customer::TicketSuppliesController < Customer::BaseController
   end
 
   def minus_supply_quantity
-    id = params[:ticket_supply][:supply_id]
-    quantity = params[:ticket_supply][:quantity]
-    supply = Supply.find_by(id:)
-    raise StandardError, 'Error: Quantity' unless supply.quantity >= quantity
-
-    supply.quantity -= quantity
-    supply.save
+    MinusSupplyQuantityService.call(params)
   end
 end
